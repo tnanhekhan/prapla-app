@@ -1,0 +1,22 @@
+{
+  "name": "prapla",
+  "version": "1.0.0",
+  "description": "A speech- controlled learning application for young children.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarvinMichel/prapla.git"
+  },
+  "author": "Marvin Sernee, Roeland van Stee, Vincent van Leeuwen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarvinMichel/prapla/issues"
+  },
+  "homepage": "https://github.com/MarvinMichel/prapla#readme",
+  "devDependencies": {
+    "eslint": "^7.26.0"
+  }
+}

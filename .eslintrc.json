@@ -1,0 +1,26 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "rules": {
+    "eqeqeq": [
+      "warn",
+      "smart"
+    ],
+    "func-style": [
+      "error",
+      "expression"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-var": "error",
+    "prefer-arrow-callback": "warn"
+  }
+}
