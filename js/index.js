@@ -21,7 +21,7 @@ function startSpeech() {
     startBtn.disabled = true
     startBtn.textContent = 'Test bezig'
 
-    if (counter > 3) {
+    if (counter > words.length - 1) {
         counter = 0
     }
 
