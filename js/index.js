@@ -21,6 +21,10 @@ function startSpeech() {
     startBtn.disabled = true
     startBtn.textContent = 'Test bezig'
 
+    if (counter > 3) {
+        counter = 0
+    }
+
     let activeWord = words[counter]
     activeWord = activeWord.toLowerCase()
     counter += 1
