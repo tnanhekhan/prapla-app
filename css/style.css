@@ -6,7 +6,7 @@
 
 body {
 	overflow: hidden;
-	padding: 50px;
+	padding: 1rem;
 }
 
 h1,
@@ -15,39 +15,92 @@ p {
 	text-align: center;
 }
 
-div p {
-	padding: 20px;
-	margin-top: 20px;
-	background-color: #cacaca33;
+header {
+  height: 12.5vh;
+  padding: 1rem;
 }
 
-div {
-	overflow: auto;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	left: 0;
+main {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  justify-content: space-between;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem auto;
+  width: clamp(15rem, 100%, 35rem);
+}
+
+section figure {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+section figure svg {
+  width: clamp(15rem, 50%, 30rem);
 }
 
 button {
-	margin: 0 auto;
-	display: block;
-	font-size: 1.1rem;
-	width: 170px;
-	line-height: 2;
-	margin-top: 30px;
+  appearance: none;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1em 0.25em #00000015;
+  display: block;
+  font-size: 1.25rem;
+  height: 2.5em;
+  padding: .25em;
+  margin: 0 auto;
+  width: 2.5em;
 }
 
-@media all and (max-height: 410px) {
-	div {
-		position: static;
-	}
+button svg {
+  --size: 2em;
+  fill: none;
+  height: var(--size);
+  stroke: #8485b4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  width: var(--size);
 }
 
-.phrase {
-	font-weight: bold;
+button svg path:first-of-type {
+  fill: none;
+  stroke: none;
 }
 
-.output {
-	font-style: italic;
+button div {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+button div i {
+  animation: musicEqualizer 400ms ease var(--delay, 0s) infinite alternate;
+  background-image: linear-gradient(
+    to top, 
+    #fbc2eb 0%, 
+    #a6c1ee 100%
+  );
+  display: block;
+  height: 1rem;
+  width: .125rem;
+}
+
+button div i:nth-of-type(even) {
+  --delay: 400ms
+}
+
+@keyframes musicEqualizer {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(1.5)
+  }
 }
