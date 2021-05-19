@@ -1,6 +1,3 @@
-.DS_Store
-.env
-
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
@@ -20,7 +17,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+coverage/
 
 # nyc test coverage
 .nyc_output
@@ -66,13 +63,13 @@ typings/
 .cache
 
 # next.js build output
-.next
+.next/
 
 # nuxt.js build output
-.nuxt
+.nuxt/
 
 # Nuxt generate
-dist
+dist/
 
 # vuepress build output
 .vuepress/dist
