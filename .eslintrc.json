@@ -11,7 +11,7 @@
     ],
     "func-style": [
       "error",
-      "expression"
+      "declaration"
     ],
     "semi": [
       "error",
