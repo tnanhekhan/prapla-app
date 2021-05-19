@@ -45,6 +45,11 @@ section figure svg {
   width: clamp(15rem, 50%, 30rem);
 }
 
+.word {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 600;
+}
+
 button {
   appearance: none;
   background: white;
