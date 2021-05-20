@@ -23,7 +23,7 @@ header {
 main {
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  height: 65vh;
   justify-content: space-between;
 }
 
@@ -42,7 +42,7 @@ section figure {
 }
 
 section figure svg {
-  width: clamp(15rem, 50%, 30rem);
+  width: clamp(15rem, 45%, 30rem);
 }
 
 .word {
@@ -58,10 +58,10 @@ button {
   box-shadow: 0 0 1em 0.25em #00000015;
   display: block;
   font-size: 1.25rem;
-  height: 2.5em;
+  height: 3em;
   padding: .25em;
   margin: 0 auto;
-  width: 2.5em;
+  width: 3em;
 }
 
 button svg {

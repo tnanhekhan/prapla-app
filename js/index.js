@@ -1,8 +1,5 @@
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition // eslint-disable-line
-var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList // eslint-disable-line
-
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const recognition = new SpeechRecognition()
-const speechRecognitionList = new SpeechGrammarList()
 
 let counter = 0
 let phrase
@@ -48,6 +45,9 @@ const microphone = `
   </svg>
 `
 
+startBtn.addEventListener('click', startSpeech)
+recognition.addEventListener('speechend', endRecording)
+
 function deleteInnerContent(element) {
   while (element.lastChild) {
     element.removeChild(element.lastChild)
@@ -70,38 +70,33 @@ function startSpeech() {
   targetWord.textContent = phrase
   deleteInnerContent(targetImage)
   targetImage.insertAdjacentHTML('beforeend', image)
-  speechRecognitionList.addFromString(
-    `#JSGF V1.0; grammar phrase; public <phrase> = ${phrase};`,
-    1
-  )
 
-  recognition.grammars = speechRecognitionList
-  recognition.continuous = false
   recognition.lang = 'nl-NL'
+  recognition.continuous = false
   recognition.interimResults = false
   recognition.maxAlternatives = 1
-
   recognition.start()
-
-  recognition.onresult = function(event) {
-    const speechResult = event.results[0][0].transcript.toLowerCase()
-
-    if (speechResult === phrase) {
-      counter++
-      targetWord.innerText = 'Goedzo!'
-      document.body.style.background = 'lime'
-    } else {
-      targetWord.innerText = 'Ah, jammer!'
-      document.body.style.background = '#ffc16f'
-    }
-
-    console.log(event)
-    console.log(speechResult)
-    console.log('Confidence: ' + event.results[0][0].confidence)
-  }
 }
 
-recognition.onspeechend = function() {
+recognition.onresult = function (event) {
+  recognition.stop()
+  const speechResult = event.results[0][0].transcript.toLowerCase()
+
+  if (speechResult === phrase) {
+    counter++
+    targetWord.innerText = 'Goedzo!'
+    document.body.style.background = 'lime'
+  } else {
+    targetWord.innerText = 'Ah, jammer!'
+    document.body.style.background = '#ffc16f'
+  }
+
+  console.log(event)
+  console.log(speechResult)
+  console.log('Confidence: ' + event.results[0][0].confidence)
+}
+
+function endRecording() {
   recognition.stop()
   startBtn.disabled = false
   deleteInnerContent(startBtn)
@@ -113,5 +108,3 @@ recognition.onerror = function() {
   deleteInnerContent(startBtn)
   startBtn.insertAdjacentHTML('beforeend', microphone)
 }
-
-startBtn.addEventListener('click', startSpeech)
