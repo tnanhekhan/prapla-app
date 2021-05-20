@@ -47,6 +47,8 @@ const microphone = `
 
 startBtn.addEventListener('click', startSpeech)
 recognition.addEventListener('speechend', endRecording)
+recognition.addEventListener('result', onResult)
+recognition.addEventListener('error', onError)
 
 function deleteInnerContent(element) {
   while (element.lastChild) {
@@ -73,12 +75,12 @@ function startSpeech() {
 
   recognition.lang = 'nl-NL'
   recognition.continuous = false
-  recognition.interimResults = false
+  recognition.interimResults = true
   recognition.maxAlternatives = 1
   recognition.start()
 }
 
-recognition.onresult = function (event) {
+function onResult(event) {
   recognition.stop()
   const speechResult = event.results[0][0].transcript.toLowerCase()
 
@@ -103,7 +105,7 @@ function endRecording() {
   startBtn.insertAdjacentHTML('beforeend', microphone)
 }
 
-recognition.onerror = function() {
+function onError() {
   startBtn.disabled = false
   deleteInnerContent(startBtn)
   startBtn.insertAdjacentHTML('beforeend', microphone)
