@@ -11,7 +11,7 @@
   }
 
   h1{
-  	font-family: sans-serif;
+  	font-size: 3rem;
   	text-align: center;
   }
 </style>

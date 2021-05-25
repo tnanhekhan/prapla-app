@@ -1,6 +1,6 @@
 <template>
   <main>
-    <Logo />
+    <Header />
     <Word :word="word" />
     <RecordButton :isRecording="isRecording" :startSpeech="startSpeech" />
   </main>
