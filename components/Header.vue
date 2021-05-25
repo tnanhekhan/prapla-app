@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Praatje-Plaatje</h1>
+    <h1>Zeg het woord</h1>
   </header>
 </template>
 

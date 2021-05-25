@@ -2,7 +2,10 @@
   <main>
     <Header />
     <Word :word="word" />
-    <RecordButton :isRecording="isRecording" :startSpeech="startSpeech" />
+    <RecordButton 
+      :isRecording="isRecording"
+      :startSpeech="startSpeech" 
+    />
   </main>
 </template>
 
@@ -12,7 +15,7 @@ export default {
     return {
       recognition: null,
       word: '',
-      words: ['hond', 'kat', 'vogel', 'vis'],
+      words: ['de hond', 'de kat', 'de vogel', 'de vis'],
       counter: 0,
       isRecording: false
     }
