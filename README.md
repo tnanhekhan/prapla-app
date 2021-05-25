@@ -16,4 +16,12 @@ You can look at our research [here](https://www.notion.so/PraPla-4606c2ab66334e5
 1. Clone this repository or download the zip file
 2. Open the terminal and `cd` into the project folder
 3. Run `npm install` to install the dependencies
-4. Run `npm start` to start the application server
+4. Run `npm run dev` to start the application server with hot reload at localhost:3000
+
+
+# build for production and launch server
+$ npm run build
+$ npm run start
+
+# generate static project
+$ npm run generate
