@@ -12,7 +12,7 @@ Check out the application [here!](https://prapla.vercel.app/)
 > ⚠️ Due to bad browser compatabillity, the app might not work on your browser. Check the [compatabillity](https://caniuse.com/?search=web%20speech%20api) first.
 
 ## Documentation
-You can look at our Design Rationale [here](https://www.notion.so/Design-Rationale-c8b9232b837b4df981de78a2a4ac5585). (Dutch only)
+You can look at our Design Rationale [here](https://github.com/MarvinMichel/prapla/wiki). (Dutch only)
 
 ## Requirement List (MoSCoW)
 ### Must haves
