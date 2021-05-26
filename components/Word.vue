@@ -1,6 +1,6 @@
 <template>
   <section>
-    <figure></figure>
+    <img :src="image" />
     <p @click="textToSpeech">{{ word }}</p>
   </section>
 </template>
@@ -13,6 +13,9 @@ export default {
     }
   },
   props: {
+    image: {
+      type: String
+    },
     word: {
       type: String
     }

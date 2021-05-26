@@ -1,7 +1,10 @@
 <template>
   <main>
     <Header />
-    <Word :word="word" />
+    <Word 
+      :image="image"
+      :word="word"
+    />
     <RecordButton 
       :isRecording="isRecording"
       :startSpeech="startSpeech" 
@@ -16,6 +19,8 @@ export default {
       recognition: null,
       word: '',
       words: ['de hond', 'de kat', 'de vogel', 'de vis'],
+      image: null,
+      images: ['hond.svg', 'kat.svg', 'vogel.svg', 'vis.svg'],
       counter: 0,
       isRecording: false
     }
@@ -29,13 +34,15 @@ export default {
   },
   methods: {
     startSpeech() {
-      this.isRecording = !this.isRecording
+      this.isRecording = true
+      document.body.style.background = '#fff'
 
       if (this.counter > this.words.length - 1) {
         this.counter = 0
       }
 
       this.word = this.words[this.counter].toLowerCase()
+      this.image = this.images[this.counter]
 
       this.recognition.lang = 'nl-NL'
       this.recognition.continuous = false
@@ -50,7 +57,7 @@ export default {
 
       if (speechResult === this.word) {
         this.counter++
-        document.body.style.background = 'lime'
+        document.body.style.background = '#89ec71'
       } else {
         document.body.style.background = '#ffc16f'
       }
