@@ -43,7 +43,7 @@ export default {
 
       this.recognition.lang = 'nl-NL'
       this.recognition.continuous = false
-      this.recognition.interimResults = false
+      this.recognition.interimResults = isIOSDevice()
       this.recognition.maxAlternatives = 1
       this.recognition.start()
     },
@@ -73,6 +73,17 @@ export default {
     onSpeechEnd() {
       this.recognition.stop()
       this.isRecording = false
+    },
+    isIOSDevice() {
+      return [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+      ].includes(navigator.platform)
+      || (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
     }
   }
 }
