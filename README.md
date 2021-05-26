@@ -1,13 +1,13 @@
 # PraPla
-![VueJS](https://img.shields.io/badge/Vue.js-35495e.svg?logo=vue.js&logoColor=4FC08D&style=for-the-badge)
+[![VueJS](https://img.shields.io/badge/Vue.js-35495e.svg?logo=vue.js&logoColor=4FC08D&style=for-the-badge)](https://vuejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](#license)
 [![issues - prapla](https://img.shields.io/github/issues/MarvinMichel/prapla?style=for-the-badge)](https://github.com/MarvinMichel/prapla/issues)
-![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=prapla&style=for-the-badge)
+[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=prapla&style=for-the-badge)](prapla.vercel.app)
 
 Praatje-Plaatje (Prapla) is a speech- controlled learning application for young children that hardly speak Dutch. With Prapla, a child learns new words and phrases, and practices proper Dutch pronunciation using a combination of speech technology and images. The web-app works on any mobile phone, tablet or desktop.
 
 ## Live demo
-Check out the application [here](prapla.vercel.app)
+Check out the application [here!](prapla.vercel.app)
 
 > ⚠️ Due to bad browser compatabillity, the app might not work on your browser. Check the [compatabillity](https://caniuse.com/?search=web%20speech%20api) first.
 
