@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Praatje-Plaatje</h1>
+    <h1>Zeg het woord</h1>
   </header>
 </template>
 
@@ -11,7 +11,7 @@
   }
 
   h1{
-  	font-family: sans-serif;
+  	font-size: 3rem;
   	text-align: center;
   }
 </style>

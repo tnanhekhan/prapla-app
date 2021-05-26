@@ -1,9 +1,9 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'PraPla',
+    title: 'PraatjePlaatje',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'nl'
     },
     meta: [
       { charset: 'utf-8' },
@@ -14,6 +14,11 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  server: {
+    port: 3000,
+    host: '0.0.0.0'
+  },
+  buildDir: 'dist',
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
