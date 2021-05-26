@@ -2,26 +2,43 @@
 Praatje-Plaatje (Prapla) is a speech- controlled learning application for young children that hardly speak Dutch. With Prapla, a child learns new words and phrases, and practices proper Dutch pronunciation using a combination of speech technology and images. The web-app works on any mobile phone, tablet or desktop.
 
 ## Live demo
-Here will be a link when it's online!
+Check out the application [here](prapla.vercel.app)
+
+> ⚠️ Due to bad browser compatabillity, the app might not work on your browser. Check the [compatabillity](https://caniuse.com/?search=web%20speech%20api) first.
 
 ## Documentation
-You can look at our research [here](https://www.notion.so/PraPla-4606c2ab66334e59ac9d19f99752f99a). (Dutch only)
+You can look at our Design Rationale [here](https://www.notion.so/Design-Rationale-c8b9232b837b4df981de78a2a4ac5585). (Dutch only)
+
+## Requirement List (MoSCoW)
+### Must haves
+- [x] Research privacy aspects of Web Speech API
+- [x] Build Dutch support for Web Speech API
+- [ ] Connect with external database for words ([BAK](https://firebasestorage.googleapis.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-M_p4V46StBPnyvvNBnN%2F-M_tYEYRZ0suAyLWPQUR%2F-M_tYV_IezP-m0Mw3ikE%2FBAK%20groep%201.xlsx?alt=media&token=7a24d3d8-6310-4b33-9f10-90f2b338c88f))
+
+### Should haves
+- [ ] Visual representation of the words (vector images)
+- [ ] Sounds for positive and negative feedback
+- [ ] A Content Management System for exercises
+
+### Could haves
+- [ ] Different categories of exercises
+- [ ] Alternative for a recording button
 
 ## Dependencies
-- Module
-- Module
-- Module
+- [NuxtJS(Vue)](https://nuxtjs.org/)
+- [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
 ## Getting started
-1. Clone this repository or download the zip file
+1. Clone this repository or download [the zip file](https://github.com/MarvinMichel/prapla/archive/refs/heads/main.zip)
 2. Open the terminal and `cd` into the project folder
 3. Run `npm install` to install the dependencies
-4. Run `npm run dev` to start the application server with hot reload at localhost:3000
 
+### Start for development
+`npm run dev`
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+### Build for production
+`npm run build`
+`npm run start`
 
-# generate static project
-$ npm run generate
+### Generate static files
+`npm run generate`
