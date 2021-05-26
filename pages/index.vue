@@ -38,10 +38,6 @@ export default {
       this.isRecording = true
       document.body.style.background = '#fff'
 
-      if (this.counter > this.words.length - 1) {
-        this.counter = 0
-      }
-
       this.word = this.words[this.counter].toLowerCase()
       this.image = this.images[this.counter]
 
@@ -58,7 +54,12 @@ export default {
 
       if (speechResult === this.word) {
         this.counter++
-        this.audio = new Audio('/sounds/feedback_positive.mp3')
+        if (this.counter > this.words.length - 1) {
+          this.counter = 0
+          this.audio = new Audio('/sounds/feedback_completed.mp3')
+        } else {
+          this.audio = new Audio('/sounds/feedback_positive.mp3')
+        }
         document.body.style.background = '#89ec71'
       } else {
         document.body.style.background = '#ffc16f'
