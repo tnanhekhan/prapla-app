@@ -22,7 +22,8 @@ export default {
       image: null,
       images: ['hond.svg', 'kat.svg', 'vogel.svg', 'vis.svg'],
       counter: 0,
-      isRecording: false
+      isRecording: false,
+      audio: null
     }
   },
   mounted() {
@@ -57,10 +58,12 @@ export default {
 
       if (speechResult === this.word) {
         this.counter++
+        this.audio = new Audio('/sounds/feedback_positive.mp3')
         document.body.style.background = '#89ec71'
       } else {
         document.body.style.background = '#ffc16f'
       }
+      this.audio.play()
 
       console.log(speechResult)
       console.log('Confidence: ' + event.results[0][0].confidence)
