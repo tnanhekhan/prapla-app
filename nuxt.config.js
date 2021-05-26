@@ -18,7 +18,7 @@ export default {
     port: 3000,
     host: '0.0.0.0'
   },
-  buildDir: 'nuxt-dist',
+  buildDir: 'dist',
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
