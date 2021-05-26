@@ -62,6 +62,7 @@ export default {
         document.body.style.background = '#89ec71'
       } else {
         document.body.style.background = '#ffc16f'
+        this.audio = new Audio('/sounds/feedback_negative.mp3')
       }
       this.audio.play()
 
