@@ -1,18 +1,16 @@
 <template>
   <section>
     <img :src="image" />
-    <p @click="textToSpeech">{{ word }}</p>
+    <p @click="speak">{{ word }}</p>
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      speech: null
-    }
-  },
   props: {
+    speak: {
+      type: Function
+    },
     image: {
       type: String
     },
@@ -25,22 +23,7 @@ export default {
       immediate: true,
       deep: true,
       handler () {
-        this.textToSpeech()
-      }
-    }
-  },
-  mounted() {
-    const SpeechSynthesisUtterance = window.SpeechSynthesisUtterance || window.webkitSpeechSynthesisUtterance
-
-    this.speech = new SpeechSynthesisUtterance()
-    this.speech.lang = 'nl-NL'
-    this.speech.rate = .8
-  },
-  methods: {
-    textToSpeech() {
-      if (this.speech) {
-        this.speech.text = this.word
-        speechSynthesis.speak(this.speech)
+        this.word && this.speak(this.word)
       }
     }
   }
