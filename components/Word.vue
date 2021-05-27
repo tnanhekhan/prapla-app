@@ -1,8 +1,9 @@
 <template>
   <section class="prapla-container">
     <img :src="image" />
+
     <section class="word-container"
-             @click="textToSpeech">
+             @click="speak">
       <h1 >{{ word }}</h1>
       <svg xmlns="http://www.w3.org/2000/svg" width="42.739" height="27.219" viewBox="0 0 42.739 27.219">
         <g id="Listen" transform="translate(-203.721 -576.637)">
@@ -18,18 +19,15 @@
         </g>
       </svg>
     </section>
-
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      speech: null
-    }
-  },
   props: {
+    speak: {
+      type: Function
+    },
     image: {
       type: String
     },
@@ -42,22 +40,7 @@ export default {
       immediate: true,
       deep: true,
       handler () {
-        this.textToSpeech()
-      }
-    }
-  },
-  mounted() {
-    const SpeechSynthesisUtterance = window.SpeechSynthesisUtterance || window.webkitSpeechSynthesisUtterance
-
-    this.speech = new SpeechSynthesisUtterance()
-    this.speech.lang = 'nl-NL'
-    this.speech.rate = .8
-  },
-  methods: {
-    textToSpeech() {
-      if (this.speech) {
-        this.speech.text = this.word
-        speechSynthesis.speak(this.speech)
+        this.word && this.speak(this.word)
       }
     }
   }

@@ -4,6 +4,7 @@
     <Word v-if="word"
       :image="word.image"
       :word="word.phrase"
+      :speak="speak"
     />
     <button class="start-button"
       v-if="counter === null"
@@ -37,31 +38,33 @@ export default {
       speech: null,
       word: '',
       prapla: [
-            {
-              phrase: 'de hond',
-              image: 'hond.svg'
-            },
-            {
-              phrase: 'de kat',
-              image: 'kat.svg'
-            },
-            {
-              phrase: 'de vogel',
-              image: 'vogel.svg'
-            },
-            {
-              phrase: 'de vis',
-              image: 'vis.svg'
-            }
-          ],
+        {
+          phrase: 'de hond',
+          image: 'hond.svg'
+        },
+        {
+          phrase: 'de kat',
+          image: 'kat.svg'
+        },
+        {
+          phrase: 'de vogel',
+          image: 'vogel.svg'
+        },
+        {
+          phrase: 'de vis',
+          image: 'vis.svg'
+        }
+      ],
       counter: null,
       isRecording: false,
-      audio: null
+      audio: null,
+      voices: []
     }
   },
   mounted() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     const SpeechSynthesisUtterance = window.SpeechSynthesisUtterance || window.webkitSpeechSynthesisUtterance
+    const speechSynthesis = window.speechSynthesis || window.webkitspeechSynthesis
 
     this.recognition = new SpeechRecognition()
     this.recognition.lang = 'nl-NL'
@@ -70,11 +73,16 @@ export default {
     this.recognition.maxAlternatives = 1
 
     this.speech = new SpeechSynthesisUtterance()
-    this.speech.lang = 'nl-NL'
-    this.speech.rate = .8
+    this.voices = speechSynthesis.getVoices()
 
     this.recognition.addEventListener('result', this.onResult)
     this.recognition.addEventListener('speechend', this.onSpeechEnd)
+    
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.addEventListener('voiceschanged', () => {
+        this.voices = speechSynthesis.getVoices()
+      })
+    }
   },
   methods: {
     startExercise() {
@@ -120,8 +128,7 @@ export default {
     },
     textToSpeech() {
       if (this.speech) {
-        this.speech.text = 'Zeg mij maar na:'
-        speechSynthesis.speak(this.speech)
+        this.speak('Zeg mij maar na:')
       }
     },
     changeWord(change) {
@@ -130,12 +137,16 @@ export default {
 
       document.body.style.background = '#F8F8FF'
     },
+    speak(phrase) {
+      this.speech.voice = this.voices.filter(voice => voice.name === 'Xander')[0]
+      this.speech.lang = 'nl-NL'
+      this.speech.rate = .8
+      this.speech.text = phrase
+      speechSynthesis.speak(this.speech)
+    },
     giveFeedback(result) {
-      this.speech.text = `Helaas hoorde ik: ${result}`
-      speechSynthesis.speak(this.speech)
-
-      this.speech.text = `Ik wíl graag horen: ${this.word.phrase}`
-      speechSynthesis.speak(this.speech)
+      this.speak(`Helaas hoorde ik: ${result}`)
+      this.speak(`Ik wíl graag horen: ${this.word.phrase}`)
     },
     isIOSDevice() {
       return [
