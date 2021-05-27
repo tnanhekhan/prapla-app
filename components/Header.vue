@@ -1,6 +1,9 @@
 <template>
   <header>
-    <h1>progbar</h1>
+    <ProgressBar
+      v-if="counter !== null"
+      :progressValue="progressValue"
+    />
     <nav>
       <svg @click="empty" xmlns="http://www.w3.org/2000/svg" width="59" height="45" viewBox="0 0 59 45">
         <g id="Arrow" transform="translate(-154 -633)">
@@ -30,6 +33,12 @@
     //   }
       empty: {
         type: Function
+      },
+      counter: {
+        type: Number
+      },
+      progressValue: {
+        type: Number
       }
     }
   }

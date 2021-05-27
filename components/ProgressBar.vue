@@ -16,10 +16,10 @@ export default {
 	progress[value] {
   	/* Reset the default appearance */
 		-webkit-appearance: none;
-		appearance: none;
-
-		width: 80%;
-		height: 20px;
+    appearance: none;
+    width: 100%;
+    height: 2em;
+    padding: .2em .2em 0 .2em;
 	}
 
 	progress[value]::-webkit-progress-bar,

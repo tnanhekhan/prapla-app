@@ -1,10 +1,10 @@
 <template>
   <main>
-    <Header v-if="counter !== null" :empty="onEmpty"/>
-    <ProgressBar 
-      v-if="counter !== null"
-      :progressValue="progressValue"
-    />
+    <Header v-if="counter !== null"
+            :empty="onEmpty"
+            :counter="counter"
+            :progressValue="progressValue"/>
+
     <Word v-if="word"
 
       :image="word.image"
@@ -83,7 +83,7 @@ export default {
 
     this.recognition.addEventListener('result', this.onResult)
     this.recognition.addEventListener('speechend', this.onSpeechEnd)
-    
+
     if (speechSynthesis.onvoiceschanged !== undefined) {
       speechSynthesis.addEventListener('voiceschanged', () => {
         this.voices = speechSynthesis.getVoices()
@@ -140,7 +140,7 @@ export default {
     changeWord(change) {
       this.counter += change
       this.word = this.prapla[this.counter]
-      this.progressValue = (this.counter / this.prapla.length) * 100 
+      this.progressValue = (this.counter / this.prapla.length) * 100
 
       document.body.style.background = '#F8F8FF'
     },
