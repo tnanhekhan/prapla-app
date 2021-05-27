@@ -21,8 +21,8 @@ You can look at our Design Rationale [here](https://github.com/MarvinMichel/prap
 - [ ] Connect with external database for words ([BAK](https://firebasestorage.googleapis.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-M_p4V46StBPnyvvNBnN%2F-M_tYEYRZ0suAyLWPQUR%2F-M_tYV_IezP-m0Mw3ikE%2FBAK%20groep%201.xlsx?alt=media&token=7a24d3d8-6310-4b33-9f10-90f2b338c88f))
 
 ### Should haves
-- [ ] Visual representation of the words (vector images)
-- [ ] Sounds for positive and negative feedback
+- [x] Visual representation of the words (vector images)
+- [x] Sounds for positive and negative feedback
 - [ ] A Content Management System for exercises
 
 ### Could haves
