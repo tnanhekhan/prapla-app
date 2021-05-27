@@ -1,7 +1,12 @@
 <template>
   <main>
     <Header v-if="counter !== null" :empty="onEmpty"/>
+    <ProgressBar 
+      v-if="counter !== null"
+      :progressValue="progressValue"
+    />
     <Word v-if="word"
+
       :image="word.image"
       :word="word.phrase"
       :speak="speak"
@@ -58,6 +63,7 @@ export default {
       counter: null,
       isRecording: false,
       audio: null,
+      progressValue: null
       voices: []
     }
   },
@@ -134,6 +140,7 @@ export default {
     changeWord(change) {
       this.counter += change
       this.word = this.prapla[this.counter]
+      this.progressValue = (this.counter / this.prapla.length) * 100 
 
       document.body.style.background = '#F8F8FF'
     },
