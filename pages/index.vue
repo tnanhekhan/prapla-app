@@ -1,6 +1,9 @@
 <template>
   <main>
     <Header />
+    <ProgressBar 
+      v-if="counter !== null"
+    />
     <Word
       :image="word.image"
       :word="word.phrase"
@@ -127,6 +130,7 @@ export default {
     changeWord(change) {
       this.counter += change
       this.word = this.prapla[this.counter]
+      this.updateProgressBar()
 
       document.body.style.background = '#fff'
     },
@@ -147,6 +151,11 @@ export default {
         'iPod'
       ].includes(navigator.platform)
       || (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+    },
+    updateProgressBar() {
+      const progressBar = document.querySelector('.progress-bar')
+      const completePct = (this.counter / this.prapla.length) * 100
+      progressBar.style.width = completePct + '%'
     }
   }
 }
