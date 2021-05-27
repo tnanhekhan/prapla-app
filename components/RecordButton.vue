@@ -1,8 +1,14 @@
 <template>
-  <button v-on:click="startSpeech" :disabled="isRecording">
-    <svg v-if="!isRecording" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <button 
+    @click="startSpeech"
+    :disabled="isRecording"
+  >
+    <svg 
+      v-if="!isRecording"
+      viewBox="0 0 24 24"
+    >
       <path d="M0 0h24v24H0z" />
-      <rect x="9" y="2" width="6" height="11" rx="3" />
+      <rect x="9" y="2" rx="3" />
       <path d="M5 10a7 7 0 0 0 14 0" />
       <line x1="8" y1="21" x2="16" y2="21" />
       <line x1="12" y1="17" x2="12" y2="21" />
@@ -62,6 +68,11 @@ export default {
   button svg path:first-of-type {
     fill: none;
     stroke: none;
+  }
+
+  button svg rect {
+    height: 11px;
+    width: 6px;
   }
 
   .audiowaves {
