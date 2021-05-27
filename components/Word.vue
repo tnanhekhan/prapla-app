@@ -1,9 +1,10 @@
 <template>
   <section class="prapla-container">
     <img :src="image" />
-
-    <section class="word-container"
-             @click="speak">
+    <section 
+      class="word-container"
+      @click="speak(word)"
+    >
       <h1 >{{ word }}</h1>
       <svg xmlns="http://www.w3.org/2000/svg" width="42.739" height="27.219" viewBox="0 0 42.739 27.219">
         <g id="Listen" transform="translate(-203.721 -576.637)">

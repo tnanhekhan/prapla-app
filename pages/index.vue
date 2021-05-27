@@ -1,17 +1,19 @@
 <template>
   <main>
-    <Header v-if="counter !== null"
-            :empty="onEmpty"
-            :counter="counter"
-            :progressValue="progressValue"/>
-
-    <Word v-if="word"
-
+    <Header
+      v-if="counter !== null"
+      :empty="onEmpty"
+      :counter="counter"
+      :progressValue="progressValue"
+    />
+    <Word 
+      v-if="word"
       :image="word.image"
       :word="word.phrase"
       :speak="speak"
     />
-    <button class="start-button"
+    <button 
+      class="start-button"
       v-if="counter === null"
       @click="startExercise"
     >Start oefening</button>
@@ -75,8 +77,8 @@ export default {
     this.recognition = new SpeechRecognition()
     this.recognition.lang = 'nl-NL'
     this.recognition.continuous = false
-    this.recognition.interimResults = this.isIOSDevice()
-    this.recognition.maxAlternatives = 1
+    this.recognition.interimResults = false
+    this.recognition.maxAlternatives = 2
 
     this.speech = new SpeechSynthesisUtterance()
     this.voices = speechSynthesis.getVoices()
@@ -155,21 +157,9 @@ export default {
       this.speak(`Helaas hoorde ik: ${result}`)
       this.speak(`Ik wíl graag horen: ${this.word.phrase}`)
     },
-    isIOSDevice() {
-      return [
-        'iPad Simulator',
-        'iPhone Simulator',
-        'iPod Simulator',
-        'iPad',
-        'iPhone',
-        'iPod'
-      ].includes(navigator.platform)
-      || (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
-    },
     onEmpty() {
-      this.counter = null;
-      this.word = null;
-
+      this.counter = null
+      this.word = null
     }
   }
 }
