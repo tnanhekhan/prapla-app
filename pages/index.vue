@@ -1,11 +1,16 @@
 <template>
   <main>
     <Header />
-    <Word 
+    <Word
       :image="image"
       :word="word"
     />
-    <RecordButton 
+    <button
+      v-if="counter === null"
+      @click="startExercise"
+    >Start oefening</button>
+    <RecordButton
+      v-else
       :isRecording="isRecording"
       :startSpeech="startSpeech" 
     />
@@ -21,7 +26,7 @@ export default {
       words: ['de hond', 'de kat', 'de vogel', 'de vis'],
       image: null,
       images: ['hond.svg', 'kat.svg', 'vogel.svg', 'vis.svg'],
-      counter: 0,
+      counter: null,
       isRecording: false,
       audio: null
     }
@@ -34,6 +39,11 @@ export default {
     this.recognition.addEventListener('speechend', this.onSpeechEnd)
   },
   methods: {
+    startExercise() {
+      this.counter = 0
+      this.word = this.words[this.counter].toLowerCase()
+      this.image = this.images[this.counter]
+    },
     startSpeech() {
       this.isRecording = true
       document.body.style.background = '#fff'
@@ -43,7 +53,7 @@ export default {
 
       this.recognition.lang = 'nl-NL'
       this.recognition.continuous = false
-      this.recognition.interimResults = isIOSDevice()
+      this.recognition.interimResults = this.isIOSDevice()
       this.recognition.maxAlternatives = 1
       this.recognition.start()
     },
