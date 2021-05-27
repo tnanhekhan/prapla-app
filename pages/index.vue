@@ -63,7 +63,7 @@ export default {
       counter: null,
       isRecording: false,
       audio: null,
-      progressValue: null
+      progressValue: null,
       voices: []
     }
   },
