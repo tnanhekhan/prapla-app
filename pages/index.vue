@@ -2,8 +2,8 @@
   <main>
     <Header />
     <Word
-      :image="image"
-      :word="word"
+      :image="word.image"
+      :word="word.phrase"
     />
     <button
       v-if="counter === null"
@@ -23,22 +23,21 @@ export default {
     return {
       recognition: null,
       word: '',
-      image: null,
       prapla: [
             {
-              word: 'de hond',
+              phrase: 'de hond',
               image: 'hond.svg'
             },
             {
-              word: 'de kat',
+              phrase: 'de kat',
               image: 'kat.svg'
             },
             {
-              word: 'de vogel',
+              phrase: 'de vogel',
               image: 'vogel.svg'
             },
             {
-              word: 'de vis',
+              phrase: 'de vis',
               image: 'vis.svg'
             }
           ],
@@ -57,15 +56,13 @@ export default {
   methods: {
     startExercise() {
       this.counter = 0
-      this.word = this.prapla[this.counter].word.toLowerCase()
-      this.image = this.prapla[this.counter].image
+      this.word = this.prapla[this.counter]
     },
     startSpeech() {
       this.isRecording = true
       document.body.style.background = '#fff'
 
-      this.word = this.prapla[this.counter].word.toLowerCase()
-      this.image = this.prapla[this.counter].image
+      this.word = this.prapla[this.counter]
 
       this.recognition.lang = 'nl-NL'
       this.recognition.continuous = false
@@ -78,7 +75,7 @@ export default {
       this.isRecording = false
       const speechResult = event.results[0][0].transcript.toLowerCase()
 
-      if (speechResult === this.word) {
+      if (speechResult === this.word.phrase) {
         this.counter++
         if (this.counter > this.prapla.length - 1) {
           this.counter = 0
