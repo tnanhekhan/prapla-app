@@ -23,9 +23,25 @@ export default {
     return {
       recognition: null,
       word: '',
-      words: ['de hond', 'de kat', 'de vogel', 'de vis'],
       image: null,
-      images: ['hond.svg', 'kat.svg', 'vogel.svg', 'vis.svg'],
+      prapla: [
+            {
+              word: 'de hond',
+              image: 'hond.svg'
+            },
+            {
+              word: 'de kat',
+              image: 'kat.svg'
+            },
+            {
+              word: 'de vogel',
+              image: 'vogel.svg'
+            },
+            {
+              word: 'de vis',
+              image: 'vis.svg'
+            }
+          ],
       counter: null,
       isRecording: false,
       audio: null
@@ -41,15 +57,15 @@ export default {
   methods: {
     startExercise() {
       this.counter = 0
-      this.word = this.words[this.counter].toLowerCase()
-      this.image = this.images[this.counter]
+      this.word = this.prapla[this.counter].word.toLowerCase()
+      this.image = this.prapla[this.counter].image
     },
     startSpeech() {
       this.isRecording = true
       document.body.style.background = '#fff'
 
-      this.word = this.words[this.counter].toLowerCase()
-      this.image = this.images[this.counter]
+      this.word = this.prapla[this.counter].word.toLowerCase()
+      this.image = this.prapla[this.counter].image
 
       this.recognition.lang = 'nl-NL'
       this.recognition.continuous = false
@@ -64,7 +80,7 @@ export default {
 
       if (speechResult === this.word) {
         this.counter++
-        if (this.counter > this.words.length - 1) {
+        if (this.counter > this.prapla.length - 1) {
           this.counter = 0
           this.audio = new Audio('/sounds/feedback_completed.mp3')
         } else {
