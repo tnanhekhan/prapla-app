@@ -1,27 +1,39 @@
 <template>
-	<div class="progress-background">
-    <div class="progress-bar"></div>
-  </div>
+	<progress max="100" :value="progressValue"></progress>
 </template>
 
+<script>
+export default {
+  props: {
+    progressValue: {
+      type: Number
+    }
+  }
+}
+</script>
+
 <style scoped>
-	.progress-background,
-	.progress-bar {
+	progress[value] {
+  	/* Reset the default appearance */
+		-webkit-appearance: none;
+		appearance: none;
+
+		width: 80%;
 		height: 20px;
+	}
+
+	progress[value]::-webkit-progress-bar,
+	progress[value]::-webkit-progress-value {
 		border-radius: 100px;
 	}
 
-	.progress-background {
-		width: 80%;
-		background-color: #e0e0e0;
+	progress[value]::-webkit-progress-bar {
+		background-color: #e7e7e7;
 	}
 
-  .progress-bar {
-		height: 20px;
-		width: 0;
-		min-width: 20px;
-		margin-right: auto;
+	progress[value]::-webkit-progress-value {
 		background-color: #77DB81;
+		min-width: 20px;
 		transition: 1s all;
-  }
+	}
 </style>
