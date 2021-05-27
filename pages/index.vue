@@ -2,8 +2,8 @@
   <main>
     <Header />
     <Word
-      :image="image"
-      :word="word"
+      :image="word.image"
+      :word="word.phrase"
     />
     <button
       v-if="counter === null"
@@ -23,9 +23,24 @@ export default {
     return {
       recognition: null,
       word: '',
-      words: ['de hond', 'de kat', 'de vogel', 'de vis'],
-      image: null,
-      images: ['hond.svg', 'kat.svg', 'vogel.svg', 'vis.svg'],
+      prapla: [
+            {
+              phrase: 'de hond',
+              image: 'hond.svg'
+            },
+            {
+              phrase: 'de kat',
+              image: 'kat.svg'
+            },
+            {
+              phrase: 'de vogel',
+              image: 'vogel.svg'
+            },
+            {
+              phrase: 'de vis',
+              image: 'vis.svg'
+            }
+          ],
       counter: null,
       isRecording: false,
       audio: null
@@ -41,15 +56,13 @@ export default {
   methods: {
     startExercise() {
       this.counter = 0
-      this.word = this.words[this.counter].toLowerCase()
-      this.image = this.images[this.counter]
+      this.word = this.prapla[this.counter]
     },
     startSpeech() {
       this.isRecording = true
       document.body.style.background = '#fff'
 
-      this.word = this.words[this.counter].toLowerCase()
-      this.image = this.images[this.counter]
+      this.word = this.prapla[this.counter]
 
       this.recognition.lang = 'nl-NL'
       this.recognition.continuous = false
@@ -62,9 +75,9 @@ export default {
       this.isRecording = false
       const speechResult = event.results[0][0].transcript.toLowerCase()
 
-      if (speechResult === this.word) {
+      if (speechResult === this.word.phrase) {
         this.counter++
-        if (this.counter > this.words.length - 1) {
+        if (this.counter > this.prapla.length - 1) {
           this.counter = 0
           this.audio = new Audio('/sounds/feedback_completed.mp3')
         } else {
