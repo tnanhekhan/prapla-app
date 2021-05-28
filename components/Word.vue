@@ -1,11 +1,11 @@
 <template>
   <section class="prapla-container">
     <img :src="image" />
-    <section 
+    <section
       class="word-container"
       @click="speak(word)"
     >
-      <h1 >{{ word }}</h1>
+      <h2 >{{ word }}</h2>
       <svg xmlns="http://www.w3.org/2000/svg" width="42.739" height="27.219" viewBox="0 0 42.739 27.219">
         <g id="Listen" transform="translate(-203.721 -576.637)">
           <g id="Group_2" data-name="Group 2" transform="translate(203.721 577.724)">
@@ -73,7 +73,7 @@ export default {
     margin-top: 2rem;
     background-color: white;
   }
-  h1 {
+  h2 {
     cursor: pointer;
     font-size: clamp(2rem, 3vw, 2.5rem);
     font-weight: 600;

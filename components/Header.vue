@@ -46,7 +46,7 @@
 <style scoped>
   header {
     height: 12.5vh;
-
+    background-color: white;
     width: 100%;
   }
 
