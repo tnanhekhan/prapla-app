@@ -133,7 +133,7 @@ export default {
         this.clap.volume = 0.5
         this.clap.play()
 
-        const fadeOut = () => {
+        function fadeOut() {
           setInterval(() => {
             if(this.clap.volume > 0.06) {
               this.clap.volume -= 0.05
@@ -141,7 +141,7 @@ export default {
               this.clap.volume = 0
               clearInterval(fadeOut)
             }
-          },100)
+          }, 100)
         }
 
         setTimeout( () => {
