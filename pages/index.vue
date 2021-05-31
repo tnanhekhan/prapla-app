@@ -6,13 +6,13 @@
       :counter="counter"
       :progressValue="progressValue"
     />
-    <Word 
+    <Word
       v-if="word"
       :image="word.image"
       :word="word.phrase"
       :speak="speak"
     />
-    <button 
+    <button
       class="start-button"
       v-if="counter === null"
       @click="startExercise"
@@ -65,6 +65,7 @@ export default {
       counter: null,
       isRecording: false,
       audio: null,
+      clap: null,
       progressValue: null,
       voices: []
     }
@@ -121,11 +122,32 @@ export default {
       }
 
       //TODO If every word is completed, play different sound
-      if (false) {
+      if (this.progressValue === this.prapla.length - 1) {
         this.audio = new Audio('/sounds/feedback_completed.mp3')
+        this.clap = new Audio('/sounds/feedback_clapping.mp3')
       }
 
       this.audio.play()
+
+      if(this.clap) {
+        this.clap.volume = 0.5
+        this.clap.play()
+
+        function fadeOut() {
+          setInterval(() => {
+            if(this.clap.volume > 0.06) {
+              this.clap.volume -= 0.05
+            } else {
+              this.clap.volume = 0
+              clearInterval(fadeOut)
+            }
+          }, 100)
+        }
+
+        setTimeout( () => {
+          fadeOut()
+        }, 1300)
+      }
 
       console.log(speechResult)
       console.log('Confidence: ' + event.results[0][0].confidence)
