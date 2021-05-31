@@ -1,12 +1,9 @@
 <template>
-  <section class="prapla-container">
+  <section 
+    @click="speak(word)"
+  >
     <img :src="image" />
-    <section
-      class="word-container"
-      @click="speak(word)"
-    >
-      <h2 >{{ word }}</h2>
-    </section>
+    <h2 >{{ word }}</h2>
   </section>
 </template>
 
@@ -36,33 +33,27 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .prapla-container {
-    width: 100%;
-    margin-top: 5rem;
+  section {
+    align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    height: 70%;
   }
-  .prapla-container img {
-    max-width: 60vw;
-    height: 60vw;
+
+  img {
+    height: 50%;
+    object-fit: cover;
   }
-  .word-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    grid-gap: 1em;
-    gap: 1em;
-    padding: 1rem 0;
-    margin-top: 2rem;
-    background-color: white;
-  }
+
   h2 {
+    background: white;
+    box-shadow: 0 3px #00000015;
+    color: var(--cl-purple-400);
     cursor: pointer;
-    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-size: clamp(2.5rem, 3vw, 3.5rem);
     font-weight: 600;
+    padding: 1.5rem;
+    width: 100vw;
   }
 </style>

@@ -17,17 +17,17 @@ export default {
 		-webkit-appearance: none;
     appearance: none;
     bottom: 0;
-    height: 2.5rem;
+    height: 100%;
     position: absolute;
     width: 100%;
 	}
 
 	progress[value]::-webkit-progress-bar {
-		background-color: #e7e7e7;
+		background-color: var(--cl-grey-100);
 	}
 
 	progress[value]::-webkit-progress-value {
-		background-color: #CECBFF;
+		background-color: var(--cl-purple-200);
 		min-width: 20px;
 		transition: all 750ms ease-in-out;
 	}

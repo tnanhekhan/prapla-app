@@ -161,21 +161,17 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  body {
-    background-color: #F8F8FF;
-  }
-
   main {
-    margin: 0 auto;
-    height: 80vh;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 85vh;
+    justify-content: space-evenly;
     text-align: center;
   }
 
   footer {
-    height: 10vh;
+    height: 5vh;
     position: relative;
   }
 
