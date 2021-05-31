@@ -8,8 +8,7 @@
     <main>
       <Word 
         v-if="word"
-        :image="word.image"
-        :word="word.phrase"
+        :word="word"
         :speak="speak"
       />
       <button 
@@ -21,6 +20,8 @@
         v-else
         :isRecording="isRecording"
         :startSpeech="startSpeech"
+        :changeWord="changeWord"
+        :correct="word.correct"
       />
     </main>
     <footer>
@@ -42,19 +43,23 @@ export default {
       prapla: [
         {
           phrase: 'de hond',
-          image: 'hond.svg'
+          image: 'hond.svg',
+          correct: false
         },
         {
           phrase: 'de kat',
-          image: 'kat.svg'
+          image: 'kat.svg',
+          correct: false
         },
         {
           phrase: 'de vogel',
-          image: 'vogel.svg'
+          image: 'vogel.svg',
+          correct: false
         },
         {
           phrase: 'de vis',
-          image: 'vis.svg'
+          image: 'vis.svg',
+          correct: false
         }
       ],
       counter: null,
@@ -105,6 +110,7 @@ export default {
       const speechResult = event.results[0][0].transcript.toLowerCase()
 
       if (speechResult === this.word.phrase) {
+        this.word.correct = true
         this.audio = new Audio('/sounds/feedback_positive.mp3')
         document.body.style.background = '#C3E6CF'
       } else {
@@ -134,8 +140,8 @@ export default {
         this.speak('Zeg mij maar na:')
       }
     },
-    changeWord(change) {
-      this.counter += change
+    changeWord() {
+      this.counter ++
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
 

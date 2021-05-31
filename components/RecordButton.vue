@@ -1,10 +1,10 @@
 <template>
   <button
     :disabled="isRecording"
-    @click="startSpeech"
+    @click="onClick"
   >
-    <img v-if="!isRecording" src="/icons/microphone.svg" alt=" " aria-hidden="true">
-    <div v-else class="audiowaves">
+    <img v-if="!isRecording && !correct" src="/icons/microphone.svg" alt=" " aria-hidden="true">
+    <div v-else-if="isRecording && !correct" class="audiowaves">
       <i></i>
       <i></i>
       <i></i>
@@ -13,17 +13,31 @@
       <i></i>
       <i></i>
     </div>
+    <img v-else src="/icons/Arrow.svg" alt=" ">
   </button>
 </template>
 
 <script>
 export default {
   props: {
+    correct: {
+      type: Boolean
+    },
     isRecording: {
       type: Boolean
     },
     startSpeech: {
       type: Function
+    },
+    changeWord: {
+      type: Function
+    }
+  },
+  methods: {
+    onClick() {
+      this.correct
+        ? this.changeWord()
+        : this.startSpeech()
     }
   }
 }

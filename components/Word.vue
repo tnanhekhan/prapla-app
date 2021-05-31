@@ -1,9 +1,9 @@
 <template>
   <section 
-    @click="speak(word)"
+    @click="speak(word.phrase)"
   >
-    <img :src="image" />
-    <h2 >{{ word }}</h2>
+    <img :src="word.image" />
+    <h2 >{{ word.phrase }}</h2>
   </section>
 </template>
 
@@ -17,15 +17,14 @@ export default {
       type: String
     },
     word: {
-      type: String
+      type: Object
     }
   },
   watch: {
     word: {
       immediate: true,
-      deep: true,
       handler () {
-        this.word && this.speak(this.word)
+        this.word && this.speak(this.word.phrase)
       }
     }
   }
