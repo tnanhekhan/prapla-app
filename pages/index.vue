@@ -1,40 +1,36 @@
 <template>
-  <main>
+  <div>
     <Header
       v-if="counter !== null"
       :empty="onEmpty"
       :counter="counter"
-      :progressValue="progressValue"
     />
-    <Word
-      v-if="word"
-      :image="word.image"
-      :word="word.phrase"
-      :speak="speak"
-    />
-    <button
-      class="start-button"
-      v-if="counter === null"
-      @click="startExercise"
-    >Start oefening</button>
-    <RecordButton
-      v-else
-      :isRecording="isRecording"
-      :startSpeech="startSpeech"
-    />
-    <button
-      v-if="this.counter > 0"
-      class="navigate"
-      id="prev"
-      @click="changeWord(-1)"
-    >Vorige</button>
-    <button
-      v-if="this.counter !== null && this.counter < this.prapla.length - 1"
-      class="navigate"
-      id="next"
-      @click="changeWord(+1)"
-    >Volgende</button>
-  </main>
+    <main>
+      <Word 
+        v-if="word"
+        :word="word"
+        :speak="speak"
+      />
+      <button 
+        class="start-button"
+        v-if="counter === null"
+        @click="startExercise"
+      >Start oefening</button>
+      <RecordButton
+        v-else
+        :isRecording="isRecording"
+        :startSpeech="startSpeech"
+        :changeWord="changeWord"
+        :correct="word.correct"
+      />
+    </main>
+    <footer>
+      <ProgressBar
+        v-if="counter !== null"
+        :progressValue="progressValue"
+      />
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -47,19 +43,23 @@ export default {
       prapla: [
         {
           phrase: 'de hond',
-          image: 'hond.svg'
+          image: 'hond.svg',
+          correct: false
         },
         {
           phrase: 'de kat',
-          image: 'kat.svg'
+          image: 'kat.svg',
+          correct: false
         },
         {
           phrase: 'de vogel',
-          image: 'vogel.svg'
+          image: 'vogel.svg',
+          correct: false
         },
         {
           phrase: 'de vis',
-          image: 'vis.svg'
+          image: 'vis.svg',
+          correct: false
         }
       ],
       counter: null,
@@ -111,6 +111,7 @@ export default {
       const speechResult = event.results[0][0].transcript.toLowerCase()
 
       if (speechResult === this.word.phrase) {
+        this.word.correct = true
         this.audio = new Audio('/sounds/feedback_positive.mp3')
         document.body.style.background = '#C3E6CF'
       } else {
@@ -161,8 +162,8 @@ export default {
         this.speak('Zeg mij maar na:')
       }
     },
-    changeWord(change) {
-      this.counter += change
+    changeWord() {
+      this.counter ++
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
 
@@ -188,48 +189,34 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  body {
-    background-color: #F8F8FF;
-  }
   main {
-    margin: 0 auto;
-    min-height: 100vh;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    /*justify-content: space-between;*/
-    align-items: center;
+    height: 85vh;
+    justify-content: space-evenly;
     text-align: center;
-
   }
 
-  .navigate {
-    --padding: 10%;
-    position: absolute;
-    top: 70%;
-    transform: translateY(-50%);
+  footer {
+    height: 5vh;
+    position: relative;
   }
 
-  .navigate#prev {
-    left: var(--padding);
-  }
-
-  .navigate#next {
-    right: var(--padding);
-  }
   button {
     appearance: none;
     border: none;
     color: white;
-    background-color: #9E99EE;
+    background-color: var(--cl-purple-300);
     padding: 1rem 2rem;
     border-radius: 30px;
     font-weight: bold;
   }
+
   .start-button {
     top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-
   }
 </style>
