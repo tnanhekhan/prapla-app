@@ -1,40 +1,35 @@
 <template>
-  <main>
+  <div>
     <Header
       v-if="counter !== null"
       :empty="onEmpty"
       :counter="counter"
-      :progressValue="progressValue"
     />
-    <Word 
-      v-if="word"
-      :image="word.image"
-      :word="word.phrase"
-      :speak="speak"
-    />
-    <button 
-      class="start-button"
-      v-if="counter === null"
-      @click="startExercise"
-    >Start oefening</button>
-    <RecordButton
-      v-else
-      :isRecording="isRecording"
-      :startSpeech="startSpeech"
-    />
-    <button
-      v-if="this.counter > 0"
-      class="navigate"
-      id="prev"
-      @click="changeWord(-1)"
-    >Vorige</button>
-    <button
-      v-if="this.counter !== null && this.counter < this.prapla.length - 1"
-      class="navigate"
-      id="next"
-      @click="changeWord(+1)"
-    >Volgende</button>
-  </main>
+    <main>
+      <Word 
+        v-if="word"
+        :image="word.image"
+        :word="word.phrase"
+        :speak="speak"
+      />
+      <button 
+        class="start-button"
+        v-if="counter === null"
+        @click="startExercise"
+      >Start oefening</button>
+      <RecordButton
+        v-else
+        :isRecording="isRecording"
+        :startSpeech="startSpeech"
+      />
+    </main>
+    <footer>
+      <ProgressBar
+        v-if="counter !== null"
+        :progressValue="progressValue"
+      />
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -169,31 +164,21 @@ export default {
   body {
     background-color: #F8F8FF;
   }
+
   main {
     margin: 0 auto;
-    min-height: 100vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
-    /*justify-content: space-between;*/
     align-items: center;
     text-align: center;
-
   }
 
-  .navigate {
-    --padding: 10%;
-    position: absolute;
-    top: 70%;
-    transform: translateY(-50%);
+  footer {
+    height: 10vh;
+    position: relative;
   }
 
-  .navigate#prev {
-    left: var(--padding);
-  }
-
-  .navigate#next {
-    right: var(--padding);
-  }
   button {
     appearance: none;
     border: none;
@@ -203,11 +188,11 @@ export default {
     border-radius: 30px;
     font-weight: bold;
   }
+
   .start-button {
     top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-
   }
 </style>

@@ -14,17 +14,12 @@ export default {
 
 <style scoped>
 	progress[value] {
-  	/* Reset the default appearance */
 		-webkit-appearance: none;
     appearance: none;
+    bottom: 0;
+    height: 2.5rem;
+    position: absolute;
     width: 100%;
-    height: 2em;
-    padding: .2em .2em 0 .2em;
-	}
-
-	progress[value]::-webkit-progress-bar,
-	progress[value]::-webkit-progress-value {
-		border-radius: 100px;
 	}
 
 	progress[value]::-webkit-progress-bar {
@@ -32,8 +27,8 @@ export default {
 	}
 
 	progress[value]::-webkit-progress-value {
-		background-color: #77DB81;
+		background-color: #CECBFF;
 		min-width: 20px;
-		transition: 1s all;
+		transition: all 750ms ease-in-out;
 	}
 </style>
