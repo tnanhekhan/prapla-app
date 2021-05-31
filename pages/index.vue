@@ -185,7 +185,7 @@ export default {
     appearance: none;
     border: none;
     color: white;
-    background-color: #9E99EE;
+    background-color: var(--cl-purple-300);
     padding: 1rem 2rem;
     border-radius: 30px;
     font-weight: bold;
