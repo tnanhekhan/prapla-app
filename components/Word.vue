@@ -1,9 +1,12 @@
 <template>
-  <section 
-    @click="speak(word.phrase)"
-  >
-    <img :src="word.image" />
-    <h2 >{{ word.phrase }}</h2>
+  <section>
+    <img
+      :src="word.image"
+      @click="speak(word.phrase, .7)"
+    />
+    <h2 @click="speak(word.phrase, .7)">
+      {{ word.phrase }}
+    </h2>
   </section>
 </template>
 
@@ -24,7 +27,7 @@ export default {
     word: {
       immediate: true,
       handler () {
-        this.word && this.speak(this.word.phrase)
+        this.word && this.speak(this.word.phrase, .7)
       }
     }
   }
@@ -41,6 +44,7 @@ export default {
   }
 
   img {
+    cursor: pointer;
     height: 50%;
     object-fit: cover;
   }
