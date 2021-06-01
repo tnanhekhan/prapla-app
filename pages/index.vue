@@ -6,12 +6,12 @@
       :counter="counter"
     />
     <main>
-      <Word 
+      <Word
         v-if="word"
         :word="word"
         :speak="speak"
       />
-      <button 
+      <button
         class="start-button"
         v-if="counter === null"
         @click="startExercise"
@@ -30,6 +30,8 @@
         :progressValue="progressValue"
       />
     </footer>
+    <ResultScreen />
+
   </div>
 </template>
 
@@ -67,7 +69,8 @@ export default {
       audio: null,
       clap: null,
       progressValue: null,
-      voices: []
+      voices: [],
+      showResultScreen: false
     }
   },
   mounted() {
@@ -123,10 +126,20 @@ export default {
       }
 
       //TODO If every word is completed, play different sound
-      if (this.progressValue === this.prapla.length - 1) {
-        this.audio = new Audio('/sounds/feedback_completed.mp3')
-        this.clap = new Audio('/sounds/feedback_clapping.mp3')
-      }
+      let correctPhrases
+      this.prapla.forEach(phrase => {
+        if(phrase.correct) {
+          correctPhrases++
+          if (correctPhrases.length === this.prapla.length) {
+            this.audio = new Audio('/sounds/feedback_completed.mp3')
+            this.clap = new Audio('/sounds/feedback_clapping.mp3')
+            this.showResultScreen = true
+          }
+        }
+      })
+      // if (this.progressValue === this.prapla.length - 1) {
+      //
+      // }
 
       this.audio.play()
 
