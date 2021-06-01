@@ -37,26 +37,30 @@ export default {
 <style lang="css" scoped>
   section {
     align-items: center;
+    background: white;
+    border-radius: .5em;
+    box-shadow: 0 .125em .125em .125em #00000015;
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 70%;
+    width: clamp(15rem, 90%, 30rem);
   }
 
   img {
     cursor: pointer;
     height: 50%;
     object-fit: cover;
+    max-width: 30rem;
   }
 
   h2 {
-    background: white;
-    box-shadow: 0 3px #00000015;
     color: var(--cl-purple-400);
     cursor: pointer;
     font-size: clamp(2.5rem, 3vw, 3.5rem);
     font-weight: 600;
     padding: 1.5rem;
+    text-decoration: underline;
     width: 100vw;
   }
 </style>
