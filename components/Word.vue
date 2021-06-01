@@ -38,7 +38,7 @@ export default {
   section {
     align-items: center;
     background: white;
-    border-radius: .5em;
+    border-radius: 1em;
     box-shadow: 0 .125em .125em .125em #00000015;
     display: flex;
     flex-direction: column;
@@ -55,12 +55,12 @@ export default {
   }
 
   h2 {
+    border-bottom: .1em solid var(--cl-purple-400);
     color: var(--cl-purple-400);
     cursor: pointer;
     font-size: clamp(2.5rem, 3vw, 3.5rem);
     font-weight: 600;
-    padding: 1.5rem;
-    text-decoration: underline;
-    width: 100vw;
+    padding: 1.5rem 0 .25rem;
+    width: max-content;
   }
 </style>

@@ -164,7 +164,7 @@ export default {
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
 
-      document.body.style.background = '#F8F8FF'
+      document.body.style.background = 'var(--cl-purple-100)'
     },
     speak(phrase, speed = .8) {
       this.speech.voice = this.voices.filter(voice => voice.name === 'Xander')[0]
