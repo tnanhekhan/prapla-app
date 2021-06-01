@@ -1,19 +1,12 @@
 <template>
   <button
     :disabled="isRecording"
+    :class="isRecording ? 'listen' : ''"
     @click="onClick"
   >
-    <img v-if="!isRecording && !correct" src="/icons/microphone.svg" alt=" " aria-hidden="true">
-    <div v-else-if="isRecording && !correct" class="audiowaves">
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-    </div>
-    <img v-else src="/icons/Arrow.svg" alt=" ">
+    <img v-if="!isRecording && !correct" src="/icons/Microphone.svg" alt=" " aria-hidden="true" />
+    <img v-else-if="isRecording" src="/icons/Ear.svg" alt=" " aria-hidden="true" />
+    <img v-else src="/icons/Arrow.svg" alt=" " aria-hidden="true" />
   </button>
 </template>
 
@@ -61,38 +54,32 @@ export default {
     width: var(--size);
   }
 
-  button:active {
+  button:active,
+  button.listen {
     box-shadow: 0 .25em 0 .05em var(--cl-purple-400);
     transform: translateY(.1em);
+  }
+
+  button.listen::after {
+    animation: pulse 1s ease-in-out infinite;
+    border: .1em solid var(--cl-purple-300);
+    border-radius: 50%;
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 100%;
   }
 
   button img {
     max-height: 2.25em;
   }
 
-  .audiowaves {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .audiowaves i {
-    animation: musicEqualizer 400ms ease var(--delay, 0s) infinite alternate;
-    background-image: linear-gradient(
-      to top,
-      #fbc2eb 0%,
-      #a6c1ee 100%
-    );
-    display: block;
-    height: 1rem;
-    width: .125rem;
-  }
-
-  @keyframes musicEqualizer {
+  @keyframes pulse {
     from {
-      transform: scaleY(1);
+      transform: scale(0);
     }
     to {
-      transform: scaleY(1.5)
+      transform: scale(1.5);
     }
   }
 </style>

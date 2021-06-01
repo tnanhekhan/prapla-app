@@ -97,7 +97,7 @@ export default {
     startExercise() {
       this.counter = 0
       this.word = this.prapla[this.counter]
-      this.textToSpeech()
+      this.speak('Zeg mij maar na:')
     },
 
     startSpeech() {
@@ -157,16 +157,10 @@ export default {
       this.recognition.stop()
       this.isRecording = false
     },
-    textToSpeech() {
-      if (this.speech) {
-        this.speak('Zeg mij maar na:')
-      }
-    },
     changeWord() {
       this.counter ++
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
-
       document.body.style.background = '#F8F8FF'
     },
     speak(phrase) {
