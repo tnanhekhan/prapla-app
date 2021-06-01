@@ -47,20 +47,17 @@ export default {
   button {
     --size: 5rem;
     align-items: center;
-    appearance: none;
     background: #9E99EE;
-    border: none;
     border-radius: 50%;
     box-shadow: 0 .35em 0 .05em var(--cl-purple-400);
-    cursor: pointer;
     display: flex;
     font-size: 1.25rem;
     height: var(--size);
     justify-content: center;
     position: relative;
     transition: 
-      box-shadow 300ms ease,
-      transform 300ms ease;
+      box-shadow 200ms ease,
+      transform 200ms ease;
     width: var(--size);
   }
 

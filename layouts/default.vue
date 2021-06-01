@@ -31,4 +31,12 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
   }
+
+  button {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    border-radius: 10em;
+    cursor: pointer;
+  }
 </style>
