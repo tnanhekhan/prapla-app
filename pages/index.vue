@@ -16,13 +16,13 @@
         v-if="counter === null"
         @click="startExercise"
       >Start oefening</button>
-      <RecordButton
+      <GlobalButton
         v-else
-        :isRecording="isRecording"
-        :startSpeech="startSpeech"
-        :changeWord="changeWord"
-        :correct="word.correct"
+        :clickEvent="word.correct ? changeWord : startSpeech"
+        :getCorrectIcon="getCorrectIcon"
+        :buttonIcon="buttonIcon"
       />
+      
     </main>
     <footer>
       <ProgressBar
@@ -30,8 +30,6 @@
         :progressValue="progressValue"
       />
     </footer>
-    <ResultScreen />
-
   </div>
 </template>
 
@@ -53,16 +51,16 @@ export default {
           image: 'kat.svg',
           correct: false
         },
-        {
-          phrase: 'de vogel',
-          image: 'vogel.svg',
-          correct: false
-        },
-        {
-          phrase: 'de vis',
-          image: 'vis.svg',
-          correct: false
-        }
+        // {
+        //   phrase: 'de vogel',
+        //   image: 'vogel.svg',
+        //   correct: false
+        // },
+        // {
+        //   phrase: 'de vis',
+        //   image: 'vis.svg',
+        //   correct: false
+        // }
       ],
       counter: null,
       isRecording: false,
@@ -70,7 +68,8 @@ export default {
       clap: null,
       progressValue: null,
       voices: [],
-      showResultScreen: false
+      showResultScreen: false,
+      buttonIcon: null
     }
   },
   mounted() {
@@ -94,6 +93,15 @@ export default {
       speechSynthesis.addEventListener('voiceschanged', () => {
         this.voices = speechSynthesis.getVoices()
       })
+    }
+  },
+  updated() {
+    if (!this.word.correct && !this.isRecording) {
+        this.buttonIcon = '/icons/Microphone.svg'
+    } else if (!this.word.correct && this.isRecording) {
+        this.buttonIcon = '/icons/Listen.svg'
+    } else {
+        this.buttonIcon = '/icons/Next.svg'
     }
   },
   methods: {
@@ -126,17 +134,18 @@ export default {
       }
 
       //TODO If every word is completed, play different sound
-      let correctPhrases
-      this.prapla.forEach(phrase => {
-        if(phrase.correct) {
-          correctPhrases++
-          if (correctPhrases.length === this.prapla.length) {
-            this.audio = new Audio('/sounds/feedback_completed.mp3')
-            this.clap = new Audio('/sounds/feedback_clapping.mp3')
-            this.showResultScreen = true
-          }
-        }
-      })
+
+      // let correctPhrases
+      // this.prapla.forEach(phrase => {
+      //   if(phrase.correct) {
+      //     correctPhrases++
+      //     if (correctPhrases.length === this.prapla.length) {
+      //       this.audio = new Audio('/sounds/feedback_completed.mp3')
+      //       this.clap = new Audio('/sounds/feedback_clapping.mp3')
+      //       this.showResultScreen = true
+      //     }
+      //   }
+      // })
       // if (this.progressValue === this.prapla.length - 1) {
       //
       // }
@@ -177,8 +186,18 @@ export default {
     },
     changeWord() {
       this.counter ++
+      if (this.counter === this.prapla.length) {
+        this.progressValue = 100
+        setTimeout(() => {
+          this.$router.push('/Complete')
+        }, 1000)
+        document.body.style.background = '#F8F8FF'
+        return
+      }
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
+
+      
 
       document.body.style.background = '#F8F8FF'
     },

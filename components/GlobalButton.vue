@@ -1,43 +1,22 @@
 <template>
-  <button
-    :disabled="isRecording"
-    @click="onClick"
-  >
-    <img v-if="!isRecording && !correct" src="/icons/microphone.svg" alt=" " aria-hidden="true">
-    <div v-else-if="isRecording && !correct" class="audiowaves">
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-    </div>
-    <img v-else src="/icons/Arrow.svg" alt=" ">
+  <button @click="clickEvent">
+    <img :src="buttonIcon" alt=" " aria-hidden="true">
+   
   </button>
 </template>
 
 <script>
 export default {
+
   props: {
-    correct: {
-      type: Boolean
-    },
-    isRecording: {
-      type: Boolean
-    },
-    startSpeech: {
+    getCorrectIcon: {
       type: Function
     },
-    changeWord: {
+    clickEvent: {
       type: Function
-    }
-  },
-  methods: {
-    onClick() {
-      this.correct
-        ? this.changeWord()
-        : this.startSpeech()
+    },
+    buttonIcon: {
+      type: String
     }
   }
 }
@@ -55,7 +34,7 @@ export default {
     height: var(--size);
     justify-content: center;
     position: relative;
-    transition: 
+    transition:
       box-shadow 200ms ease,
       transform 200ms ease;
     width: var(--size);
