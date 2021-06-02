@@ -1,17 +1,12 @@
 <template>
   <button @click="clickEvent">
     <img :src="buttonIcon" alt=" " aria-hidden="true">
-   
   </button>
 </template>
 
 <script>
 export default {
-
   props: {
-    getCorrectIcon: {
-      type: Function
-    },
     clickEvent: {
       type: Function
     },
@@ -47,31 +42,5 @@ export default {
 
   button img {
     max-height: 2.25em;
-  }
-
-  .audiowaves {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .audiowaves i {
-    animation: musicEqualizer 400ms ease var(--delay, 0s) infinite alternate;
-    background-image: linear-gradient(
-      to top,
-      #fbc2eb 0%,
-      #a6c1ee 100%
-    );
-    display: block;
-    height: 1rem;
-    width: .125rem;
-  }
-
-  @keyframes musicEqualizer {
-    from {
-      transform: scaleY(1);
-    }
-    to {
-      transform: scaleY(1.5)
-    }
   }
 </style>
