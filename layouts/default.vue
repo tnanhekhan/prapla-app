@@ -12,6 +12,12 @@
     --cl-grey-100: hsl(0, 0%, 91%);
   }
 
+  @font-face {
+    font-family: 'Arial Rounded MT';
+    src: local('Arial Rounded MT'),
+         local('Arial Rounded MT Bold')
+  }
+
   *,
   *::before,
   *::after {
@@ -23,7 +29,7 @@
   html {
     background-color: var(--cl-purple-100);
     font-family:
-      'Arial Rounded MT Bold',
+      'Arial Rounded MT',
       sans-serif;
     font-size: 100%;
     -ms-text-size-adjust: 100%;
