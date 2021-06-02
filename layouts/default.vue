@@ -23,7 +23,7 @@
   html {
     background-color: var(--cl-purple-100);
     font-family:
-      'Arial Rounded MT',
+      'Arial Rounded MT Bold',
       sans-serif;
     font-size: 100%;
     -ms-text-size-adjust: 100%;
