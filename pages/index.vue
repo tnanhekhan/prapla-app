@@ -18,8 +18,8 @@
       >Start oefening</button>
       <GlobalButton
         v-else
-        :clickEvent="word.correct ? changeWord : startSpeech"
-        :buttonIcon="buttonIcon"
+        :clickEvent="setClickEvent"
+        :buttonIcon="setButtonIcon()"
         :class="isRecording ? 'listen' : ''"
       />
     </main>
@@ -43,22 +43,26 @@ export default {
         {
           phrase: 'de hond',
           image: 'hond.svg',
-          correct: false
+          correct: false,
+          false: 0
         },
         {
           phrase: 'de kat',
           image: 'kat.svg',
-          correct: false
+          correct: false,
+          false: 0
         },
         {
           phrase: 'de vogel',
           image: 'vogel.svg',
-          correct: false
+          correct: false,
+          false: 0
         },
         {
           phrase: 'de vis',
           image: 'vis.svg',
-          correct: false
+          correct: false,
+          false: 0
         }
       ],
       counter: null,
@@ -68,7 +72,6 @@ export default {
       clap: null,
       progressValue: null,
       voices: [],
-      showResultScreen: false,
       buttonIcon: null
     }
   },
@@ -96,15 +99,6 @@ export default {
       })
     }
   },
-  updated() {
-    if (!this.word.correct && !this.isRecording) {
-        this.buttonIcon = '/icons/Microphone.svg'
-    } else if (!this.word.correct && this.isRecording) {
-        this.buttonIcon = '/icons/Ear.svg'
-    } else {
-        this.buttonIcon = '/icons/Next.svg'
-    }
-  },
   methods: {
     startExercise() {
       this.counter = 0
@@ -127,9 +121,14 @@ export default {
         document.body.style.background = '#C3E6CF'
         setTimeout(() => this.giveFeedback(), 1000)
       } else {
+        this.word.false++
         document.body.style.background = '#FFD2D2'
         this.audio = new Audio('/sounds/feedback_negative.mp3')
         setTimeout(() => this.giveFeedback(speechResult), 1000)
+        
+        if(this.word.false > 1) {
+          this.prapla.push(this.word)
+        }
       }
 
       //TODO If every word is completed, play different sound
@@ -141,13 +140,14 @@ export default {
       //     if (correctPhrases.length === this.prapla.length) {
       //       this.audio = new Audio('/sounds/feedback_completed.mp3')
       //       this.clap = new Audio('/sounds/feedback_clapping.mp3')
-      //       this.showResultScreen = true
+      //   
       //     }
       //   }
       // })
-      // if (this.progressValue === this.prapla.length - 1) {
-      //
-      // }
+      if (this.progressValue === this.prapla.length - 1) {
+        this.audio = new Audio('/sounds/feedback_completed.mp3')
+        this.clap = new Audio('/sounds/feedback_clapping.mp3')
+      }
 
       this.audio.play()
 
@@ -194,6 +194,7 @@ export default {
         return
       }
 
+      this.word.false = 0
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
 
@@ -231,6 +232,18 @@ export default {
     onEmpty() {
       this.counter = null
       this.word = null
+    },
+    setClickEvent() {
+      return this.word.false > 1 || this.word.correct ? this.changeWord() : this.startSpeech()
+    },
+    setButtonIcon() {
+      if (this.isRecording) {
+        return '/icons/Ear.svg'
+      } else if (this.word.correct || this.word.false > 1) {
+        return '/icons/Next.svg'    
+      } else {
+        return '/icons/Microphone.svg'
+      }
     }
   }
 }

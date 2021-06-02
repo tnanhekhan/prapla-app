@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  button {
+   button {
     --size: 5rem;
     align-items: center;
     background: #9E99EE;
