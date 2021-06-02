@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-button {
+   button {
     --size: 5rem;
     align-items: center;
     background: #9E99EE;
@@ -34,14 +34,17 @@ button {
       transform 200ms ease;
     width: var(--size);
   }
+
   button img {
     max-height: 2.25em;
   }
+
   button:active,
   button.listen {
     box-shadow: 0 .25em 0 .05em var(--cl-purple-400);
     transform: translateY(.1em);
   }
+
   button.listen::after {
     animation: pulse 1s ease-in-out infinite;
     border: .1em solid var(--cl-purple-300);
@@ -51,6 +54,7 @@ button {
     position: absolute;
     width: 100%;
   }
+
   @keyframes pulse {
     from {
       transform: scale(0);

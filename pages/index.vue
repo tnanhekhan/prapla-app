@@ -22,7 +22,6 @@
         :buttonIcon="setButtonIcon()"
         :class="isRecording ? 'listen' : ''"
       />
-      
     </main>
     <footer>
       <ProgressBar
