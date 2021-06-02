@@ -59,7 +59,7 @@ export default {
     color: #4b4b4b;
     cursor: pointer;
     font-size: clamp(2.5rem, 3vw, 3.5rem);
-    font-weight: 600;
+    font-weight: 500;
     padding: 1.5rem 0 .25rem;
     width: max-content;
   }
