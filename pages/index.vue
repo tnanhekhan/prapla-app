@@ -50,16 +50,16 @@ export default {
           image: 'kat.svg',
           correct: false
         },
-        // {
-        //   phrase: 'de vogel',
-        //   image: 'vogel.svg',
-        //   correct: false
-        // },
-        // {
-        //   phrase: 'de vis',
-        //   image: 'vis.svg',
-        //   correct: false
-        // }
+        {
+          phrase: 'de vogel',
+          image: 'vogel.svg',
+          correct: false
+        },
+        {
+          phrase: 'de vis',
+          image: 'vis.svg',
+          correct: false
+        }
       ],
       counter: null,
       isRecording: false,
