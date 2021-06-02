@@ -6,23 +6,22 @@
       :counter="counter"
     />
     <main>
-      <Word 
+      <Word
         v-if="word"
         :word="word"
         :speak="speak"
       />
-      <button 
+      <button
         class="start-button"
         v-if="counter === null"
         @click="startExercise"
       >Start oefening</button>
-      <RecordButton
+      <GlobalButton
         v-else
-        :isRecording="isRecording"
-        :startSpeech="startSpeech"
-        :changeWord="changeWord"
-        :correct="word.correct"
+        :clickEvent="word.correct ? changeWord : startSpeech"
+        :buttonIcon="buttonIcon"
       />
+      
     </main>
     <footer>
       <ProgressBar
@@ -67,7 +66,9 @@ export default {
       audio: null,
       clap: null,
       progressValue: null,
-      voices: []
+      voices: [],
+      showResultScreen: false,
+      buttonIcon: null
     }
   },
   mounted() {
@@ -91,6 +92,15 @@ export default {
       speechSynthesis.addEventListener('voiceschanged', () => {
         this.voices = speechSynthesis.getVoices()
       })
+    }
+  },
+  updated() {
+    if (!this.word.correct && !this.isRecording) {
+        this.buttonIcon = '/icons/Microphone.svg'
+    } else if (!this.word.correct && this.isRecording) {
+        this.buttonIcon = '/icons/Listen.svg'
+    } else {
+        this.buttonIcon = '/icons/Next.svg'
     }
   },
   methods: {
@@ -123,10 +133,21 @@ export default {
       }
 
       //TODO If every word is completed, play different sound
-      if (this.progressValue === this.prapla.length - 1) {
-        this.audio = new Audio('/sounds/feedback_completed.mp3')
-        this.clap = new Audio('/sounds/feedback_clapping.mp3')
-      }
+
+      // let correctPhrases
+      // this.prapla.forEach(phrase => {
+      //   if(phrase.correct) {
+      //     correctPhrases++
+      //     if (correctPhrases.length === this.prapla.length) {
+      //       this.audio = new Audio('/sounds/feedback_completed.mp3')
+      //       this.clap = new Audio('/sounds/feedback_clapping.mp3')
+      //       this.showResultScreen = true
+      //     }
+      //   }
+      // })
+      // if (this.progressValue === this.prapla.length - 1) {
+      //
+      // }
 
       this.audio.play()
 
@@ -164,6 +185,15 @@ export default {
     },
     changeWord() {
       this.counter ++
+      
+      if (this.counter === this.prapla.length) {
+        this.progressValue = 100
+        setTimeout(() => {
+          this.$router.push('/Complete')
+        }, 1000)
+        document.body.style.background = '#F8F8FF'
+        return
+      }
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
 
