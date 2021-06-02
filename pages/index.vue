@@ -62,6 +62,7 @@ export default {
         }
       ],
       counter: null,
+      isSpeaking: false,
       isRecording: false,
       audio: null,
       clap: null,
@@ -87,6 +88,7 @@ export default {
 
     this.recognition.addEventListener('result', this.onResult)
     this.recognition.addEventListener('speechend', this.onSpeechEnd)
+    this.speech.addEventListener('end', this.onSpeakEnd)
 
     if (speechSynthesis.onvoiceschanged !== undefined) {
       speechSynthesis.addEventListener('voiceschanged', () => {
@@ -107,9 +109,8 @@ export default {
     startExercise() {
       this.counter = 0
       this.word = this.prapla[this.counter]
-      this.textToSpeech()
+      this.speak('Druk op de knop en zeg mij na:')
     },
-
     startSpeech() {
       this.isRecording = true
       this.word = this.prapla[this.counter]
@@ -124,14 +125,14 @@ export default {
         this.word.correct = true
         this.audio = new Audio('/sounds/feedback_positive.mp3')
         document.body.style.background = '#C3E6CF'
+        setTimeout(() => this.giveFeedback(), 1000)
       } else {
         document.body.style.background = '#FFD2D2'
         this.audio = new Audio('/sounds/feedback_negative.mp3')
-        setTimeout(() => {
-          this.giveFeedback(speechResult)
-        }, 1000)
+        setTimeout(() => this.giveFeedback(speechResult), 1000)
       }
 
+<<<<<<< HEAD
       //TODO If every word is completed, play different sound
 
       // let correctPhrases
@@ -148,6 +149,12 @@ export default {
       // if (this.progressValue === this.prapla.length - 1) {
       //
       // }
+=======
+      if (this.progressValue === this.prapla.length - 1) {
+        this.audio = new Audio('/sounds/feedback_completed.mp3')
+        this.clap = new Audio('/sounds/feedback_clapping.mp3')
+      }
+>>>>>>> d5b3f247154e0d80ef269490a1758b42fe76bc27
 
       this.audio.play()
 
@@ -178,12 +185,11 @@ export default {
       this.recognition.stop()
       this.isRecording = false
     },
-    textToSpeech() {
-      if (this.speech) {
-        this.speak('Zeg mij maar na:')
-      }
+    onSpeakEnd() {
+      this.isSpeaking = false
     },
     changeWord() {
+<<<<<<< HEAD
       this.counter ++
       
       if (this.counter === this.prapla.length) {
@@ -194,21 +200,42 @@ export default {
         document.body.style.background = '#F8F8FF'
         return
       }
+=======
+      this.counter++
+>>>>>>> d5b3f247154e0d80ef269490a1758b42fe76bc27
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
 
-      document.body.style.background = '#F8F8FF'
+      document.body.style.background = 'var(--cl-purple-100)'
     },
-    speak(phrase) {
+    speak(phrase, speed = .8) {
       this.speech.voice = this.voices.filter(voice => voice.name === 'Xander')[0]
       this.speech.lang = 'nl-NL'
-      this.speech.rate = .8
+      this.speech.rate = speed
       this.speech.text = phrase
+      this.isSpeaking = true
       speechSynthesis.speak(this.speech)
     },
-    giveFeedback(result) {
-      this.speak(`Helaas hoorde ik: ${result}`)
-      this.speak(`Ik wíl graag horen: ${this.word.phrase}`)
+    giveFeedback(result = undefined) {
+      if (result) {
+        this.speak(`Helaas hoorde ik: ${result}`)
+        this.speak(`Ik wíl graag horen: ${this.word.phrase}`)
+      } else {
+        this.speak(this.randomText())
+      }
+    },
+    randomText() {
+      const phrases = [
+        'Goed gedaan!',
+        'Netjes!',
+        'Je doet het súper!',
+        'Helemaal goed!',
+        'Je bent een topper!'
+      ]
+      const maximumNumber = phrases.length
+      const randomNumber = Math.floor(Math.random() * maximumNumber)
+
+      return phrases[randomNumber]
     },
     onEmpty() {
       this.counter = null
