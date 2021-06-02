@@ -20,8 +20,8 @@
         v-else
         :clickEvent="word.correct ? changeWord : startSpeech"
         :buttonIcon="buttonIcon"
+        :class="isRecording ? 'listen' : ''"
       />
-      
     </main>
     <footer>
       <ProgressBar
@@ -100,7 +100,7 @@ export default {
     if (!this.word.correct && !this.isRecording) {
         this.buttonIcon = '/icons/Microphone.svg'
     } else if (!this.word.correct && this.isRecording) {
-        this.buttonIcon = '/icons/Listen.svg'
+        this.buttonIcon = '/icons/Ear.svg'
     } else {
         this.buttonIcon = '/icons/Next.svg'
     }
