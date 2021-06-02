@@ -3,7 +3,6 @@
     <h1> Nog <span>{{ needed }}</span> oefening te gaan </h1>
     <ProgressCircle :amount="amount" :total="total" />
     <GlobalButton 
-      :clickEvent="startNewExercise"
       :buttonIcon="buttonIcon"/>
   </main>
 </template>
@@ -20,6 +19,20 @@ export default {
     }
   }
 }
+
+  //TODO If every word is completed, play different sound
+
+  // let correctPhrases
+  // this.prapla.forEach(phrase => {
+  //   if(phrase.correct) {
+  //     correctPhrases++
+  //     if (correctPhrases.length === this.prapla.length) {
+  //       this.audio = new Audio('/sounds/feedback_completed.mp3')
+  //       this.clap = new Audio('/sounds/feedback_clapping.mp3')
+  //   
+  //     }
+  //   }
+  // })
 </script>
 
 <style scoped>
