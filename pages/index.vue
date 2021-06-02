@@ -19,7 +19,6 @@
       <GlobalButton
         v-else
         :clickEvent="word.correct ? changeWord : startSpeech"
-        :getCorrectIcon="getCorrectIcon"
         :buttonIcon="buttonIcon"
       />
       
@@ -186,6 +185,7 @@ export default {
     },
     changeWord() {
       this.counter ++
+      
       if (this.counter === this.prapla.length) {
         this.progressValue = 100
         setTimeout(() => {
@@ -196,8 +196,6 @@ export default {
       }
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
-
-      
 
       document.body.style.background = '#F8F8FF'
     },
