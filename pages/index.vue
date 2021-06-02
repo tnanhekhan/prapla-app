@@ -132,7 +132,6 @@ export default {
         setTimeout(() => this.giveFeedback(speechResult), 1000)
       }
 
-<<<<<<< HEAD
       //TODO If every word is completed, play different sound
 
       // let correctPhrases
@@ -149,12 +148,6 @@ export default {
       // if (this.progressValue === this.prapla.length - 1) {
       //
       // }
-=======
-      if (this.progressValue === this.prapla.length - 1) {
-        this.audio = new Audio('/sounds/feedback_completed.mp3')
-        this.clap = new Audio('/sounds/feedback_clapping.mp3')
-      }
->>>>>>> d5b3f247154e0d80ef269490a1758b42fe76bc27
 
       this.audio.play()
 
@@ -189,7 +182,7 @@ export default {
       this.isSpeaking = false
     },
     changeWord() {
-<<<<<<< HEAD
+
       this.counter ++
       
       if (this.counter === this.prapla.length) {
@@ -200,9 +193,7 @@ export default {
         document.body.style.background = '#F8F8FF'
         return
       }
-=======
-      this.counter++
->>>>>>> d5b3f247154e0d80ef269490a1758b42fe76bc27
+
       this.word = this.prapla[this.counter]
       this.progressValue = (this.counter / this.prapla.length) * 100
 
