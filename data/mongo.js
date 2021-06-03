@@ -9,7 +9,7 @@ require('dotenv').config()
 let db
 
 // Initialize MongoDB
-const dbUrl = `mongodb+srv://prapla-admin:${process.env.DB_PASSWORD}@cluster0.71p3t.mongodb.net/test`
+const dbUrl = process.env.DB_URL
 
 // Connect to the Database
 mongoose.connect(dbUrl, {
