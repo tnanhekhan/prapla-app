@@ -1,9 +1,18 @@
 <template>
   <main>
-    <section>
+    <button
+      v-if="login === false"
+      @click="loginSpeechText"
+    >
+      text
+    </button>
+    <section
+      v-else
+    >
       <h1>Wat is je geheime wachtwoord?</h1>
     </section>
     <GlobalButton
+      v-if="login === true"
       :buttonIcon="setButtonIcon()"
       :clickEvent="startSpeech"
       :class="isRecording ? 'listen' : ''"
@@ -15,10 +24,8 @@
 export default {
   data() {
     return {
-      // speech: null,
-      // voices: [],
-      // audio: null,
-      // buttonIcon: null
+      login: false,
+      password: 'geheim'
     }
   },
   mounted() {
@@ -32,6 +39,12 @@ export default {
       } else {
         return '/icons/Microphone.svg'
       }
+    },
+    loginSpeechText() {
+      this.login = true
+      setTimeout(() => {
+        this.speak('Druk op de knop en zeg je geheime wachtwoord')
+      }, 400)
     }
   }
 }
