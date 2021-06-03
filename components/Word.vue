@@ -13,14 +13,14 @@
 <script>
 export default {
   props: {
-    speak: {
-      type: Function
-    },
-    image: {
-      type: String
-    },
     word: {
       type: Object
+    },
+    speech: {
+      type: SpeechSynthesisUtterance
+    },
+    voices: {
+      type: Array
     }
   },
   watch: {
