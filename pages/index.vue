@@ -262,6 +262,9 @@ export default {
   footer {
     height: 5vh;
     position: relative;
+    display: flex;
+    align-items: top;
+    justify-content: center;
   }
 
   button {

@@ -12,6 +12,12 @@
     --cl-grey-100: hsl(0, 0%, 91%);
   }
 
+  @font-face {
+    font-family: 'Arial Rounded MT';
+    src: local('Arial Rounded MT'),
+         local('Arial Rounded MT Bold')
+  }
+
   *,
   *::before,
   *::after {
