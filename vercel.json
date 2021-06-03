@@ -7,7 +7,7 @@
         "serverFiles": [
           ".nuxt/content/**",
           ".content/**",
-          "server-middleware"
+          "server-middleware/**"
         ],
         "internalServer": true
       }
