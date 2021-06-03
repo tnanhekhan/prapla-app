@@ -4,7 +4,7 @@
       v-if="login === false"
       @click="loginSpeechText"
     >
-      text
+      Login
     </button>
     <section
       v-else
@@ -77,5 +77,14 @@ export default {
   }
   h1 span {
     font-size: 150%;
+  }
+  button {
+    appearance: none;
+    border: none;
+    color: white;
+    background-color: var(--cl-purple-300);
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: bold;
   }
 </style>
