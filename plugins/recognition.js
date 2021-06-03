@@ -28,7 +28,7 @@ if (!Vue.recognition) {
       },
       startSpeech() {
         this.isRecording = true
-        this.word = this.prapla[this.counter]
+        this.targetPhrase = this.phrases[this.counter]
         this.recognition.start()
       },
       onResult(event) {
@@ -36,23 +36,23 @@ if (!Vue.recognition) {
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
   
-        if (speechResult === this.word.phrase) {
-          this.word.correct = true
+        if (speechResult === this.targetPhrase.word.toLowerCase()) {
+          this.targetPhrase.correct = true
           this.audio = new Audio('/sounds/feedback_positive.mp3')
           document.body.style.background = '#C3E6CF'
           setTimeout(() => this.giveFeedback(), 1000)
         } else {
-          this.word.false++
+          this.targetPhrase.tries++
           document.body.style.background = '#FFD2D2'
           this.audio = new Audio('/sounds/feedback_negative.mp3')
           setTimeout(() => this.giveFeedback(speechResult), 1000)
           
-          if(this.word.false > 1) {
-            this.prapla.push(this.word)
+          if(this.targetPhrase.tries > 1) {
+            this.phrases.push(this.targetPhrase)
           }
         }
   
-        if (this.progressValue === this.prapla.length - 1) {
+        if (this.progressValue === this.phrases.length - 1) {
           this.audio = new Audio('/sounds/feedback_completed.mp3')
           this.clap = new Audio('/sounds/feedback_clapping.mp3')
         }

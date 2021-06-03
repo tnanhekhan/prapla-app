@@ -1,4 +1,4 @@
-import Vue from "vue"
+import Vue from 'vue'
 
 if (!Vue.speech) {
   Vue.speech = true
@@ -31,7 +31,7 @@ if (!Vue.speech) {
       giveFeedback(result = undefined) {
         if (result) {
           this.speak(`Helaas hoorde ik: ${result}`)
-          this.speak(`Ik wíl graag horen: ${this.word.phrase}`)
+          this.speak(`Ik wíl graag horen: ${this.targetPhrase.word}`)
         } else {
           this.speak(this.randomText())
         }

@@ -7,10 +7,10 @@
     />
     <main>
       <Word
-        v-if="word"
-        :word="word"
+        v-if="targetPhrase"
+        :targetPhrase="targetPhrase"
         :speech="speech"
-        :voices="voices"
+        :voice="voices"
       />
       <button
         class="start-button"
@@ -34,43 +34,25 @@
 </template>
 
 <script>
+
 export default {
+  async asyncData({ $axios }) {
+    const { data } = await $axios.get('/exercise')
+    return {
+      phrases: data
+    }
+  },
   data() {
     return {
       speech: null,
-      word: '',
-      voices: [],
-      prapla: [
-        {
-          phrase: 'de hond',
-          image: 'hond.svg',
-          correct: false,
-          false: 0
-        },
-        {
-          phrase: 'de kat',
-          image: 'kat.svg',
-          correct: false,
-          false: 0
-        },
-        {
-          phrase: 'de vogel',
-          image: 'vogel.svg',
-          correct: false,
-          false: 0
-        },
-        {
-          phrase: 'de vis',
-          image: 'vis.svg',
-          correct: false,
-          false: 0
-        }
-      ],
       counter: null,
       audio: null,
       clap: null,
       progressValue: null,
-      buttonIcon: null
+      buttonIcon: null,
+      isRecording: false,
+      targetPhrase: '',
+      voices: []
     }
   },
   mounted() {
@@ -80,13 +62,13 @@ export default {
   methods: {
     startExercise() {
       this.counter = 0
-      this.word = this.prapla[this.counter]
+      this.targetPhrase = this.phrases[this.counter]
       this.speak('Druk op de knop en zeg mij na:')
     },
     changeWord() {
       this.counter ++
       
-      if (this.counter === this.prapla.length) {
+      if (this.counter === this.phrases.length) {
         this.progressValue = 100
         setTimeout(() => {
           this.$router.push('/Complete')
@@ -95,23 +77,25 @@ export default {
         return
       }
 
-      this.word.false = 0
-      this.word = this.prapla[this.counter]
-      this.progressValue = (this.counter / this.prapla.length) * 100
+      this.targetPhrase.tries = 0
+      this.targetPhrase = this.phrases[this.counter]
+      this.progressValue = (this.counter / this.phrases.length) * 100
 
       document.body.style.background = 'var(--cl-purple-100)'
     },
     onEmpty() {
       this.counter = null
-      this.word = null
+      this.targetPhrase = null
     },
     setClickEvent() {
-      return this.word.false > 1 || this.word.correct ? this.changeWord() : this.startSpeech()
+      return this.targetPhrase.tries > 1 || this.targetPhrase.correct 
+        ? this.changeWord() 
+        : this.startSpeech()
     },
     setButtonIcon() {
       if (this.isRecording) {
         return '/icons/Ear.svg'
-      } else if (this.word.correct || this.word.false > 1) {
+      } else if (this.targetPhrase.correct || this.targetPhrase.tries > 1) {
         return '/icons/Next.svg'    
       } else {
         return '/icons/Microphone.svg'

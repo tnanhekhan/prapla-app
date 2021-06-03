@@ -1,11 +1,11 @@
 <template>
   <section>
     <img
-      :src="word.image"
-      @click="speak(word.phrase, .7)"
+      :src="targetPhrase.image"
+      @click="speak(targetPhrase.word, .7)"
     />
-    <h2 @click="speak(word.phrase, .7)">
-      {{ word.phrase }}
+    <h2 @click="speak(targetPhrase.word, .7)">
+      {{ targetPhrase.word }}
     </h2>
   </section>
 </template>
@@ -13,21 +13,21 @@
 <script>
 export default {
   props: {
-    word: {
-      type: Object
-    },
     speech: {
       type: SpeechSynthesisUtterance
     },
     voices: {
       type: Array
+    },
+    targetPhrase: {
+      type: Object
     }
   },
   watch: {
-    word: {
+    targetPhrase: {
       immediate: true,
       handler () {
-        this.word && this.speak(this.word.phrase, .7)
+        this.targetPhrase && this.speak(this.targetPhrase.word, .7)
       }
     }
   }
