@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/MarvinMichel/prapla#readme",
   "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.9.1",
+    "express": "^4.17.1",
     "mongodb": "^3.6.9",
     "mongoose": "^5.12.12",
     "nuxt": "^2.15.3"
