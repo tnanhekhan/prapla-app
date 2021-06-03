@@ -26,9 +26,10 @@ export default {
   buildDir: 'dist',
   components: true,
   serverMiddleware: ['~/server-middleware/index.js'],
-  buildModules: ['@nuxtjs/axios'],
+  modules: ['@nuxtjs/axios'],
   plugins: [
     '~/plugins/speech',
     '~/plugins/recognition'
-  ]
+  ],
+  "axios": {}
 }
