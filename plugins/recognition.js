@@ -3,6 +3,12 @@ import Vue from 'vue'
 if (!Vue.recognition) {
   Vue.recognition = true
   Vue.mixin({
+    data() {
+      return {
+        recognition: null,
+        isRecording: false
+      }
+    },
     methods: {
       buildRecognition () {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition

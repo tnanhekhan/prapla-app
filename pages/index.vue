@@ -9,9 +9,8 @@
       <Word
         v-if="word"
         :word="word"
-        :voices="voices"
         :speech="speech"
-        :isSpeaking="isSpeaking"
+        :voices="voices"
       />
       <button
         class="start-button"
@@ -38,9 +37,9 @@
 export default {
   data() {
     return {
-      recognition: null,
       speech: null,
       word: '',
+      voices: [],
       prapla: [
         {
           phrase: 'de hond',
@@ -68,12 +67,9 @@ export default {
         }
       ],
       counter: null,
-      isSpeaking: false,
-      isRecording: false,
       audio: null,
       clap: null,
       progressValue: null,
-      voices: [],
       buttonIcon: null
     }
   },

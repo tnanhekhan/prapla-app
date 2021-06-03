@@ -13,20 +13,14 @@
 <script>
 export default {
   props: {
-    voices: {
-      type: Array
-    },
-    image: {
-      type: String
-    },
     word: {
       type: Object
     },
     speech: {
       type: SpeechSynthesisUtterance
     },
-    isSpeaking: {
-      type: Boolean
+    voices: {
+      type: Array
     }
   },
   watch: {

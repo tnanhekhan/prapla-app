@@ -8,21 +8,24 @@ if (!Vue.speech) {
         const SpeechSynthesisUtterance = window.SpeechSynthesisUtterance || window.webkitSpeechSynthesisUtterance
         const speechSynthesis = window.speechSynthesis || window.webkitspeechSynthesis
 
-        this.speech = new SpeechSynthesisUtterance()
         this.voices = speechSynthesis.getVoices()
+        
+        this.speech = new SpeechSynthesisUtterance()
+        this.speech.lang = 'nl-NL'
+        this.speech.voice = this.voices.filter(voice => voice.name === 'Xander')[0]
     
         if (speechSynthesis.onvoiceschanged !== undefined) {
           speechSynthesis.addEventListener('voiceschanged', () => {
             this.voices = speechSynthesis.getVoices()
+
+            this.speech.lang = 'nl-NL'
+            this.speech.voice = this.voices.filter(voice => voice.name === 'Xander')[0]
           })
         }
       },
       speak(phrase, speed = .8) {
-        this.speech.voice = this.voices.filter(voice => voice.name === 'Xander')[0]
-        this.speech.lang = 'nl-NL'
         this.speech.rate = speed
         this.speech.text = phrase
-        this.isSpeaking = true
         speechSynthesis.speak(this.speech)
       },
       giveFeedback(result = undefined) {
