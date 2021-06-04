@@ -8,7 +8,7 @@
     <main>
       <Word
         v-if="targetPhrase"
-        :targetPhrase="targetPhrase"
+        :word="targetPhrase.word"
         :speech="speech"
         :voice="voices"
       />
