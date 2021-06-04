@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 if (!Vue.login) {
-  Vue.buildLoginRecognition = true
+  Vue.login = true
   Vue.mixin({
     data() {
       return {
@@ -19,18 +19,18 @@ if (!Vue.login) {
         this.recognition.interimResults = false
         this.recognition.maxAlternatives = 2
     
-        this.recognition.addEventListener('result', this.onResult)
-        this.recognition.addEventListener('speechend', this.onUserSpeechEnd)
+        this.recognition.addEventListener('result', this.loginOnResult)
+        this.recognition.addEventListener('speechend', this.loginOnUserSpeechEnd)
       },
-      onUserSpeechEnd() {
+      loginOnUserSpeechEnd() {
         this.recognition.stop()
         this.isRecording = false
       },
-      startSpeech() {
+      loginStartSpeech() {
         this.isRecording = true
         this.recognition.start()
       },
-      onResult(event) {
+      loginOnResult(event) {
         this.recognition.stop()
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
