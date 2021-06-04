@@ -21,7 +21,8 @@ export default {
     host: '0.0.0.0'
   },
   env: {
-    DB_URL: process.env.DB_URL
+    DB_URL: process.env.DB_URL,
+    CLOUDINARY_BASE_URL: process.env.CLOUDINARY_BASE_URL
   },
   buildDir: 'dist',
   components: true,

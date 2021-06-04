@@ -1,17 +1,22 @@
 <template>
   <section>
     <img
-      :src="targetPhrase.image"
-      @click="speak(targetPhrase.word, .7)"
+      :src="`${baseUrl}${word}.svg`"
+      @click="speak(word, .7)"
     />
-    <h2 @click="speak(targetPhrase.word, .7)">
-      {{ targetPhrase.word }}
+    <h2 @click="speak(word, .7)">
+      {{ word }}
     </h2>
   </section>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      baseUrl: process.env.CLOUDINARY_BASE_URL
+    }
+  },
   props: {
     speech: {
       type: SpeechSynthesisUtterance
@@ -19,15 +24,15 @@ export default {
     voices: {
       type: Array
     },
-    targetPhrase: {
-      type: Object
+    word: {
+      type: String
     }
   },
   watch: {
     targetPhrase: {
       immediate: true,
       handler () {
-        this.targetPhrase && this.speak(this.targetPhrase.word, .7)
+        this.word && this.speak(this.word, .7)
       }
     }
   }
