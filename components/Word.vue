@@ -17,17 +17,7 @@ export default {
       baseUrl: process.env.CLOUDINARY_BASE_URL
     }
   },
-  props: {
-    speech: {
-      type: SpeechSynthesisUtterance
-    },
-    voices: {
-      type: Array
-    },
-    word: {
-      type: String
-    }
-  },
+  props: ['speech', 'voices', 'word'],
   watch: {
     targetPhrase: {
       immediate: true,
