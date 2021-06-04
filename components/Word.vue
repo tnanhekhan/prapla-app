@@ -19,7 +19,7 @@ export default {
   },
   props: ['speech', 'voices', 'word'],
   watch: {
-    targetPhrase: {
+    word: {
       immediate: true,
       handler () {
         this.word && this.speak(this.word, .7)
