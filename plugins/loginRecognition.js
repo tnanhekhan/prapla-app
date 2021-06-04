@@ -36,10 +36,10 @@ if (!Vue.login) {
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
         if (speechResult === this.password) {
-            document.body.style.background = '#C3E6CF'
-          } else {
-            document.body.style.background = '#FFD2D2'
-          }
+					document.body.style.background = '#C3E6CF'
+        } else {
+					document.body.style.background = '#FFD2D2'
+        }
   
         console.log(speechResult)
         console.log('Confidence: ' + event.results[0][0].confidence)
