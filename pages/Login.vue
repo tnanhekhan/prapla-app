@@ -14,7 +14,7 @@
     <GlobalButton
       v-if="login === true"
       :buttonIcon="setButtonIcon()"
-      :clickEvent="startSpeech"
+      :clickEvent="loginStartSpeech"
       :class="isRecording ? 'listen' : ''"
     />
   </main>
