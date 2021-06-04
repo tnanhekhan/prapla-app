@@ -29,7 +29,8 @@ export default {
   modules: ['@nuxtjs/axios'],
   plugins: [
     '~/plugins/speech',
-    '~/plugins/recognition'
+    '~/plugins/recognition',
+    '~/plugins/loginRecognition'
   ],
   "axios": {}
 }
