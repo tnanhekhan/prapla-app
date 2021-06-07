@@ -17,7 +17,7 @@ if (!Vue.recognition) {
         this.recognition.lang = 'nl-NL'
         this.recognition.continuous = false
         this.recognition.interimResults = false
-        this.recognition.maxAlternatives = 2
+        this.recognition.maxAlternatives = 1
     
         this.recognition.addEventListener('result', this.onResult)
         this.recognition.addEventListener('speechend', this.onUserSpeechEnd)
