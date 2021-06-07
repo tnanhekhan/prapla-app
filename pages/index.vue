@@ -67,17 +67,10 @@ export default {
     },
     changeWord() {
       this.counter ++
+      this.targetPhrase.tries++
       
-      if (this.counter === this.phrases.length) {
-        this.progressValue = 100
-        setTimeout(() => {
-          this.$router.push('/Complete')
-        }, 1000)
-        document.body.style.background = '#F8F8FF'
-        return
-      }
-
-      this.targetPhrase.tries = 0
+      this.isComplete()
+      
       this.targetPhrase = this.phrases[this.counter]
       this.progressValue = (this.counter / this.phrases.length) * 100
 
@@ -88,17 +81,27 @@ export default {
       this.targetPhrase = null
     },
     setClickEvent() {
-      return this.targetPhrase.tries > 1 || this.targetPhrase.correct 
+      return this.targetPhrase.tries === 2 || this.targetPhrase.correct 
         ? this.changeWord() 
         : this.startSpeech()
     },
     setButtonIcon() {
       if (this.isRecording) {
         return '/icons/Ear.svg'
-      } else if (this.targetPhrase.correct || this.targetPhrase.tries > 1) {
+      } else if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
         return '/icons/Next.svg'    
       } else {
         return '/icons/Microphone.svg'
+      }
+    },
+    isComplete() {
+      if (this.counter === this.phrases.length) {
+        this.progressValue = 100
+        setTimeout(() => {
+          this.$router.push('/Complete')
+        }, 1000)
+        document.body.style.background = '#F8F8FF'
+        return
       }
     }
   }

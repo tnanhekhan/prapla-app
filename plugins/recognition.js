@@ -47,8 +47,10 @@ if (!Vue.recognition) {
           this.audio = new Audio('/sounds/feedback_negative.mp3')
           setTimeout(() => this.giveFeedback(speechResult), 1000)
           
-          if(this.targetPhrase.tries > 1) {
+          if(this.targetPhrase.tries === 2) {
             this.phrases.push(this.targetPhrase)
+          } else if (this.targetPhrase.tries > 3) {
+            this.targetPhrase.correct = true
           }
         }
   
