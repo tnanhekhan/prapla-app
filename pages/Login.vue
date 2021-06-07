@@ -20,8 +20,7 @@
 export default {
   data() {
     return {
-      login: false,
-      password: 'geheim'
+      login: false
     }
   },
   mounted() {
@@ -77,7 +76,7 @@ export default {
   h1 span {
     font-size: 150%;
   }
-  
+
   button {
     appearance: none;
     border: none;

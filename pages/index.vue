@@ -98,7 +98,7 @@ export default {
       if (this.counter === this.phrases.length) {
         this.progressValue = 100
         setTimeout(() => {
-          this.$router.push('/Complete')
+          this.$router.push('/complete')
         }, 1000)
         document.body.style.background = '#F8F8FF'
         return
@@ -132,7 +132,6 @@ export default {
     color: white;
     background-color: var(--cl-purple-300);
     padding: 1rem 2rem;
-    border-radius: 30px;
     font-weight: bold;
   }
 
