@@ -1,18 +1,8 @@
 <template>
-      <div class="progress-circle">
-        <div class="inner"></div>
-        <div class="outer"></div>
-        <p class="progression-value"> {{ amount }} / {{ total }}</p>
-        <div class="circle">
-          <div class="bar left">
-              <div class="progress"></div>
-          </div>
-          <div class="bar right">
-              <div class="progress"></div>
-          </div>
+      <div class="progress-circles">
+        <div class="progression-circle" v-for="exercise in dummyExercises" :key="exercise.num" :class="exercise.complete ? 'completed' : null">
+          {{ exercise.num}}
         </div>
-        
-          
       </div>
 </template>
 
@@ -25,90 +15,120 @@ export default {
     amount: {
       type: Number
     }
+  },
+  data() {
+    return {
+      dummyExercises: [
+        {num: 1, complete: true}, 
+        {num: 2, complete: true}, 
+        {num: 3, complete: true}, 
+        {num: 4, complete: false}
+      ]
+    }
+  },
+  mounted() {
+    this.setAnimation()
+  },
+  methods: {
+    setAnimation() {
+      const completedArray = document.querySelectorAll('.completed')
+      completedArray[completedArray.length - 1].classList.add('completed-last')
+    }
   }
 }
 </script>
 
 <style scoped>
-  .progress-circle {
+  .progress-circles {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 18.75em;
+  }
+  .progression-circle {
     position: relative;
-    height: 10rem;
-    width: 10rem;
-    /* background-color: #9E99EE;
-   
-   */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #E6E6E6;
+    border: solid 5px #BEBEBE;
+    color: #BEBEBE;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    min-width: 2em;
+    min-height: 2em;
+ 
   }
-  .progress-circle p {
+  .progression-circle::before {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 15;
-    font-size: 3em; 
-    color: white;
-    width: 100%;
+    left: -2em;
+    width: 2em;
+    height: .2em;
+    z-index: -1;
+    background-color: #BEBEBE;
   }
-
-  .progress-circle .inner, .progress-circle .outer, .progress-circle .circle{
-    position: absolute;
-    z-index: 6;
-    height: 100%;
-    width: 100%;
-    border-radius: 100%;
+  .progression-circle:first-of-type::before {
+    display: none;
   }
-  .progress-circle .inner {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 9rem;
-    height: 9rem;
-    background-color: #9E99EE;
-  }
-  .progress-circle .circle{
-    z-index: 1;
+  .completed {
+    background-color: #99D87A;
+    border: solid 5px #379807;
+    color: #379807;
   }
   
-  .progress-circle .bar {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: 100%;
-    clip: rect(0, 10rem, 10rem, 5rem);
-    background-color: #9E99EE;
-  }
-  .progress-circle .bar .progress{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: 100%;
-    clip: rect(0px, 5rem, 10rem, 0px);
-  }
-  .progress-circle .bar .progress, .dot span{
-    background: #7AD1BA;
-  }
-  .progress-circle .left .progress{
-    z-index: 1;
-    animation: left .5s linear both;
+  .completed::before {
+    background-color: #379807;
   }
 
-  .progress-circle .right{
-    z-index: 3;
-    transform: rotate(180deg);
+  .completed-last{
+    background-color: #E6E6E6;
+    border: solid 5px #BEBEBE;
+    color: #BEBEBE;
+    animation: to-complete 2s forwards ease 1s;
   }
-  .progress-circle .right .progress{
-    animation: right .5s linear both;
-    animation-delay: .5s;
+  .completed-last::before {
+    /* background-color: #E6E6E6; */
+     width: 0;
+    animation: to-complete-before 2s forwards ease;
+  }
+  .completed-last::after {
+    content: '';
+    position: absolute;
+    left: -2em;
+    width: 2em;
+    height: .2em;
+    z-index: -1;
+    background-color: #BEBEBE;
+    animation: to-complete-after 2s forwards ease;
   }
   
-  @keyframes left {
-    100%{
-      transform: rotate(180deg);
+  @keyframes to-complete {
+    to {
+      background-color: #99D87A;
+      border: solid 5px #379807;
+      color: #379807;
     }
   }
-  @keyframes right {
-    100%{
-      transform: rotate(60deg);
+  @keyframes to-complete-before {
+    to {
+       width: 2em;
     }
   }
-
+  @keyframes to-complete-after {
+    0% {
+       left: 0;
+       width: 100%;
+    }
+    90% {
+      left: 0;
+      width: 100%;
+    }
+    100% {
+      left: 0;
+      width: 50%;
+    }
+  }
 </style>

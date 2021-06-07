@@ -52,7 +52,8 @@ export default {
       buttonIcon: null,
       isRecording: false,
       targetPhrase: '',
-      voices: []
+      voices: [],
+      wrong: 0
     }
   },
   mounted() {
@@ -66,17 +67,16 @@ export default {
       this.speak('Druk op de knop en zeg mij na:')
     },
     changeWord() {
-      this.counter ++
-      
-      if (this.counter === this.phrases.length) {
-        this.progressValue = 100
-        setTimeout(() => {
-          this.$router.push('/Complete')
-        }, 1000)
-        document.body.style.background = '#F8F8FF'
-        return
+      console.log('tries =', this.targetPhrase.tries)
+
+      if (this.repeat && this.targetPhrase.tries !== 0) {
+        this.wrong++
       }
 
+      this.counter ++
+      
+      this.isCompleted()
+     
       this.targetPhrase.tries = 0
       this.targetPhrase = this.phrases[this.counter]
       this.progressValue = (this.counter / this.phrases.length) * 100
@@ -88,17 +88,28 @@ export default {
       this.targetPhrase = null
     },
     setClickEvent() {
-      return this.targetPhrase.tries > 1 || this.targetPhrase.correct 
+      return this.targetPhrase.correct || this.targetPhrase.tries > 1 || (this.repeat && this.targetPhrase !== 0)
         ? this.changeWord() 
         : this.startSpeech()
     },
     setButtonIcon() {
+      console.log('tries(btnicon) =', this.targetPhrase.tries)
       if (this.isRecording) {
         return '/icons/Ear.svg'
-      } else if (this.targetPhrase.correct || this.targetPhrase.tries > 1) {
+      } else if (this.targetPhrase.correct || this.targetPhrase.tries > 1 || (this.repeat && this.targetPhrase !== 0)) {
         return '/icons/Next.svg'    
       } else {
         return '/icons/Microphone.svg'
+      }
+    },
+    isCompleted() {
+      if (this.counter === (this.phrases.length + this.wrong)) {
+        this.progressValue = 100
+        setTimeout(() => {
+          this.$router.push('/Complete')
+        }, 1000)
+        document.body.style.background = '#F8F8FF'
+        return
       }
     }
   }
