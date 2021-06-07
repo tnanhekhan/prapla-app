@@ -11,7 +11,8 @@ app.locals.db = db
 const sessionOptions = {
   ssaveUninitialized: true,
   secret: 'psst',
-  store: session.MemoryStore()
+  store: session.MemoryStore(),
+  resave: true
 }
 
 app
