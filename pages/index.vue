@@ -24,12 +24,14 @@
         :class="isRecording ? 'listen' : ''"
       />
     </main>
+    <Modal v-if="showModal"/>
     <footer>
       <ProgressBar
         v-if="counter !== null"
         :progressValue="progressValue"
       />
     </footer>
+    
   </div>
 </template>
 
@@ -53,7 +55,7 @@ export default {
       isRecording: false,
       targetPhrase: '',
       voices: [],
-      wrong: 0
+      showModal: false
     }
   },
   mounted() {
@@ -67,18 +69,16 @@ export default {
       this.speak('Druk op de knop en zeg mij na:')
     },
     changeWord() {
-      console.log('tries =', this.targetPhrase.tries)
-
-      if (this.repeat && this.targetPhrase.tries !== 0) {
-        this.wrong++
-      }
-
       this.counter ++
-      
-      this.isCompleted()
-     
       this.targetPhrase.tries = 0
       this.targetPhrase = this.phrases[this.counter]
+
+      // Show last question on exercise end
+      if(!this.targetPhrase) {
+        this.isCompleted()
+        this.startFinishSound()
+        this.targetPhrase = this.phrases[this.counter - 1]
+      }
       this.progressValue = (this.counter / this.phrases.length) * 100
 
       document.body.style.background = 'var(--cl-purple-100)'
@@ -88,29 +88,45 @@ export default {
       this.targetPhrase = null
     },
     setClickEvent() {
-      return this.targetPhrase.correct || this.targetPhrase.tries > 1 || (this.repeat && this.targetPhrase !== 0)
+      return this.targetPhrase.correct || this.targetPhrase.tries > 1 
         ? this.changeWord() 
         : this.startSpeech()
     },
     setButtonIcon() {
-      console.log('tries(btnicon) =', this.targetPhrase.tries)
       if (this.isRecording) {
         return '/icons/Ear.svg'
-      } else if (this.targetPhrase.correct || this.targetPhrase.tries > 1 || (this.repeat && this.targetPhrase !== 0)) {
+      } else if (this.targetPhrase.correct || this.targetPhrase.tries > 1) {
         return '/icons/Next.svg'    
       } else {
         return '/icons/Microphone.svg'
       }
     },
     isCompleted() {
-      if (this.counter === (this.phrases.length + this.wrong)) {
-        this.progressValue = 100
-        setTimeout(() => {
-          this.$router.push('/Complete')
-        }, 1000)
-        document.body.style.background = '#F8F8FF'
-        return
-      }
+      this.progressValue = 100
+      setTimeout(() => {
+        this.showModal = true
+      }, 1000)
+      document.body.style.background = '#F8F8FF'
+    },
+    startFinishSound() {
+      this.audio = new Audio('/sounds/feedback_completed.mp3')
+      this.clap = new Audio('/sounds/feedback_clapping.mp3')
+
+      this.audio.play()
+      
+      this.clap.volume = 0.5
+      this.clap.play()
+
+      setTimeout( () => {
+        setInterval(() => {
+          if(this.clap.volume > 0.06) {
+            this.clap.volume -= 0.05
+          } else {
+            this.clap.volume = 0
+            clearInterval()
+          }
+        }, 100)
+      }, 1300)  
     }
   }
 }
@@ -128,9 +144,7 @@ export default {
 
   footer {
     height: 5vh;
-    position: relative;
     display: flex;
-    align-items: top;
     justify-content: center;
   }
 

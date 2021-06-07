@@ -1,45 +1,60 @@
 <template>
-      <div class="progress-circles">
-        <div class="progression-circle" v-for="exercise in dummyExercises" :key="exercise.num" :class="exercise.complete ? 'completed' : null">
-          {{ exercise.num}}
-        </div>
-
-      </div>
+  <div class="back-shadow">
+    <section class="modal">
+      <h1> Nog {{ needed }} </h1>
+      <ProgressCircle :amount="amount" :total="total" />
+      <GlobalButton 
+        :buttonIcon="'/icons/Next.svg'" :clickEvent="startFinishSound"/>
+  </section>
+  </div>
+  
 </template>
 
 <script>
 export default {
-  props: {
-    total: {
-      type: Number
-    },
-    amount: {
-      type: Number
-    }
-  },
+  name: "Complete",
   data() {
     return {
-      dummyExercises: [
-        {num: 1, complete: true}, 
-        {num: 2, complete: true}, 
-        {num: 3, complete: true}, 
-        {num: 4, complete: false}
-      ]
+      needed: 1,
+      total: 3,
+      amount: 2,
+      audio: null,
+      clap: null,
+      buttonIcon: '/icons/Next.svg'
     }
   },
-  mounted() {
-    this.setAnimation()
-  },
-  methods: {
-    setAnimation() {
-      const completedArray = document.querySelectorAll('.completed')
-      completedArray[completedArray.length - 1].classList.add('completed-last')
-    }
-  }
+  // methods: {
+    
+  // }
 }
 </script>
 
 <style scoped>
+  .back-shadow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.6);
+    padding: 2em;
+  }
+  .modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--cl-purple-100);
+    border-radius: 1em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    height: 50%;
+  }
   .progress-circles {
     display: flex;
     flex-direction: row;
