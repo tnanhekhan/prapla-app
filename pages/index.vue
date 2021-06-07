@@ -22,6 +22,7 @@
         :clickEvent="setClickEvent"
         :buttonIcon="setButtonIcon()"
         :class="isRecording ? 'listen' : ''"
+        :disabled="isRecording"
       />
     </main>
     <footer>
