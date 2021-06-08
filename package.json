@@ -22,10 +22,10 @@
   "homepage": "https://github.com/MarvinMichel/prapla#readme",
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "cookie-session": "^1.4.0",
     "core-js": "^3.9.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.2",
     "mongodb": "^3.6.9",
     "mongoose": "^5.12.12",
     "nuxt": "^2.15.3"
