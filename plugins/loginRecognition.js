@@ -34,14 +34,14 @@ if (!Vue.login) {
         this.recognition.stop()
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
-
         const { data } = await this.$axios.get(`/auth/${speechResult}`)
 
         if (data !== null) {
           this.speak(`Welkom, ${data.name.firstname}`)
           this.$router.push('/')
+					document.body.style.background = 'var(--cl-green-100)'
         } else {
-					document.body.style.background = '#FFD2D2'
+					document.body.style.background = 'var(--cl-orange-100)'
         }
   
         console.log(speechResult)

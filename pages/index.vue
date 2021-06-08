@@ -85,7 +85,7 @@ export default {
       this.targetPhrase.tries++
       this.progressValue = (this.counter / this.phrases.length) * 100
 
-      document.body.style.background = 'var(--cl-purple-100)'
+      document.body.style.background = 'rgb(255, 255, 255)'
     },
     onExit() {
       this.exitModal = true
@@ -166,7 +166,7 @@ export default {
     appearance: none;
     border: none;
     color: white;
-    background-color: var(--cl-purple-300);
+    background-color: var(--cl-primary-300);
     padding: 1rem 2rem;
     font-weight: bold;
   }

@@ -9,7 +9,15 @@
     --cl-purple-300: hsl(244, 85%, 75%);
     --cl-purple-400: hsl(244, 85%, 70%);
 
+    --cl-primary-200: hsl(207, 56%, 65%);
+    --cl-primary-300: hsl(207, 55%, 50%);
+    --cl-primary-400: hsl(207, 55%, 35%);
+
     --cl-grey-100: hsl(0, 0%, 91%);
+
+    --cl-green-100: hsl(99, 62%, 82%);
+
+    --cl-orange-100: hsl(22, 100%, 84%);
   }
 
   @font-face {
@@ -27,7 +35,6 @@
   }
 
   html {
-    background-color: var(--cl-purple-100);
     font-family:
       'Arial Rounded MT',
       sans-serif;

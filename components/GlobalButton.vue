@@ -25,9 +25,9 @@ export default {
    button {
     --size: 5rem;
     align-items: center;
-    background: #9E99EE;
+    background: var(--cl-primary-300);
     border-radius: 50%;
-    box-shadow: 0 .35em 0 .05em var(--cl-purple-400);
+    box-shadow: 0 .35em 0 .05em var(--cl-primary-400);
     display: flex;
     font-size: 1.25rem;
     height: var(--size);
@@ -45,13 +45,13 @@ export default {
 
   button:active,
   button.listen {
-    box-shadow: 0 .25em 0 .05em var(--cl-purple-400);
+    box-shadow: 0 .25em 0 .05em var(--cl-primary-400);
     transform: translateY(.1em);
   }
 
   button.listen::after {
     animation: pulse 1s ease-in-out infinite;
-    border: .1em solid var(--cl-purple-300);
+    border: .1em solid var(--cl-primary-300);
     border-radius: 50%;
     content: '';
     height: 100%;
