@@ -9,7 +9,7 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
   .get('/', async (req, res, next) => {
-    const user = await User.findById('60b8df8bab775db676e6c62e')
+    const user = await User.findById('60be092ab6049b7a2c4df7d7')
     const id = user.exercises[0]
     const exercise = await SpeechExercise.findById(id)
 
