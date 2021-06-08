@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "Complete",
+  name: "complete",
   data() {
     return {
       needed: 1,

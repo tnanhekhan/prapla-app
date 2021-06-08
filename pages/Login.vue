@@ -3,12 +3,8 @@
     <button
       v-if="login === false"
       @click="loginSpeechText"
-    >
-      Login
-    </button>
-    <section
-      v-else
-    >
+    >Login</button>
+    <section v-else>
       <h1>Wat is je geheime wachtwoord?</h1>
     </section>
     <GlobalButton
@@ -24,8 +20,7 @@
 export default {
   data() {
     return {
-      login: false,
-      password: 'geheim'
+      login: false
     }
   },
   mounted() {
@@ -59,6 +54,7 @@ export default {
     justify-content: space-evenly;
     text-align: center;
   }
+
   section {
     align-items: center;
     background: white;
@@ -70,14 +66,17 @@ export default {
     height: 30%;
     width: clamp(15rem, 90%, 30rem);
   }
+
   h1 {
     color: #4b4b4b;
     font-size: clamp(2rem, 3vw, 2.5rem);
     font-weight: 500;
   }
+
   h1 span {
     font-size: 150%;
   }
+
   button {
     appearance: none;
     border: none;

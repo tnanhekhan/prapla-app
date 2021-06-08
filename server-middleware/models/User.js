@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
+  _id: String,
   exercises: Array,
   name: {
     firstname: {
@@ -11,10 +12,6 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-  },
-  secret: {
-    type: String,
-    required: true
   }
 })
 
