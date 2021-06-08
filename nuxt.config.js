@@ -33,5 +33,7 @@ export default {
     '~/plugins/recognition',
     '~/plugins/loginRecognition'
   ],
-  "axios": {}
+  "axios": {
+    baseURL: process.env.BASE_URL
+  }
 }

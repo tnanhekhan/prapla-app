@@ -1,6 +1,10 @@
 <template>
   <button @click="clickEvent">
-    <img :src="buttonIcon" alt=" " aria-hidden="true">
+    <img
+      :src="buttonIcon"
+      alt=" "
+      aria-hidden="true"
+    >
   </button>
 </template>
 

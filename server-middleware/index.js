@@ -1,22 +1,27 @@
 import express from 'express'
 import db from './db'
-import User from './models/User'
-import SpeechExercise from './models/SpeechExercise'
+import cookieSession from 'cookie-session'
+import auth from './routes/auth'
+import exercises from './routes/exercise'
 
 const app = express()
+app.locals.db = db
+
+const sessionOptions = {
+  name: 'session',
+  keys: ['Leren praten'],
+  maxAge: 2 * 60 * 60 * 1000
+}
 
 app
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
-  .get('/', async (req, res, next) => {
-    const user = await User.findById('60be092ab6049b7a2c4df7d7')
-    const id = user.exercises[0]
-    const exercise = await SpeechExercise.findById(id)
+  .use(cookieSession(sessionOptions))
+  .use('/auth', auth)
+  .use('/exercise', exercises)
 
-    res.json(exercise.phrases)
-  })
  
 export default {
-  path: '/exercise',
+  path: '/',
   handler: app
 }

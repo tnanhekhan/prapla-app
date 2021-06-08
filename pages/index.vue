@@ -71,7 +71,6 @@ export default {
     },
     changeWord() {
       this.counter ++
-      this.targetPhrase.tries = 0
       this.targetPhrase = this.phrases[this.counter]
 
       // Show last question on exercise end
@@ -80,6 +79,8 @@ export default {
         this.startFinishSound()
         this.targetPhrase = this.phrases[this.counter - 1]
       }
+      
+      this.targetPhrase.tries++
       this.progressValue = (this.counter / this.phrases.length) * 100
 
       document.body.style.background = 'var(--cl-purple-100)'
@@ -89,14 +90,14 @@ export default {
       this.targetPhrase = null
     },
     setClickEvent() {
-      return this.targetPhrase.correct || this.targetPhrase.tries > 1 
+      return this.targetPhrase.tries === 2 || this.targetPhrase.correct 
         ? this.changeWord() 
         : this.startSpeech()
     },
     setButtonIcon() {
       if (this.isRecording) {
         return '/icons/Ear.svg'
-      } else if (this.targetPhrase.correct || this.targetPhrase.tries > 1) {
+      } else if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
         return '/icons/Next.svg'    
       } else {
         return '/icons/Microphone.svg'
@@ -155,7 +156,6 @@ export default {
     color: white;
     background-color: var(--cl-purple-300);
     padding: 1rem 2rem;
-    border-radius: 30px;
     font-weight: bold;
   }
 

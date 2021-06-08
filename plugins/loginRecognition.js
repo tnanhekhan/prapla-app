@@ -30,13 +30,16 @@ if (!Vue.login) {
         this.isRecording = true
         this.recognition.start()
       },
-      loginOnResult(event) {
+      async loginOnResult (event) {
         this.recognition.stop()
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
-        if (speechResult === this.password) {
-					document.body.style.background = '#C3E6CF'
+        const { data } = await this.$axios.get(`/auth/${speechResult}`)
+
+        if (data !== null) {
+          this.speak(`Welkom, ${data.name.firstname}`)
+          this.$router.push('/')
         } else {
 					document.body.style.background = '#FFD2D2'
         }
