@@ -38,10 +38,8 @@
 </template>
 
 <script>
-import ExitModal from '../components/ExitModal.vue'
 
 export default {
-  components: { ExitModal },
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
     return {
