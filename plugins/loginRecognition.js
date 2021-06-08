@@ -35,13 +35,7 @@ if (!Vue.login) {
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
-        const { data } = await this.$axios.get(`/auth/${speechResult}`, {
-          headers: {
-            'Accept': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Content-type': 'application/x-www-form-urlencoded'
-          }
-        })
+        const { data } = await this.$axios.get(`/auth/${speechResult}`)
 
         if (data !== null) {
           this.speak(`Welkom, ${data.name.firstname}`)
