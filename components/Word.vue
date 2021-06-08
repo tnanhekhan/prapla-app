@@ -35,6 +35,7 @@ export default {
     background: white;
     border-radius: 1em;
     box-shadow: 0 .125em .125em .125em #00000015;
+    border: 2px solid var(--cl-grey-100);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,7 +51,7 @@ export default {
   }
 
   h2 {
-    border-bottom: .1em solid var(--cl-purple-400);
+    border-bottom: .1em solid var(--cl-primary-300);
     color: #4b4b4b;
     cursor: pointer;
     font-size: clamp(2.5rem, 3vw, 3.5rem);

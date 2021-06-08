@@ -42,7 +42,7 @@ export default {
     align-items: center;
     background: #9E99EE;
     border-radius: 50%;
-    box-shadow: 0 .35em 0 .05em var(--cl-purple-400);
+    box-shadow: 0 .35em 0 .05em var(--cl-primary-400);
     display: flex;
     font-size: 1.25rem;
     height: var(--size);

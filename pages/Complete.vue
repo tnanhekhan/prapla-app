@@ -45,7 +45,7 @@ export default {
     text-align: center;
   }
   h1 {
-    color: #7973CC;
+    color: var(--cl-primary-300);
     max-width: 16rem;
   }
   h1 span {

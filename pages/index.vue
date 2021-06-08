@@ -74,7 +74,7 @@ export default {
         setTimeout(() => {
           this.$router.push('/Complete')
         }, 1000)
-        document.body.style.background = '#F8F8FF'
+        document.body.style.background = 'rgb(255, 255, 255)'
         return
       }
 
@@ -82,7 +82,7 @@ export default {
       this.targetPhrase = this.phrases[this.counter]
       this.progressValue = (this.counter / this.phrases.length) * 100
 
-      document.body.style.background = 'var(--cl-purple-100)'
+      document.body.style.background = 'rgb(255, 255, 255)'
     },
     onEmpty() {
       this.counter = null
@@ -128,7 +128,7 @@ export default {
     appearance: none;
     border: none;
     color: white;
-    background-color: var(--cl-purple-300);
+    background-color: var(--cl-primary-300);
     padding: 1rem 2rem;
     border-radius: 30px;
     font-weight: bold;

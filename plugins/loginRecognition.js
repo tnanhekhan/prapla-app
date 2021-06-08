@@ -36,9 +36,9 @@ if (!Vue.login) {
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
         if (speechResult === this.password) {
-					document.body.style.background = '#C3E6CF'
+					document.body.style.background = 'var(--cl-green-100)'
         } else {
-					document.body.style.background = '#FFD2D2'
+					document.body.style.background = 'var(--cl-orange-100)'
         }
   
         console.log(speechResult)
