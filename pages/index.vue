@@ -2,7 +2,7 @@
   <div>
     <Header
       v-if="counter !== null"
-      :empty="onEmpty"
+      :empty="onExit"
       :counter="counter"
     />
     <main>
@@ -25,7 +25,8 @@
         :disabled="isRecording"
       />
     </main>
-    <Modal v-if="showModal"/>
+    <Complete v-if="showComplete"/>
+    <ExitModal v-if="exitModal" :closeModal="closeModal" :sendToHome="sendToHome"/>
     <footer>
       <ProgressBar
         v-if="counter !== null"
@@ -37,8 +38,10 @@
 </template>
 
 <script>
+import ExitModal from '../components/ExitModal.vue'
 
 export default {
+  components: { ExitModal },
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
     return {
@@ -56,7 +59,8 @@ export default {
       isRecording: false,
       targetPhrase: '',
       voices: [],
-      showModal: false
+      showComplete: false,
+      exitModal: false,
     }
   },
   mounted() {
@@ -84,9 +88,19 @@ export default {
 
       document.body.style.background = 'var(--cl-purple-100)'
     },
-    onEmpty() {
+    onExit() {
+      this.exitModal = true
+      this.speak('Weet je zeker dat je wilt stoppen?')
+    },
+    closeModal() {
+      console.log('hello')
+      this.exitModal = false
+    },
+    sendToHome() {
+      console.log('hola')
       this.counter = null
       this.targetPhrase = null
+      this.exitModal = false
     },
     setClickEvent() {
       return this.targetPhrase.correct || this.targetPhrase.tries > 1 
@@ -105,7 +119,7 @@ export default {
     isCompleted() {
       this.progressValue = 100
       setTimeout(() => {
-        this.showModal = true
+        this.showComplete = true
       }, 1000)
       document.body.style.background = '#F8F8FF'
     },
