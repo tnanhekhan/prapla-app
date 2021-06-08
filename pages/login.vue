@@ -25,6 +25,7 @@ export default {
     }
   },
   mounted() {
+     // Setup the Web Speech API
     this.buildSpeech()
     this.buildLoginRecognition()
   },
