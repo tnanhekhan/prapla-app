@@ -58,7 +58,13 @@ export default {
     position: absolute;
     width: 100%;
   }
-
+  button p {
+    font-size: 1.5em;
+    font-family:
+      'Arial Rounded MT',
+      sans-serif;
+    color: white;
+  }
   @keyframes pulse {
     from {
       transform: scale(0);
