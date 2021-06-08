@@ -36,7 +36,11 @@ if (!Vue.login) {
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
         const { data } = await this.$axios.get(`/auth/${speechResult}`, {
-          headers: { 'Access-Control-Allow-Origin': '*' }
+          headers: {
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Content-type': 'application/x-www-form-urlencoded'
+          }
         })
 
         if (data !== null) {
