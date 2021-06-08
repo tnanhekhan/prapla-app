@@ -79,7 +79,7 @@ export default {
         this.startFinishSound()
         this.targetPhrase = this.phrases[this.counter - 1]
       }
-
+      
       this.targetPhrase.tries++
       this.progressValue = (this.counter / this.phrases.length) * 100
 

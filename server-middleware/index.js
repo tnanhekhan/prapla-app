@@ -19,6 +19,7 @@ app
   .use(cookieSession(sessionOptions))
   .use('/auth', auth)
   .use('/exercise', exercises)
+
  
 export default {
   path: '/',
