@@ -12,6 +12,7 @@
       :buttonIcon="setButtonIcon()"
       :clickEvent="loginStartSpeech"
       :class="isRecording ? 'listen' : ''"
+      :disabled="isRecording"
     />
   </main>
 </template>
