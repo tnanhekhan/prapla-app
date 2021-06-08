@@ -33,6 +33,10 @@ You can look at our Design Rationale [here](https://github.com/MarvinMichel/prap
 - [NuxtJS(Vue)](https://nuxtjs.org/)
 - [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
+## Lifecycle
+
+![Data Lifecycle](https://github.com/MarvinMichel/prapla/blob/main/gitimages/lifecycle.png?raw=true)
+
 ## Getting started
 1. Clone this repository or download [the zip file](https://github.com/MarvinMichel/prapla/archive/refs/heads/main.zip)
 2. Open the terminal and `cd` into the project folder
