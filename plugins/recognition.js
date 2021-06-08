@@ -54,36 +54,11 @@ if (!Vue.recognition) {
           }
         }
   
-        if (this.progressValue === this.phrases.length - 1) {
-          this.audio = new Audio('/sounds/feedback_completed.mp3')
-          this.clap = new Audio('/sounds/feedback_clapping.mp3')
-        }
-  
         this.audio.play()
-  
-        if(this.clap) {
-          this.clap.volume = 0.5
-          this.clap.play()
-  
-          function fadeOut() {
-            setInterval(() => {
-              if(this.clap.volume > 0.06) {
-                this.clap.volume -= 0.05
-              } else {
-                this.clap.volume = 0
-                clearInterval(fadeOut)
-              }
-            }, 100)
-          }
-  
-          setTimeout( () => {
-            fadeOut()
-          }, 1300)
-        }
   
         console.log(speechResult)
         console.log('Confidence: ' + event.results[0][0].confidence)
-      },
+      }
     }
   })
 }
