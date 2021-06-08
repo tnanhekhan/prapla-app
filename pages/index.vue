@@ -64,7 +64,7 @@ export default {
     startExercise() {
       this.counter = 0
       this.targetPhrase = this.phrases[this.counter]
-      // this.speak('Druk op de knop en zeg mij na:')
+      this.speak('Druk op de knop en zeg mij na:')
     },
     changeWord() {
       this.counter ++
