@@ -4,7 +4,19 @@
       :src="`${baseUrl}${word}.svg`"
       @click="speak(word, .7)"
     />
-    <h2 @click="speak(word, .7)">
+  
+    <h2 
+      v-if="article"
+      @click="speak(word, .7)"
+    >
+      <span>{{ article }}</span>
+      {{ noun }}
+    </h2>
+
+    <h2 
+      v-else
+      @click="speak(word, .7)"
+    >
       {{ word }}
     </h2>
   </section>
@@ -14,7 +26,9 @@
 export default {
   data() {
     return {
-      baseUrl: process.env.CLOUDINARY_BASE_URL
+      baseUrl: process.env.CLOUDINARY_BASE_URL,
+      article: null,
+      noun: null
     }
   },
   props: ['speech', 'voices', 'word'],
@@ -23,6 +37,15 @@ export default {
       immediate: true,
       handler () {
         this.word && this.speak(this.word, .7)
+        this.splitWord()
+      }
+    }
+  },
+  methods: {
+    splitWord() {
+      if (this.word.includes('De ') || this.word.includes('Het ')) {
+        this.article = this.word.match(/(De|Het)/g)[0]
+        this.noun = this.word.match(/(?<=De|Het).*/ms)[0]
       }
     }
   }
@@ -51,12 +74,16 @@ export default {
   }
 
   h2 {
-    border-bottom: .1em solid var(--cl-primary-300);
     color: #4b4b4b;
     cursor: pointer;
     font-size: clamp(2.5rem, 3vw, 3.5rem);
     font-weight: 500;
     padding: 1.5rem 0 .25rem;
     width: max-content;
+  }
+
+  h2 span {
+    border-bottom: .1em solid var(--cl-primary-300);
+    color: var(--cl-primary-300);
   }
 </style>
