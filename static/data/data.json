@@ -675,10 +675,10 @@
     ],
     "boerderij": [
         {
-            "word": "kinderword"
+            "word": "kinderboerderij"
         },
         {
-            "word": "word",
+            "word": "boerderij",
             "article": "de"
         },
         {
@@ -699,7 +699,7 @@
         },
         {
             "word": "kalf",
-            "article": "de"
+            "article": "het"
         },
         {
             "word": "geit",
@@ -1454,8 +1454,7 @@
             "article": "de"
         },
         {
-            "word": "zeer",
-            "article": "het"
+            "word": "zeer"
         },
         {
             "word": "verkouden"
@@ -2814,7 +2813,7 @@
         },
         {
             "word": "sinterklaasfeest",
-            "article": "her"
+            "article": "het"
         },
         {
             "word": "sinterklaasliedje"
@@ -2835,7 +2834,7 @@
             "word": "strooien"
         },
         {
-            "word": "Piet ",
+            "word": "Piet",
             "article": "de"
         },
         {
