@@ -40,15 +40,17 @@
 <script>
 
 export default {
+  
   // Get the exercise asynchronously
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
     return {
-      phrases: data
+      phrases: data,
     }
   },
   data() {
     return {
+      bakList: null,
       speech: null,
       counter: null,
       audio: null,
@@ -66,6 +68,15 @@ export default {
     // Setup the Web Speech API
     this.buildSpeech()
     this.buildRecognition()
+
+    fetch('/data/data.json')
+      .then(response => response.json())
+      .then(data => {
+        this.bakList = data
+        console.log(this.bakList)
+      })
+      .catch(err => console.log(err))
+      
   },
   methods: {
     // Start the exercise
@@ -124,7 +135,6 @@ export default {
       setTimeout(() => {
         this.showComplete = true
       }, 1000)
-      document.body.style.background = '#F8F8FF'
     },
     startFinishSound() {
       this.audio = new Audio('/sounds/feedback_completed.mp3')

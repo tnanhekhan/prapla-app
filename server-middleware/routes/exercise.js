@@ -3,6 +3,7 @@ import SpeechExercise from '../models/SpeechExercise'
 
 const router = Router()
 
+// Show exercises to user
 router.get('/', async (req, res, next) => {
   const user = req.session.user
   const id = user.exercises[0]
