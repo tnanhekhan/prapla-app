@@ -68,7 +68,7 @@ export default {
     // Setup the Web Speech API
     this.buildSpeech()
     this.buildRecognition()
-    // const bakList = new Request()
+
     fetch('/data/data.json')
       .then(response => response.json())
       .then(data => {
@@ -136,7 +136,6 @@ export default {
       setTimeout(() => {
         this.showComplete = true
       }, 1000)
-      document.body.style.background = '#F8F8FF'
     },
     startFinishSound() {
       this.audio = new Audio('/sounds/feedback_completed.mp3')
