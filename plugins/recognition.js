@@ -30,6 +30,7 @@ if (!Vue.recognition) {
         this.isRecording = true
         this.targetPhrase = this.phrases[this.counter]
         this.recognition.start()
+        document.body.classList.remove('correct', 'incorrect')
       },
       onResult(event) {
         this.recognition.stop()
