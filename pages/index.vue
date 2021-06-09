@@ -77,6 +77,7 @@ export default {
     // Go to the next word
     changeWord() {
       this.counter ++
+      this.targetPhrase.tries++
       this.targetPhrase = this.phrases[this.counter]
 
       // Show last question on exercise end
@@ -86,12 +87,9 @@ export default {
         this.targetPhrase = this.phrases[this.counter - 1]
       }
       
-      this.targetPhrase.tries++
-
-      // Set the progressbar percentage
       this.progressValue = (this.counter / this.phrases.length) * 100
 
-      document.body.style.background = 'rgb(255, 255, 255)'
+      document.body.classList.remove('correct', 'incorrect')
     },
     onExit() {
       this.exitModal = true
@@ -104,6 +102,7 @@ export default {
       this.counter = null
       this.targetPhrase = null
       this.exitModal = false
+      document.body.classList.remove('correct', 'incorrect')
     },
     setClickEvent() {
       return this.targetPhrase.tries === 2 || this.targetPhrase.correct 

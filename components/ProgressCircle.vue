@@ -76,13 +76,13 @@ export default {
     display: none;
   }
   .completed {
-    background-color: #99D87A;
-    border: solid 5px #379807;
-    color: #379807;
+    background-color: var(--cl-green-200);
+    border: solid 5px var(--cl-green-400);
+    color: var(--cl-green-400);
   }
   
   .completed::before {
-    background-color: #379807;
+    background-color: var(--cl-green-400);
   }
 
   .completed-last{
@@ -109,9 +109,9 @@ export default {
   
   @keyframes to-complete {
     to {
-      background-color: #99D87A;
-      border: solid 5px #379807;
-      color: #379807;
+      background-color: var(--cl-green-200);
+      border: solid 5px var(--cl-green-400);
+      color: var(--cl-green-400);
     }
   }
   @keyframes to-complete-before {
