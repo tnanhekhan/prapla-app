@@ -42,6 +42,7 @@ export default {
     }
   },
   methods: {
+    // Splits the article from a phrase so we can style it differently.
     splitWord() {
       if (this.word.includes('De ') || this.word.includes('Het ')) {
         this.article = this.word.match(/(De|Het)/g)[0]
