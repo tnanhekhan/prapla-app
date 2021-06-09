@@ -73,6 +73,7 @@ export default {
     },
     changeWord() {
       this.counter ++
+      this.targetPhrase.tries++
       this.targetPhrase = this.phrases[this.counter]
 
       // Show last question on exercise end
@@ -82,7 +83,6 @@ export default {
         this.targetPhrase = this.phrases[this.counter - 1]
       }
       
-      this.targetPhrase.tries++
       this.progressValue = (this.counter / this.phrases.length) * 100
 
       document.body.classList.remove('correct', 'incorrect')
