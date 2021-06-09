@@ -48,21 +48,19 @@ export default {
     transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,.6);
+    background-color: rgba(0,0,0,.5);
     padding: 2em;
   }
   .modal {
-    width: 50vw;
-    min-width: 16em;
-    max-width: 30em;
-    height: 50vh;
+    width: clamp(15rem, 90%, 30rem);
+    height: 65vh;
     min-height: 16em;
     max-height: 30em;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--cl-purple-100);
+    background-color: #FFF;
     border-radius: 1em;
     display: flex;
     flex-direction: column;
@@ -80,7 +78,7 @@ export default {
   .modal div button {
     appearance: none;
     margin: 0 1rem;
-    color: darkred;
+    color: var(--cl-orange-400);
     font-family:
       'Arial Rounded MT',
       sans-serif;
@@ -88,13 +86,13 @@ export default {
     width: 5rem;
     height: 5rem;
     border-radius: 1.5rem;
-    border: solid red 2px;
-    box-shadow: 0 .15em 0 .05em darkred;  
+    border: solid var(--cl-orange-300);
+    box-shadow: 0 .15em 0 .05em var(--cl-orange-400);  
   }
   .modal div button:first-child {
-    border: solid green 2px;
-    box-shadow: 0 .15em 0 .05em darkgreen;
-    color: darkgreen;
+    border: solid var(--cl-green-300);
+    box-shadow: 0 .15em 0 .05em var(--cl-green-400);
+    color: var(--cl-green-400);
   }
   h2 {
     text-align: center;

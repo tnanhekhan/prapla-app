@@ -85,8 +85,7 @@ export default {
       this.targetPhrase.tries++
       this.progressValue = (this.counter / this.phrases.length) * 100
 
-      document.body.classList.remove('correct')
-      document.body.classList.remove('incorrect')
+      document.body.classList.remove('correct', 'incorrect')
     },
     onExit() {
       this.exitModal = true
@@ -101,6 +100,7 @@ export default {
       this.counter = null
       this.targetPhrase = null
       this.exitModal = false
+      document.body.classList.remove('correct', 'incorrect')
     },
     setClickEvent() {
       return this.targetPhrase.tries === 2 || this.targetPhrase.correct 
