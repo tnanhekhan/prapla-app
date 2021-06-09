@@ -45,11 +45,12 @@ export default {
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
     return {
-      phrases: data
+      phrases: data,
     }
   },
   data() {
     return {
+      bakList: null,
       speech: null,
       counter: null,
       audio: null,
@@ -67,20 +68,15 @@ export default {
     // Setup the Web Speech API
     this.buildSpeech()
     this.buildRecognition()
-
-    const bakList = new Request('/data/data.json')
-    fetch(bakList)
+    // const bakList = new Request()
+    fetch('/data/data.json')
       .then(response => response.json())
       .then(data => {
-        console.log(data)
-        let newData = data.reduce((acc, cur) => {
-          console.log(cur)
-          acc['category'].name = cur[0]
-          return acc
-        }, {})
-        console.log(newData)
+        this.bakList = data
+        console.log(this.bakList)
       })
       .catch(err => console.log(err))
+      
   },
   methods: {
     // Start the exercise

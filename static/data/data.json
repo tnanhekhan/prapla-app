@@ -3327,10 +3327,6 @@
             "word": "wonen"
         },
         {
-            "word": "huis",
-            "article": "het"
-        },
-        {
             "word": "flat",
             "article": "de"
         },
@@ -3490,7 +3486,7 @@
         },
         {
             "word": "slot",
-            "article": "de"
+            "article": "het"
         },
         {
             "word": "op slot"
@@ -3536,7 +3532,7 @@
         },
         {
             "word": "stoffer en blik",
-            "article": "het "
+            "article": "het"
         },
         {
             "word": "doek ",
@@ -3552,11 +3548,11 @@
         },
         {
             "word": "sop",
-            "article": "het "
+            "article": "het"
         },
         {
             "word": "wasmiddel",
-            "article": "het "
+            "article": "het"
         },
         {
             "word": "uitspoelen"
@@ -3603,7 +3599,7 @@
     "familie": [
         {
             "word": "moeder",
-            "article": "dd"
+            "article": "de"
         },
         {
             "word": "vader",
@@ -3819,7 +3815,8 @@
             "word": "bekeuren"
         },
         {
-            "word": "bekeuring"
+            "word": "bekeuring",
+            "article": "de"
         },
         {
             "word": "botsen"
@@ -3889,7 +3886,8 @@
             "word": "varen"
         },
         {
-            "word": "land (staat)"
+            "word": "land (staat)",
+            "article": "het"
         },
         {
             "word": "aankomst"
@@ -4128,10 +4126,12 @@
             "article": "de"
         },
         {
-            "word": "het regent"
+            "word": "regent",
+            "article": "het" 
         },
         {
-            "word": "het waait"
+            "word": "waait",
+            "article": "het"
         },
         {
             "word": "blad / blaadje"
@@ -4150,9 +4150,6 @@
         },
         {
             "word": "omwaaien"
-        },
-        {
-            "word": "pla"
         },
         {
             "word": "paddestoel",
@@ -4182,7 +4179,8 @@
             "word": "koud"
         },
         {
-            "word": "het vriest"
+            "word": "vriest",
+            "article": "het"
         },
         {
             "word": "ijs",
@@ -4193,7 +4191,8 @@
             "article": "de"
         },
         {
-            "word": "het sneeuwt"
+            "word": "sneeuwt",
+            "article": "het"
         },
         {
             "word": "sneeuwpop",
@@ -4265,7 +4264,8 @@
             "word": "warm"
         },
         {
-            "word": "de zon schijnt"
+            "word": "zon schijnt",
+            "article": "de"
         },
         {
             "word": "gras",
