@@ -39,12 +39,12 @@ if (!Vue.recognition) {
         if (speechResult === this.targetPhrase.word.toLowerCase()) {
           this.targetPhrase.correct = true
           this.audio = new Audio('/sounds/feedback_positive.mp3')
-          document.body.style.background = 'var(--cl-green-100)'
+          document.body.classList.add('correct')
           setTimeout(() => this.giveFeedback(), 1000)
         } else {
           this.targetPhrase.tries++
-          document.body.style.background = 'var(--cl-orange-100)'
           this.audio = new Audio('/sounds/feedback_negative.mp3')
+          document.body.classList.add('incorrect')
           setTimeout(() => this.giveFeedback(speechResult), 1000)
           
           if(this.targetPhrase.tries === 2) {

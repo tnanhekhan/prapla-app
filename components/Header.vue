@@ -44,8 +44,7 @@
     width: 1.7rem;
   }
 
-  nav svg path {
-    fill: var(--cl-primary-200);
-    transform: translate(-3px, -3px);
+  nav svg line {
+    stroke: var(--cl-primary-200);
   }
 </style>

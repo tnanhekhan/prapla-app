@@ -85,7 +85,8 @@ export default {
       this.targetPhrase.tries++
       this.progressValue = (this.counter / this.phrases.length) * 100
 
-      document.body.style.background = 'rgb(255, 255, 255)'
+      document.body.classList.remove('correct')
+      document.body.classList.remove('incorrect')
     },
     onExit() {
       this.exitModal = true
