@@ -40,6 +40,7 @@
 <script>
 
 export default {
+  // Get the exercise asynchronously
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
     return {
@@ -62,15 +63,18 @@ export default {
     }
   },
   mounted() {
+    // Setup the Web Speech API
     this.buildSpeech()
     this.buildRecognition()
   },
   methods: {
+    // Start the exercise
     startExercise() {
       this.counter = 0
       this.targetPhrase = this.phrases[this.counter]
       this.speak('Druk op de knop en zeg mij na:')
     },
+    // Go to the next word
     changeWord() {
       this.counter ++
       this.targetPhrase.tries++
@@ -92,11 +96,9 @@ export default {
       this.speak('Weet je zeker dat je wilt stoppen?')
     },
     closeModal() {
-      console.log('hello')
       this.exitModal = false
     },
     sendToHome() {
-      console.log('hola')
       this.counter = null
       this.targetPhrase = null
       this.exitModal = false
@@ -116,6 +118,7 @@ export default {
         return '/icons/Microphone.svg'
       }
     },
+    // After finishing each phrase
     isCompleted() {
       this.progressValue = 100
       setTimeout(() => {
@@ -132,6 +135,7 @@ export default {
       this.clap.volume = 0.5
       this.clap.play()
 
+      // Slowly lower the volume of the claps to make it less abrupt
       setTimeout( () => {
         setInterval(() => {
           if(this.clap.volume > 0.06) {
