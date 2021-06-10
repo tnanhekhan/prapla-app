@@ -30,6 +30,7 @@ if (!Vue.recognition) {
         this.isRecording = true
         this.targetPhrase = this.phrases[this.counter]
         this.recognition.start()
+        document.body.classList.remove('correct', 'incorrect')
       },
       onResult(event) {
         this.recognition.stop()
@@ -39,12 +40,12 @@ if (!Vue.recognition) {
         if (speechResult === this.targetPhrase.word.toLowerCase()) {
           this.targetPhrase.correct = true
           this.audio = new Audio('/sounds/feedback_positive.mp3')
-          document.body.style.background = '#C3E6CF'
+          document.body.classList.add('correct')
           setTimeout(() => this.giveFeedback(), 1000)
         } else {
           this.targetPhrase.tries++
-          document.body.style.background = '#FFD2D2'
           this.audio = new Audio('/sounds/feedback_negative.mp3')
+          document.body.classList.add('incorrect')
           setTimeout(() => this.giveFeedback(speechResult), 1000)
           
           if(this.targetPhrase.tries === 2) {

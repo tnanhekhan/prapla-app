@@ -2,11 +2,18 @@
   <header>
     <nav>
       <svg 
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 35.904 35.904"
+        xmlns="http://www.w3.org/2000/svg" 
+        width="22.368" 
+        height="22.368" 
+        viewBox="0 0 22.368 22.368"
         @click="empty"
       >
-        <path d="M20.952,3A17.952,17.952,0,1,0,38.9,20.952,17.936,17.936,0,0,0,20.952,3Zm8.976,24.4L27.4,29.928l-6.445-6.445-6.445,6.445L11.976,27.4l6.445-6.445-6.445-6.445,2.531-2.531,6.445,6.445L27.4,11.976l2.531,2.531-6.445,6.445Z"/>
+
+        <g id="Group_63" data-name="Group 63" transform="translate(-130.672 -24.672)">
+          <line id="Line_2" data-name="Line 2" x2="16.711" y2="16.711" transform="translate(133.5 27.5)" fill="none" stroke="#70a4d0" stroke-linecap="round" stroke-width="4"/>
+          <line id="Line_3" data-name="Line 3" x1="16.711" y2="16.711" transform="translate(133.5 27.5)" fill="none" stroke="#70a4d0" stroke-linecap="round" stroke-width="4"/>
+        </g>
+
       </svg>
     </nav>
   </header>
@@ -33,12 +40,11 @@
   }
 
   svg {
-    height: 2rem;
-    width: 2rem;
+    height: 1.7rem;
+    width: 1.7rem;
   }
 
-  nav svg path {
-    fill: var(--cl-purple-300);
-    transform: translate(-3px, -3px);
+  nav svg line {
+    stroke: var(--cl-primary-200);
   }
 </style>

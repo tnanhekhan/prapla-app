@@ -25,6 +25,7 @@ export default {
     }
   },
   mounted() {
+     // Setup the Web Speech API
     this.buildSpeech()
     this.buildLoginRecognition()
   },
@@ -83,7 +84,7 @@ export default {
     appearance: none;
     border: none;
     color: white;
-    background-color: var(--cl-purple-300);
+    background-color: var(--cl-primary-300);
     padding: 1rem 2rem;
     border-radius: 30px;
     font-weight: bold;

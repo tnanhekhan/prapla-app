@@ -42,7 +42,7 @@ if (!Vue.login) {
           document.body.style.background = '#FFF'
         } catch (err) {
           this.speak(`Helaas herken ik: ${speechResult}, niet`)
-          document.body.style.background = '#FFD2D2'
+          document.body.style.background = 'var(--cl-orange-100)'
         }
 
         console.log(this.$auth.user)

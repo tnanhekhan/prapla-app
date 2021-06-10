@@ -2,7 +2,7 @@
   <div>
     <Header
       v-if="counter !== null"
-      :empty="onEmpty"
+      :empty="onExit"
       :counter="counter"
     />
     <main>
@@ -25,7 +25,8 @@
         :disabled="isRecording"
       />
     </main>
-    <Modal v-if="showModal"/>
+    <Complete v-if="showComplete"/>
+    <ExitModal v-if="exitModal" :closeModal="closeModal" :sendToHome="sendToHome"/>
     <footer>
       <ProgressBar
         v-if="counter !== null"
@@ -38,14 +39,17 @@
 
 <script>
 export default {
+  // Get the exercise asynchronously
   async asyncData({ $axios, $auth }) {
     const { data } = await $axios.post('/exercise', { user: $auth.user })
+    
     return {
-      phrases: data
+      phrases: data,
     }
   },
   data() {
     return {
+      bakList: null,
       speech: null,
       counter: null,
       audio: null,
@@ -55,22 +59,36 @@ export default {
       isRecording: false,
       targetPhrase: '',
       voices: [],
-      showModal: false
+      showComplete: false,
+      exitModal: false,
     }
   },
   mounted() {
+    // Setup the Web Speech API
     this.buildSpeech()
     this.buildRecognition()
+
+    fetch('/data/data.json')
+      .then(response => response.json())
+      .then(data => {
+        this.bakList = data
+        console.log(this.bakList)
+      })
+      .catch(err => console.log(err))
+      
   },
   middleware: 'auth',
   methods: {
+    // Start the exercise
     startExercise() {
       this.counter = 0
       this.targetPhrase = this.phrases[this.counter]
       this.speak('Druk op de knop en zeg mij na:')
     },
+    // Go to the next word
     changeWord() {
       this.counter ++
+      this.targetPhrase.tries++
       this.targetPhrase = this.phrases[this.counter]
 
       // Show last question on exercise end
@@ -80,14 +98,22 @@ export default {
         this.targetPhrase = this.phrases[this.counter - 1]
       }
       
-      this.targetPhrase.tries++
       this.progressValue = (this.counter / this.phrases.length) * 100
 
-      document.body.style.background = 'var(--cl-purple-100)'
+      document.body.classList.remove('correct', 'incorrect')
     },
-    onEmpty() {
+    onExit() {
+      this.exitModal = true
+      this.speak('Weet je zeker dat je wilt stoppen?')
+    },
+    closeModal() {
+      this.exitModal = false
+    },
+    sendToHome() {
       this.counter = null
       this.targetPhrase = null
+      this.exitModal = false
+      document.body.classList.remove('correct', 'incorrect')
     },
     setClickEvent() {
       return this.targetPhrase.tries === 2 || this.targetPhrase.correct 
@@ -103,12 +129,12 @@ export default {
         return '/icons/Microphone.svg'
       }
     },
+    // After finishing each phrase
     isCompleted() {
       this.progressValue = 100
       setTimeout(() => {
-        this.showModal = true
+        this.showComplete = true
       }, 1000)
-      document.body.style.background = '#F8F8FF'
     },
     startFinishSound() {
       this.audio = new Audio('/sounds/feedback_completed.mp3')
@@ -119,6 +145,7 @@ export default {
       this.clap.volume = 0.5
       this.clap.play()
 
+      // Slowly lower the volume of the claps to make it less abrupt
       setTimeout( () => {
         setInterval(() => {
           if(this.clap.volume > 0.06) {
@@ -154,7 +181,7 @@ export default {
     appearance: none;
     border: none;
     color: white;
-    background-color: var(--cl-purple-300);
+    background-color: var(--cl-primary-300);
     padding: 1rem 2rem;
     font-weight: bold;
   }
