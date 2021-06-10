@@ -18,7 +18,7 @@ You can look at our Design Rationale [here](https://github.com/MarvinMichel/prap
 ### Must haves
 - [x] Research privacy aspects of Web Speech API
 - [x] Build Dutch support for Web Speech API
-- [ ] Connect with external database for words ([BAK](https://firebasestorage.googleapis.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-M_p4V46StBPnyvvNBnN%2F-M_tYEYRZ0suAyLWPQUR%2F-M_tYV_IezP-m0Mw3ikE%2FBAK%20groep%201.xlsx?alt=media&token=7a24d3d8-6310-4b33-9f10-90f2b338c88f))
+- [x] Connect with external database for words ([BAK](https://firebasestorage.googleapis.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-M_p4V46StBPnyvvNBnN%2F-M_tYEYRZ0suAyLWPQUR%2F-M_tYV_IezP-m0Mw3ikE%2FBAK%20groep%201.xlsx?alt=media&token=7a24d3d8-6310-4b33-9f10-90f2b338c88f))
 
 ### Should haves
 - [x] Visual representation of the words (vector images)
@@ -26,7 +26,7 @@ You can look at our Design Rationale [here](https://github.com/MarvinMichel/prap
 - [ ] A Content Management System for exercises
 
 ### Could haves
-- [ ] Different categories of exercises
+- [ ] Different categories of exercises, based on level
 - [ ] Alternative for a recording button
 
 ## Dependencies

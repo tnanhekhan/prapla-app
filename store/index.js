@@ -7,3 +7,11 @@ export const getters = {
     return state.auth.user
   }
 }
+
+export const actions = {
+  async nuxtServerInit({ commit }, { req }) {
+    if (req.session.user) {
+      this.$auth.setUser(req.session.user)
+    }
+  }
+}

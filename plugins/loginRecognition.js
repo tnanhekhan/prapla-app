@@ -10,6 +10,7 @@ if (!Vue.login) {
       }
     },
     methods: {
+      // Setup the Web Speech API's speech recognition for login
       buildLoginRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
@@ -17,38 +18,44 @@ if (!Vue.login) {
         this.recognition.lang = 'nl-NL'
         this.recognition.continuous = false
         this.recognition.interimResults = false
-        this.recognition.maxAlternatives = 2
+        this.recognition.maxAlternatives = 1
     
         this.recognition.addEventListener('result', this.loginOnResult)
         this.recognition.addEventListener('speechend', this.loginOnUserSpeechEnd)
       },
+      // Stop listining on end of user speech
       loginOnUserSpeechEnd() {
         this.recognition.stop()
         this.isRecording = false
       },
+      // Start listining for user speech input
       loginStartSpeech() {
         this.isRecording = true
         this.recognition.start()
       },
+      // Handle login when result has been recognized
       async loginOnResult (event) {
         this.recognition.stop()
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
+        // Handle user's secret word for authentication
         try {
-          const { data: user } = await this.$auth.loginWith('local', { data: { secret: speechResult } })
+          // Use local login strategy for auth
+          const { data: user } = await this.$auth.loginWith('local', {
+            data: {
+              secret: speechResult
+            }
+          })
+
           this.$auth.setUser(user)
           this.speak(`Welkom, ${user.name.firstname}`)
+          
           document.body.style.background = '#FFF'
         } catch (err) {
           this.speak(`Helaas herken ik: ${speechResult}, niet`)
           document.body.style.background = 'var(--cl-orange-100)'
         }
-
-        console.log(this.$auth.user)
-  
-        console.log(speechResult)
-        console.log('Confidence: ' + event.results[0][0].confidence)
       }
     }
   })

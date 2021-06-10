@@ -42,7 +42,6 @@ export default {
   // Get the exercise asynchronously
   async asyncData({ $axios, $auth }) {
     const { data } = await $axios.post('/exercise', { user: $auth.user })
-    
     return {
       phrases: data,
     }
@@ -72,10 +71,8 @@ export default {
       .then(response => response.json())
       .then(data => {
         this.bakList = data
-        console.log(this.bakList)
       })
-      .catch(err => console.log(err))
-      
+      .catch(err => console.log(err)) 
   },
   middleware: 'auth',
   methods: {
@@ -140,9 +137,8 @@ export default {
       this.audio = new Audio('/sounds/feedback_completed.mp3')
       this.clap = new Audio('/sounds/feedback_clapping.mp3')
 
-      this.audio.play()
-      
       this.clap.volume = 0.5
+      this.audio.play()
       this.clap.play()
 
       // Slowly lower the volume of the claps to make it less abrupt
