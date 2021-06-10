@@ -6,21 +6,21 @@
       :counter="counter"
     />
     <main>
-      <!--
-      <Word
+      
+      <!-- <Word
         v-if="targetPhrase"
         :word="targetPhrase.word"
         :speech="speech"
         :voice="voices"
-      />
-      -->
+      />-->
+     
       <VisualExercise 
         v-if="targetPhrase"
         :question="targetPhrase.question"
         :images="targetPhrase.images"
         :voice="voices"
         :visualAnswer="visualAnswer"
-        :getAnswer="getAnswer"/>
+        :getAnswer="getAnswer"/> 
 
       <button
         class="start-button"
@@ -74,7 +74,13 @@ export default {
       voices: [],
       showComplete: false,
       exitModal: false,
-      visualAnswer: null
+      visualAnswer: null,
+      instructions: [
+        'Druk op de knop en zeg mij na:',
+        'Druk op de knop en doe iets anders:',
+        'Klik op het juiste antwoord:',
+        'Klik op de knop en beantwoord de vraag:'
+      ]
     }
   },
   mounted() {
@@ -96,11 +102,7 @@ export default {
     startExercise() {
       this.counter = 0
       this.targetPhrase = this.phrases[this.counter]
-      if (this.level === 1) {
-        this.speak('Druk op de knop en zeg mij na:')
-      } else if (this.level === 3) {
-        this.speak('Klik op het juiste antwoord:')
-      }
+      this.speak(this.instructions[this.level - 1])
     },
     // Go to the next word
     changeWord() {
@@ -140,33 +142,23 @@ export default {
       console.log(this.visualAnswer)
     },
     checkMultipleAnswer(answer) {
+      this.counter++
       this.progressValue = (this.counter / this.phrases.length) * 100
+
       if(this.targetPhrase.correctAnswer === answer) {
-        this.counter++
         this.targetPhrase.correct = true;
-
-        
-        
-        
         this.targetPhrase.tries++
-        console.log('Place success code here')
-
         this.audio = new Audio('/sounds/feedback_positive.mp3')
         document.body.classList.add('correct')
         setTimeout(() => this.giveFeedback(), 1000)
 
       } else {
         this.targetPhrase.tries++
-
-        console.log('Place error code here')
         this.audio = new Audio('/sounds/feedback_negative.mp3')
         document.body.classList.add('incorrect')
-        setTimeout(() => this.giveFeedback(), 1000)
       }
       
-      this.audio.play()
-
-       
+      this.audio.play()       
     },
     nextQuestion() {
       
@@ -177,32 +169,46 @@ export default {
       for(var i=0;i<inputFields.length;i++) inputFields[i].checked = false;
     },
     setClickEvent() {
-      if (this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
+      if(this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
          return this.nextQuestion()
       } else if(this.targetPhrase.correctAnswer) {
         return this.checkMultipleAnswer(this.visualAnswer)
-      }
-      if (this.targetPhrase.tries === 2 || this.targetPhrase.correct ) {
+      } else if(this.targetPhrase.tries === 2 || this.targetPhrase.correct ) {
        return this.changeWord()
       } else {
         return this.startSpeech()
       }
     },
     setButtonIcon() {
-       if (this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
-         return '/icons/Next.svg'
-      } else if(this.targetPhrase.correctAnswer) {
-        return '/icons/Check.svg'
-      } else if(this.targetPhrase.correctAnswer) {
-        return '/icons/Check.svg'
-      } else if (this.isRecording) {
-        return '/icons/Ear.svg'
-      } else if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
-        return '/icons/Next.svg'    
-      } else {
-        return '/icons/Microphone.svg'
+     
+      const icons = {
+        '/icons/Ear.svg': this.isRecording,
+        '/icons/Next.svg': this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer || this.targetPhrase.correct || this.targetPhrase.tries === 2,
+        '/icons/Microphone.svg': this.targetPhrase.word && !this.targetPhrase.correct,
+        '/icons/Check.svg': this.targetPhrase.correctAnswer
       }
       
+      for(const [key, value] of Object.entries(icons)) {
+        console.log('entry: ', key, value)
+        if (value !== false && value && value !== undefined) {
+          console.log('hey', key, value)
+          return key;
+        }
+      }
+      // console.log()
+      // // return icons[icons.] ?? '/icons/Microphone.svg'
+
+      // if (this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
+      //    return '/icons/Next.svg'
+      // } else if(this.targetPhrase.correctAnswer) {
+      //   return '/icons/Check.svg'
+      // } else if (this.isRecording) {
+      //   return '/icons/Ear.svg'
+      // } else if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
+      //   return '/icons/Next.svg'    
+      // } else {
+      //   return '/icons/Microphone.svg'
+      // }
     },
     // After finishing each phrase
     isCompleted() {

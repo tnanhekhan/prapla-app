@@ -36,7 +36,7 @@ if (!Vue.speech) {
       giveFeedback(result = undefined) {
         if (result) {
           this.speak(`Helaas hoorde ik: ${result}`)
-          this.speak(`Ik wíl graag horen: ${this.targetPhrase.word}`)
+          this.speak(`Ik wíl graag horen: ${this.targetPhrase.word ? this.targetPhrase.word : this.targetPhrase.correctAnswer }`)
         } else {
           // Speak a random positive sentence when correct
           this.speak(this.randomText())
