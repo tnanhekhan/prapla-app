@@ -33,9 +33,10 @@ if (!Vue.login) {
       async loginOnResult (event) {
         this.recognition.stop()
         this.isRecording = false
+        
         const speechResult = event.results[0][0].transcript.toLowerCase()
         const { data } = await this.$axios.get(`/auth/${speechResult}`)
-
+       
         if (data !== null) {
           this.speak(`Welkom, ${data.name.firstname}`)
           this.$router.push('/')

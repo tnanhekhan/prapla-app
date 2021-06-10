@@ -5,7 +5,8 @@ const visualSchema = new mongoose.Schema({
     correct: { type: Boolean, required: true },
     images: { type: Array, required: true},
     question: { type: String, required: true },
-    tries: { type: Number, required: true }
+    tries: { type: Number, required: true },
+    correctAnswer: { type: String, required: true}
   }],
 }, { collection: 'visualExercises' })
 

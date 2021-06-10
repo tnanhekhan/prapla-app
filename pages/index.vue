@@ -14,7 +14,14 @@
         :voice="voices"
       />
       -->
-      <VisualExercise />
+      <VisualExercise 
+        v-if="targetPhrase"
+        :question="targetPhrase.question"
+        :images="targetPhrase.images"
+        :voice="voices"
+        :visualAnswer="visualAnswer"
+        :getAnswer="getAnswer"/>
+
       <button
         class="start-button"
         v-if="counter === null"
@@ -47,8 +54,10 @@ export default {
   // Get the exercise asynchronously
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
+    console.log(data)
     return {
-      phrases: data,
+      phrases: data.phrases,
+      level: data.level
     }
   },
   data() {
@@ -65,6 +74,7 @@ export default {
       voices: [],
       showComplete: false,
       exitModal: false,
+      visualAnswer: null
     }
   },
   mounted() {
@@ -86,7 +96,11 @@ export default {
     startExercise() {
       this.counter = 0
       this.targetPhrase = this.phrases[this.counter]
-      this.speak('Druk op de knop en zeg mij na:')
+      if (this.level === 1) {
+        this.speak('Druk op de knop en zeg mij na:')
+      } else if (this.level === 3) {
+        this.speak('Klik op het juiste antwoord:')
+      }
     },
     // Go to the next word
     changeWord() {
@@ -118,19 +132,77 @@ export default {
       this.exitModal = false
       document.body.classList.remove('correct', 'incorrect')
     },
+    getAnswer() {
+      const inputVal = document.querySelector('input[name="images"]:checked')  
+      if(inputVal){
+        this.visualAnswer = inputVal.value
+      }
+      console.log(this.visualAnswer)
+    },
+    checkMultipleAnswer(answer) {
+      this.progressValue = (this.counter / this.phrases.length) * 100
+      if(this.targetPhrase.correctAnswer === answer) {
+        this.counter++
+        this.targetPhrase.correct = true;
+
+        
+        
+        
+        this.targetPhrase.tries++
+        console.log('Place success code here')
+
+        this.audio = new Audio('/sounds/feedback_positive.mp3')
+        document.body.classList.add('correct')
+        setTimeout(() => this.giveFeedback(), 1000)
+
+      } else {
+        this.targetPhrase.tries++
+
+        console.log('Place error code here')
+        this.audio = new Audio('/sounds/feedback_negative.mp3')
+        document.body.classList.add('incorrect')
+        setTimeout(() => this.giveFeedback(), 1000)
+      }
+      
+      this.audio.play()
+
+       
+    },
+    nextQuestion() {
+      
+      this.targetPhrase = this.phrases[this.counter]
+      document.body.classList.remove('correct', 'incorrect')
+
+      var inputFields = document.getElementsByName("images");
+      for(var i=0;i<inputFields.length;i++) inputFields[i].checked = false;
+    },
     setClickEvent() {
-      return this.targetPhrase.tries === 2 || this.targetPhrase.correct 
-        ? this.changeWord() 
-        : this.startSpeech()
+      if (this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
+         return this.nextQuestion()
+      } else if(this.targetPhrase.correctAnswer) {
+        return this.checkMultipleAnswer(this.visualAnswer)
+      }
+      if (this.targetPhrase.tries === 2 || this.targetPhrase.correct ) {
+       return this.changeWord()
+      } else {
+        return this.startSpeech()
+      }
     },
     setButtonIcon() {
-      if (this.isRecording) {
+       if (this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
+         return '/icons/Next.svg'
+      } else if(this.targetPhrase.correctAnswer) {
+        return '/icons/Check.svg'
+      } else if(this.targetPhrase.correctAnswer) {
+        return '/icons/Check.svg'
+      } else if (this.isRecording) {
         return '/icons/Ear.svg'
       } else if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
         return '/icons/Next.svg'    
       } else {
         return '/icons/Microphone.svg'
       }
+      
     },
     // After finishing each phrase
     isCompleted() {

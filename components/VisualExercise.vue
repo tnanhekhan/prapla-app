@@ -1,44 +1,102 @@
 <template>
   <section>
-    <button v-for="image in images" :key="image"> 
-        <img :src="image + '.jpg'" :alt="image"/>
-        <span>{{ image }}<span/>
-    </button>
-
-    <GlobalButton 
-        :clickEvent="setClickEvent"
-        :buttonIcon="setButtonIcon()" />
+    <div class="option-buttons">
+      <div 
+        v-for="image in images" 
+        :key="image"
+        @click="getAnswer()">
+        <input :id="image" type="radio" name="images" :value="image"/>
+        <label :for="image"> 
+          <img :src="baseUrl + image + '.svg'" :alt="image"/>
+        </label>
+      </div>
+    </div>
+    <p>{{ question }}</p>
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
+  props: {
+    images: {
+      type: Array
+    },
+    question: {
+      type: String
+    },
+    getAnswer: {
+      type: Function
     }
   },
-  methods: {
-    setClickEvent() {
-      return this.targetPhrase.tries === 2 || this.targetPhrase.correct 
-        ? this.nextExercise()
-        : this.selectChoice()
-    },
-    setButtonIcon() {
-      if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
-        return '/icons/Next.svg'    
-      } else  {
-        return '/icons/Done.svg'
+  data() {
+    return {
+      baseUrl: process.env.CLOUDINARY_BASE_URL
+    }
+  },
+  
+  watch: {
+    visualAnswer: {
+      immediate: true,
+      handler () {
+        this.visualAnswer
       }
-    },
+    }
   }
 }
 </script>
 
 <style lang="css" scoped>
-    button span {
-        opacity: 0;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-    }
+  section {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .option-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+  }
+
+  .option-buttons > div {
+    position: relative;
+    margin: 1em;
+    max-width: clamp(1em, 40%, 15em);
+  }
+
+  input {
+    display: none;
+  }
+
+  label {
+    box-shadow: 0 .35em 0 .05em var(--cl-grey-200);
+    background-color: #FFF;
+    width: 100%;
+    height: 100%;
+    border-radius: 2em;
+    display: inline-block;
+    border: solid #D1D1D1 1px;
+    cursor: pointer;
+  }
+
+  input[type="radio"]:checked + label  {
+    background-color: var(--cl-primary-200);
+    box-shadow: 0 .35em 0 .05em var(--cl-primary-300);
+    border: solid var(--cl-primary-300) 1px;
+  }
+
+  label img {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.7);
+  }
+
+  p {
+    font-size: 1.5em;
+  }
+
+  
 </style>
