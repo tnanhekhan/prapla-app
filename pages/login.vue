@@ -28,7 +28,7 @@ export default {
     this.buildSpeech()
     this.buildLoginRecognition()
   },
-  middleware: 'quest',
+  middleware: 'guest',
   methods: {
     setButtonIcon() {
       if (this.isRecording) {
