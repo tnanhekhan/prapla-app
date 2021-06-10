@@ -1,12 +1,8 @@
 import Vue from 'vue'
-import { mapGetters } from 'vuex'
 
 if (!Vue.login) {
   Vue.login = true
   Vue.mixin({
-    computed: {
-      ...mapGetters(['loggedInUser'])
-    },
     data() {
       return {
         recognition: null,
