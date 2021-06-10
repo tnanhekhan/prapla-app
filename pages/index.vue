@@ -37,7 +37,6 @@
 </template>
 
 <script>
-
 export default {
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
@@ -63,6 +62,7 @@ export default {
     this.buildSpeech()
     this.buildRecognition()
   },
+  middleware: 'auth',
   methods: {
     startExercise() {
       this.counter = 0

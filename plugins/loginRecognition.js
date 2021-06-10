@@ -35,13 +35,16 @@ if (!Vue.login) {
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
-        const { data } = await this.$axios.get(`/auth/${speechResult}`)
-
-        if (data !== null) {
-          this.speak(`Welkom, ${data.name.firstname}`)
+        try {
+          const user = await this.$auth.loginWith('local', { data: { secret: speechResult } })
+          if (user === null) throw 'Not authorized'
+          this.speak(`Welkom, ${user.name.firstname}`)
           this.$router.push('/')
-        } else {
-					document.body.style.background = '#FFD2D2'
+        } catch (err) {
+          if(err.response) {
+            this.speak(`Helaas herken ik: ${speechResult}, niet`)
+            document.body.style.background = '#FFD2D2'
+          }
         }
   
         console.log(speechResult)

@@ -18,16 +18,26 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
+  computed: {
+    ...mapGetters(['isAuthenticated'])
+  },
   data() {
     return {
       login: false
     }
   },
   mounted() {
-    this.buildSpeech()
-    this.buildLoginRecognition()
+    if (this.isAuthenticated) {
+      this.$router.push('/')
+    } else {
+      this.buildSpeech()
+      this.buildLoginRecognition()
+    }
   },
+  middleware: 'quest',
   methods: {
     setButtonIcon() {
       if (this.isRecording) {

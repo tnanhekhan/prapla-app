@@ -27,7 +27,10 @@ export default {
   buildDir: 'dist',
   components: true,
   serverMiddleware: ['~/server-middleware/index.js'],
-  modules: ['@nuxtjs/axios'],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
+  ],
   plugins: [
     '~/plugins/speech',
     '~/plugins/recognition',
@@ -35,5 +38,16 @@ export default {
   ],
   "axios": {
     baseURL: process.env.BASE_URL
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/auth', method: 'post' },
+          user: false,
+          logout: false
+        }
+      }
+    }
   }
 }
