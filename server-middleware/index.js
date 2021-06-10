@@ -7,6 +7,7 @@ import exercises from './routes/exercise'
 const app = express()
 app.locals.db = db
 
+// Set the session
 const sessionOptions = {
   name: 'session',
   keys: ['Leren praten'],

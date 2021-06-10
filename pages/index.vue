@@ -6,12 +6,15 @@
       :counter="counter"
     />
     <main>
+      <!--
       <Word
         v-if="targetPhrase"
         :word="targetPhrase.word"
         :speech="speech"
         :voice="voices"
       />
+      -->
+      <VisualExercise />
       <button
         class="start-button"
         v-if="counter === null"
