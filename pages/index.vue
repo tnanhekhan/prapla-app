@@ -38,8 +38,8 @@
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    const { data } = await $axios.get('/exercise')
+  async asyncData({ $axios, $auth }) {
+    const { data } = await $axios.post('/exercise', { user: $auth.user })
     return {
       phrases: data
     }

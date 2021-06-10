@@ -5,8 +5,11 @@ const router = Router()
 
 router.post('/', async (req, res) => {
   const user = await User.findById(req.body.secret)
-  req.session.user = user
-  res.json(user)
+  if (!user) {
+    res.status(401).send({ 'error': 'User not found!' })
+  } else {
+    res.json(user)
+  }
 })
 
 export default router

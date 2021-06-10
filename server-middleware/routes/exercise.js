@@ -3,8 +3,8 @@ import SpeechExercise from '../models/SpeechExercise'
 
 const router = Router()
 
-router.get('/', async (req, res, next) => {
-  const user = req.session.user
+router.post('/', async (req, res) => {
+  const user = req.body.user
   const id = user.exercises[0]
   const exercise = await SpeechExercise.findById(id)
 

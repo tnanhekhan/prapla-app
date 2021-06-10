@@ -44,8 +44,8 @@ export default {
       local: {
         endpoints: {
           login: { url: '/auth', method: 'post' },
-          user: false,
-          logout: false
+          logout: false,
+          user: false
         }
       }
     }

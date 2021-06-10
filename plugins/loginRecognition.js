@@ -1,8 +1,12 @@
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 
 if (!Vue.login) {
   Vue.login = true
   Vue.mixin({
+    computed: {
+      ...mapGetters(['loggedInUser'])
+    },
     data() {
       return {
         recognition: null,
@@ -36,20 +40,20 @@ if (!Vue.login) {
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
         try {
-          const user = await this.$auth.loginWith('local', { data: { secret: speechResult } })
-          if (user === null) throw 'Not authorized'
+          const { data: user } = await this.$auth.loginWith('local', { data: { secret: speechResult } })
+          this.$auth.setUser(user)
           this.speak(`Welkom, ${user.name.firstname}`)
-          this.$router.push('/')
+          document.body.style.background = '#FFF'
         } catch (err) {
-          if(err.response) {
-            this.speak(`Helaas herken ik: ${speechResult}, niet`)
-            document.body.style.background = '#FFD2D2'
-          }
+          this.speak(`Helaas herken ik: ${speechResult}, niet`)
+          document.body.style.background = '#FFD2D2'
         }
+
+        console.log(this.$auth.user)
   
         console.log(speechResult)
         console.log('Confidence: ' + event.results[0][0].confidence)
-      },
+      }
     }
   })
 }
