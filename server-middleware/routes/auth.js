@@ -3,10 +3,11 @@ import User from '../models/User'
 
 const router = Router()
 
-router.get('/:secret', async (req, res, next) => {
-  const user = await User.findById(req.params.secret)
-  if (user) {
-    req.session.user = user
+router.post('/', async (req, res) => {
+  const user = await User.findById(req.body.secret)
+  if (!user) {
+    res.status(401).send({ 'error': 'User not found!' })
+  } else {
     res.json(user)
   }
 })

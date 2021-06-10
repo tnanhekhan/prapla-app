@@ -38,12 +38,11 @@
 </template>
 
 <script>
-
 export default {
-  
   // Get the exercise asynchronously
-  async asyncData({ $axios }) {
-    const { data } = await $axios.get('/exercise')
+  async asyncData({ $axios, $auth }) {
+    const { data } = await $axios.post('/exercise', { user: $auth.user })
+    
     return {
       phrases: data,
     }
@@ -78,6 +77,7 @@ export default {
       .catch(err => console.log(err))
       
   },
+  middleware: 'auth',
   methods: {
     // Start the exercise
     startExercise() {

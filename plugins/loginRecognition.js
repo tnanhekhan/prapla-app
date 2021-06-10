@@ -34,18 +34,22 @@ if (!Vue.login) {
         this.recognition.stop()
         this.isRecording = false
         const speechResult = event.results[0][0].transcript.toLowerCase()
-        const { data } = await this.$axios.get(`/auth/${speechResult}`)
 
-        if (data !== null) {
-          this.speak(`Welkom, ${data.name.firstname}`)
-          this.$router.push('/')
-        } else {
-					document.body.style.background = 'var(--cl-orange-100)'
+        try {
+          const { data: user } = await this.$auth.loginWith('local', { data: { secret: speechResult } })
+          this.$auth.setUser(user)
+          this.speak(`Welkom, ${user.name.firstname}`)
+          document.body.style.background = '#FFF'
+        } catch (err) {
+          this.speak(`Helaas herken ik: ${speechResult}, niet`)
+          document.body.style.background = 'var(--cl-orange-100)'
         }
+
+        console.log(this.$auth.user)
   
         console.log(speechResult)
         console.log('Confidence: ' + event.results[0][0].confidence)
-      },
+      }
     }
   })
 }
