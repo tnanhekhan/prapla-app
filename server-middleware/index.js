@@ -8,9 +8,9 @@ const app = express()
 app.locals.db = db
 
 const sessionOptions = {
-  name: 'session',
+  name: 'auth',
   keys: ['Leren praten'],
-  maxAge: 2 * 60 * 60 * 1000
+  maxAge: 30 * 60 * 1000
 }
 
 app

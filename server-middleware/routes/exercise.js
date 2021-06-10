@@ -3,7 +3,6 @@ import SpeechExercise from '../models/SpeechExercise'
 
 const router = Router()
 
-
 router.post('/', async (req, res) => {
   // Show exercises to user
   const user = req.body.user
