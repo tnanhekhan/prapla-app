@@ -7,15 +7,15 @@
     />
     <main>
       
-      <!-- <Word
-        v-if="targetPhrase"
+      <Word
+        v-if="targetPhrase && level === 1"
         :word="targetPhrase.word"
         :speech="speech"
         :voice="voices"
-      />-->
+      />
      
       <VisualExercise 
-        v-if="targetPhrase"
+        v-if="targetPhrase && level === 3"
         :question="targetPhrase.question"
         :images="targetPhrase.images"
         :voice="voices"
