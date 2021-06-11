@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
   _id: String,
   exercises: [
     {
-      _id: mongoose.Types.ObjectId,
+      _id: String,
       completed: Boolean
     }
   ],

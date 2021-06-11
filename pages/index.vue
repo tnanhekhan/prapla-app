@@ -6,23 +6,20 @@
       :counter="counter"
     />
     <main>
-      
       <Word
         v-if="targetPhrase && level === 1"
         :word="targetPhrase.word"
         :speech="speech"
         :voice="voices"
       />
-     
-      <VisualExercise 
+      <VisualExercise
         v-if="targetPhrase && level === 3"
         :question="targetPhrase.question"
         :images="targetPhrase.images"
         :voice="voices"
         :visualAnswer="visualAnswer"
         :getAnswer="getAnswer"
-      /> 
-
+      />
       <button
         class="start-button"
         v-if="counter === null"
@@ -36,7 +33,7 @@
         :disabled="isRecording"
       />
     </main>
-    <Complete v-if="showComplete"/>
+    <Complete v-if="showComplete" :nextExercise="nextExercise"/>
     <ExitModal v-if="exitModal" :closeModal="closeModal" :sendToHome="sendToHome"/>
     <footer>
       <ProgressBar
@@ -51,7 +48,7 @@
 <script>
 export default {
   // Get the exercise asynchronously
-  async asyncData({ $axios }) {
+  async asyncData({ $axios, $auth }) {
     const { data } = await $axios.post('/exercise', { user: $auth.user })
     let exercises = []
 
@@ -219,9 +216,22 @@ export default {
       this.progressValue = 100
       setTimeout(() => {
         this.showComplete = true
-        this.level = 3
-        this.$axios.post('/exercise/completed', { user: this.$auth.user })
+        // this.$axios.post('/exercise/completed', {
+        //   user: this.$auth.user
+        // })
       }, 1000)
+    },
+    nextExercise() {
+      this.level = 3
+      this.showComplete = false
+      this.exercises.forEach(exercise => {
+        if(exercise.level === this.level) {
+          this.phrases = exercise.phrases
+        }
+      })
+      this.counter = 0
+      this.progressValue = (this.counter / this.phrases.length) * 100
+      this.targetPhrase = this.phrases[this.counter]
     },
     startFinishSound() {
       this.audio = new Audio('/sounds/feedback_completed.mp3')

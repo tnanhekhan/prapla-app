@@ -7,7 +7,9 @@ const router = Router()
 router.post('/', async (req, res) => {
   // Show exercises to user
   const user = req.body.user
-  const exercises = await Exercise.find({ '_id': user.exercises })
+  const exercisesIDs = user.exercises.map(exercise => exercise._id)
+  console.log(exercisesIDs)
+  const exercises = await Exercise.find({ '_id': exercisesIDs })
 
   res.json(exercises)
 })
