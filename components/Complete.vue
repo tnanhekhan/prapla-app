@@ -4,7 +4,7 @@
       <h1> Nog {{ needed }}! </h1>
       <ProgressCircle :amount="amount" :total="total" />
       <GlobalButton 
-        :buttonIcon="'/icons/Next.svg'" :clickEvent="startFinishSound"/>
+        :buttonIcon="'/icons/Next.svg'" :clickEvent="nextExercise"/>
   </section>
   </div>
   
@@ -13,19 +13,17 @@
 <script>
 export default {
   name: "Complete",
+  props: ['nextExercise'],
   data() {
     return {
-      needed: 1,
-      total: 3,
+      needed: 2,
+      total: 4,
       amount: 2,
       audio: null,
       clap: null,
       buttonIcon: '/icons/Next.svg'
     }
   },
-  // methods: {
-    
-  // }
 }
 </script>
 

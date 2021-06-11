@@ -7,10 +7,18 @@
     />
     <main>
       <Word
-        v-if="targetPhrase"
+        v-if="targetPhrase && level === 1"
         :word="targetPhrase.word"
         :speech="speech"
         :voice="voices"
+      />
+      <VisualExercise
+        v-if="targetPhrase && level === 3"
+        :question="targetPhrase.question"
+        :images="targetPhrase.images"
+        :voice="voices"
+        :visualAnswer="visualAnswer"
+        :getAnswer="getAnswer"
       />
       <button
         class="start-button"
@@ -25,7 +33,7 @@
         :disabled="isRecording"
       />
     </main>
-    <Complete v-if="showComplete"/>
+    <Complete v-if="showComplete" :nextExercise="nextExercise"/>
     <ExitModal v-if="exitModal" :closeModal="closeModal" :sendToHome="sendToHome"/>
     <footer>
       <ProgressBar
@@ -42,8 +50,17 @@ export default {
   // Get the exercise asynchronously
   async asyncData({ $axios, $auth }) {
     const { data } = await $axios.post('/exercise', { user: $auth.user })
+    let exercises = []
+
+    data.forEach(exercise => {
+      exercises.push({
+        phrases: exercise.phrases, 
+        level: exercise.level, 
+        completed: exercise.completed
+      })
+    })
     return {
-      phrases: data,
+      exercises: exercises
     }
   },
   data() {
@@ -60,6 +77,15 @@ export default {
       voices: [],
       showComplete: false,
       exitModal: false,
+      visualAnswer: null,
+      instructions: [
+        'Druk op de knop en zeg mij na:',
+        'Druk op de knop en doe iets anders:',
+        'Klik op het juiste antwoord:',
+        'Klik op de knop en beantwoord de vraag:'
+      ],
+      level: 1,
+      phrases: null
     }
   },
   mounted() {
@@ -79,12 +105,19 @@ export default {
     // Start the exercise
     startExercise() {
       this.counter = 0
+
+      this.exercises.forEach(exercise => {
+        if(exercise.level === this.level) {
+          this.phrases = exercise.phrases
+        }
+      })
+
       this.targetPhrase = this.phrases[this.counter]
-      this.speak('Druk op de knop en zeg mij na:')
+      this.speak(this.instructions[this.level - 1])
     },
     // Go to the next word
     changeWord() {
-      this.counter ++
+      this.counter++
       this.targetPhrase.tries++
       this.targetPhrase = this.phrases[this.counter]
 
@@ -112,18 +145,66 @@ export default {
       this.exitModal = false
       document.body.classList.remove('correct', 'incorrect')
     },
+    getAnswer() {
+      const inputVal = document.querySelector('input[name="images"]:checked')  
+      if(inputVal){
+        this.visualAnswer = inputVal.value
+      }
+    },
+    checkMultipleAnswer(answer) {
+      this.counter++
+      this.progressValue = (this.counter / this.phrases.length) * 100
+
+      if(this.targetPhrase.correctAnswer === answer) {
+        this.targetPhrase.correct = true;
+        this.targetPhrase.tries++
+        this.audio = new Audio('/sounds/feedback_positive.mp3')
+        document.body.classList.add('correct')
+        setTimeout(() => this.giveFeedback(), 1000)
+
+      } else {
+        this.targetPhrase.tries++
+        this.audio = new Audio('/sounds/feedback_fart.mp3')
+        document.body.classList.add('incorrect')
+      }
+
+      var inputFields = document.getElementsByName("images")
+      for(var i=0;i<inputFields.length;i++) inputFields[i].disabled = true
+
+      this.audio.play()       
+    },
+    nextQuestion() {
+      
+      this.targetPhrase = this.phrases[this.counter]
+      document.body.classList.remove('correct', 'incorrect')
+
+      var inputFields = document.getElementsByName("images")
+      for(var i=0;i<inputFields.length;i++) {
+        inputFields[i].checked = false
+        inputFields[i].disabled = false
+      }
+    },
     setClickEvent() {
-      return this.targetPhrase.tries === 2 || this.targetPhrase.correct 
-        ? this.changeWord() 
-        : this.startSpeech()
+      if(this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
+         return this.nextQuestion()
+      } else if(this.targetPhrase.correctAnswer) {
+        return this.checkMultipleAnswer(this.visualAnswer)
+      } else if(this.targetPhrase.tries === 2 || this.targetPhrase.correct ) {
+       return this.changeWord()
+      } else {
+        return this.startSpeech()
+      }
     },
     setButtonIcon() {
-      if (this.isRecording) {
-        return '/icons/Ear.svg'
-      } else if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
-        return '/icons/Next.svg'    
-      } else {
-        return '/icons/Microphone.svg'
+      const icons = {
+        '/icons/Ear.svg': this.isRecording,
+        '/icons/Next.svg': this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer || this.targetPhrase.correct || this.targetPhrase.tries === 2,
+        '/icons/Microphone.svg': this.targetPhrase.word && !this.targetPhrase.correct,
+        '/icons/Check.svg': this.targetPhrase.correctAnswer
+      }
+      
+      for(const [key, value] of Object.entries(icons)) {
+        if (value !== false && value && value !== undefined) return key;
       }
     },
     // After finishing each phrase
@@ -131,7 +212,22 @@ export default {
       this.progressValue = 100
       setTimeout(() => {
         this.showComplete = true
+        // this.$axios.post('/exercise/completed', {
+        //   user: this.$auth.user
+        // })
       }, 1000)
+    },
+    nextExercise() {
+      this.level = 3
+      this.showComplete = false
+      this.exercises.forEach(exercise => {
+        if(exercise.level === this.level) {
+          this.phrases = exercise.phrases
+        }
+      })
+      this.counter = 0
+      this.progressValue = (this.counter / this.phrases.length) * 100
+      this.targetPhrase = this.phrases[this.counter]
     },
     startFinishSound() {
       this.audio = new Audio('/sounds/feedback_completed.mp3')
