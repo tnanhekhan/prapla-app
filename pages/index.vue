@@ -20,7 +20,8 @@
         :images="targetPhrase.images"
         :voice="voices"
         :visualAnswer="visualAnswer"
-        :getAnswer="getAnswer"/> 
+        :getAnswer="getAnswer"
+      /> 
 
       <button
         class="start-button"
@@ -50,14 +51,20 @@
 <script>
 
 export default {
-  
   // Get the exercise asynchronously
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/exercise')
-    console.log(data)
+    let exercises = []
+
+    data.forEach(exercise => {
+      exercises.push({
+        phrases: exercise.phrases, 
+        level: exercise.level, 
+        completed: exercise.completed
+      })
+    })
     return {
-      phrases: data.phrases,
-      level: data.level
+      exercises: exercises
     }
   },
   data() {
@@ -80,7 +87,9 @@ export default {
         'Druk op de knop en doe iets anders:',
         'Klik op het juiste antwoord:',
         'Klik op de knop en beantwoord de vraag:'
-      ]
+      ],
+      level: 1,
+      phrases: null
     }
   },
   mounted() {
@@ -101,12 +110,19 @@ export default {
     // Start the exercise
     startExercise() {
       this.counter = 0
+
+      this.exercises.forEach(exercise => {
+        if(exercise.level === this.level) {
+          this.phrases = exercise.phrases
+        }
+      })
+
       this.targetPhrase = this.phrases[this.counter]
       this.speak(this.instructions[this.level - 1])
     },
     // Go to the next word
     changeWord() {
-      this.counter ++
+      this.counter++
       this.targetPhrase.tries++
       this.targetPhrase = this.phrases[this.counter]
 
@@ -139,7 +155,6 @@ export default {
       if(inputVal){
         this.visualAnswer = inputVal.value
       }
-      console.log(this.visualAnswer)
     },
     checkMultipleAnswer(answer) {
       this.counter++
@@ -157,7 +172,10 @@ export default {
         this.audio = new Audio('/sounds/feedback_negative.mp3')
         document.body.classList.add('incorrect')
       }
-      
+
+      var inputFields = document.getElementsByName("images")
+      for(var i=0;i<inputFields.length;i++) inputFields[i].disabled = true
+
       this.audio.play()       
     },
     nextQuestion() {
@@ -165,8 +183,11 @@ export default {
       this.targetPhrase = this.phrases[this.counter]
       document.body.classList.remove('correct', 'incorrect')
 
-      var inputFields = document.getElementsByName("images");
-      for(var i=0;i<inputFields.length;i++) inputFields[i].checked = false;
+      var inputFields = document.getElementsByName("images")
+      for(var i=0;i<inputFields.length;i++) {
+        inputFields[i].checked = false
+        inputFields[i].disabled = false
+      }
     },
     setClickEvent() {
       if(this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
@@ -180,7 +201,6 @@ export default {
       }
     },
     setButtonIcon() {
-     
       const icons = {
         '/icons/Ear.svg': this.isRecording,
         '/icons/Next.svg': this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer || this.targetPhrase.correct || this.targetPhrase.tries === 2,
@@ -195,26 +215,14 @@ export default {
           return key;
         }
       }
-      // console.log()
-      // // return icons[icons.] ?? '/icons/Microphone.svg'
-
-      // if (this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
-      //    return '/icons/Next.svg'
-      // } else if(this.targetPhrase.correctAnswer) {
-      //   return '/icons/Check.svg'
-      // } else if (this.isRecording) {
-      //   return '/icons/Ear.svg'
-      // } else if (this.targetPhrase.correct || this.targetPhrase.tries === 2) {
-      //   return '/icons/Next.svg'    
-      // } else {
-      //   return '/icons/Microphone.svg'
-      // }
     },
     // After finishing each phrase
     isCompleted() {
       this.progressValue = 100
       setTimeout(() => {
         this.showComplete = true
+        this.level = 3
+        this.$axios.post('/exercise/completed', { user: this.$auth.user })
       }, 1000)
     },
     startFinishSound() {

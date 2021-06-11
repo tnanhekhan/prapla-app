@@ -2,7 +2,12 @@ import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
   _id: String,
-  exercises: Array,
+  exercises: [
+    {
+      _id: mongoose.Types.ObjectId,
+      completed: Boolean
+    }
+  ],
   name: {
     firstname: {
       type: String,

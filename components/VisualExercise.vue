@@ -5,7 +5,12 @@
         v-for="image in images" 
         :key="image"
         @click="getAnswer()">
-        <input :id="image" type="radio" name="images" :value="image"/>
+        <input
+          :id="image"
+          type="radio"
+          name="images"
+          :value="image"
+        />
         <label :for="image"> 
           <img :src="baseUrl + image + '.svg'" :alt="image"/>
         </label>
@@ -17,17 +22,7 @@
 
 <script>
 export default {
-  props: {
-    images: {
-      type: Array
-    },
-    question: {
-      type: String
-    },
-    getAnswer: {
-      type: Function
-    }
-  },
+  props: [ 'images', 'question', 'getAnswer', 'visualAnswer' ],
   data() {
     return {
       baseUrl: process.env.CLOUDINARY_BASE_URL
@@ -80,12 +75,16 @@ export default {
     display: inline-block;
     border: solid #D1D1D1 1px;
     cursor: pointer;
+    transition:
+      box-shadow 200ms ease,
+      transform 200ms ease;
   }
 
   input[type="radio"]:checked + label  {
     background-color: var(--cl-primary-200);
-    box-shadow: 0 .35em 0 .05em var(--cl-primary-300);
+    box-shadow: 0 .2em 0 .05em var(--cl-primary-400);
     border: solid var(--cl-primary-300) 1px;
+    transform: translateY(.2em);
   }
 
   label img {
