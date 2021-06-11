@@ -164,7 +164,7 @@ export default {
 
       } else {
         this.targetPhrase.tries++
-        this.audio = new Audio('/sounds/feedback_negative.mp3')
+        this.audio = new Audio('/sounds/feedback_fart.mp3')
         document.body.classList.add('incorrect')
       }
 
@@ -204,11 +204,7 @@ export default {
       }
       
       for(const [key, value] of Object.entries(icons)) {
-        console.log('entry: ', key, value)
-        if (value !== false && value && value !== undefined) {
-          console.log('hey', key, value)
-          return key;
-        }
+        if (value !== false && value && value !== undefined) return key;
       }
     },
     // After finishing each phrase

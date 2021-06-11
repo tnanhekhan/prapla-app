@@ -44,7 +44,7 @@ if (!Vue.recognition) {
           setTimeout(() => this.giveFeedback(), 1000)
         } else {
           this.targetPhrase.tries++
-          this.audio = new Audio('/sounds/feedback_negative.mp3')
+          this.audio = new Audio('/sounds/feedback_fart.mp3')
           document.body.classList.add('incorrect')
           setTimeout(() => this.giveFeedback(speechResult), 1000)
           

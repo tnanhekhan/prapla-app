@@ -51,8 +51,6 @@ if (!Vue.login) {
 
           this.$auth.setUser(user)
           this.speak(`Welkom, ${user.name.firstname}`)
-          
-          document.body.style.background = '#FFF'
         } catch (err) {
           this.speak(`Helaas herken ik: ${speechResult}, niet`)
           document.body.style.background = 'var(--cl-orange-100)'
