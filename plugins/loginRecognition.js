@@ -37,6 +37,7 @@ if (!Vue.login) {
       async loginOnResult (event) {
         this.recognition.stop()
         this.isRecording = false
+        
         const speechResult = event.results[0][0].transcript.toLowerCase()
 
         // Handle user's secret word for authentication
@@ -55,6 +56,7 @@ if (!Vue.login) {
         } catch (err) {
           this.speak(`Helaas herken ik: ${speechResult}, niet`)
           document.body.style.background = 'var(--cl-orange-100)'
+
         }
       }
     }
