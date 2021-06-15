@@ -40,6 +40,9 @@ export default {
     baseURL: process.env.BASE_URL
   },
   auth: {
+    redirect: {
+      home: '/'
+    },
     strategies: {
       local: {
         endpoints: {

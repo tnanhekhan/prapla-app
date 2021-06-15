@@ -7,7 +7,6 @@ const router = Router()
 router.post('/', async (req, res) => {
   // Show exercises to user
   const user = req.body.user
-  console.log(user.exercises)
   const exercisesIDs = user.exercises.map(exercise => exercise._id)
   const exercises = await Exercise.find({ '_id': exercisesIDs })
 
@@ -16,7 +15,6 @@ router.post('/', async (req, res) => {
 
 router.post('/completed', async (req, res) => {
   const user = await User.findById(req.body.user._id)
-  console.log(user)
 })
 
 export default router
