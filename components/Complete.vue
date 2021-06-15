@@ -16,7 +16,7 @@ export default {
   props: ['nextExercise'],
   data() {
     return {
-      needed: 2,
+      needed: 1,
       total: 4,
       amount: 2,
       audio: null,

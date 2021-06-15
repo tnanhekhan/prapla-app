@@ -58,6 +58,13 @@ export default {
     position: absolute;
     width: 100%;
   }
+
+  button.inactiveVisual {
+    background: var(--cl-grey-200);
+    transform: translateY(.3em);
+    box-shadow: none;
+  }
+
   button p {
     font-size: 1.5em;
     font-family:

@@ -29,7 +29,11 @@ export default {
 	progress[value]::-webkit-progress-value {
 		background-color: var(--cl-primary-200);
 		min-width: 20px;
-		transition: width 750ms ease-in-out;
+		transition: width 750ms ease-in-out, border-radius 50ms ease 650ms;
 		border-radius: 100px 0 0 100px;
+	}
+
+	progress[value="100"]::-webkit-progress-value {
+		border-radius: 100px;
 	}
 </style>

@@ -10,7 +10,7 @@
     <GlobalButton
       v-if="login === true"
       :buttonIcon="setButtonIcon()"
-      :clickEvent="loginStartSpeech"
+      :clickEvent="startSpeech"
       :class="isRecording ? 'listen' : ''"
       :disabled="isRecording"
     />
@@ -27,7 +27,7 @@ export default {
   mounted() {
      // Setup the Web Speech API
     this.buildSpeech()
-    this.buildLoginRecognition()
+    this.buildRecognition(true)
   },
   middleware: 'guest',
   methods: {

@@ -42,6 +42,7 @@
   svg {
     height: 1.7rem;
     width: 1.7rem;
+    cursor: pointer;
   }
 
   nav svg line {

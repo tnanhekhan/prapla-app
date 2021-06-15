@@ -1,5 +1,6 @@
-export default function ({ store, redirect }) {
-  if (store.state.auth.loggedIn) {
+export default async function ({ $auth, redirect }) {
+  const isLoggedIn = await $auth.loggedIn
+  if (isLoggedIn) {
     return redirect('/')
   }
 }

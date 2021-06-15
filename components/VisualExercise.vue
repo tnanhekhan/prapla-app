@@ -4,7 +4,7 @@
       <div 
         v-for="image in images" 
         :key="image"
-        @click="getAnswer()">
+        @click="getAnswer(image)">
         <input
           :id="image"
           type="radio"
@@ -22,7 +22,14 @@
 
 <script>
 export default {
-  props: [ 'images', 'question', 'getAnswer', 'visualAnswer' ],
+  props: [
+    'images',
+    'question',
+    'getAnswer',
+    'visualAnswer',
+    'speech',
+    'voices'
+  ],
   data() {
     return {
       baseUrl: process.env.CLOUDINARY_BASE_URL
@@ -30,10 +37,10 @@ export default {
   },
   
   watch: {
-    visualAnswer: {
+    question: {
       immediate: true,
       handler () {
-        this.visualAnswer
+        this.question && this.speak(this.question)
       }
     }
   }
@@ -96,6 +103,4 @@ export default {
   p {
     font-size: 1.5em;
   }
-
-  
 </style>

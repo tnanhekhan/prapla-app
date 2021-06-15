@@ -16,6 +16,7 @@
         v-if="targetPhrase && level === 3"
         :question="targetPhrase.question"
         :images="targetPhrase.images"
+        :speech="speech"
         :voice="voices"
         :visualAnswer="visualAnswer"
         :getAnswer="getAnswer"
@@ -29,8 +30,8 @@
         v-else
         :clickEvent="setClickEvent"
         :buttonIcon="setButtonIcon()"
-        :class="isRecording ? 'listen' : ''"
-        :disabled="isRecording"
+        :class="[isRecording ? 'listen' : '', level === 3 && !visualAnswer ? 'inactiveVisual' : '']"
+        :disabled="showComplete || isRecording || (level === 3 && !visualAnswer)"
       />
     </main>
     <Complete v-if="showComplete" :nextExercise="nextExercise"/>
@@ -152,41 +153,32 @@ export default {
       }
     },
     checkMultipleAnswer(answer) {
-      this.counter++
-      this.progressValue = (this.counter / this.phrases.length) * 100
-
-      if(this.targetPhrase.correctAnswer === answer) {
-        this.targetPhrase.correct = true;
-        this.targetPhrase.tries++
-        this.audio = new Audio('/sounds/feedback_positive.mp3')
-        document.body.classList.add('correct')
-        setTimeout(() => this.giveFeedback(), 1000)
-
-      } else {
-        this.targetPhrase.tries++
-        this.audio = new Audio('/sounds/feedback_fart.mp3')
-        document.body.classList.add('incorrect')
+      this.checkAnswer(answer, this.targetPhrase.correctAnswer)
+      
+      if(this.targetPhrase.tries === 2 && this.targetPhrase.correctAnswer || this.targetPhrase.correctAnswer && this.targetPhrase.correct ) {
+        const inputFields = document.getElementsByName("images")
+        for(let i = 0; i < inputFields.length; i++) inputFields[i].disabled = true
       }
-
-      var inputFields = document.getElementsByName("images")
-      for(var i=0;i<inputFields.length;i++) inputFields[i].disabled = true
-
-      this.audio.play()       
     },
     nextQuestion() {
-      
-      this.targetPhrase = this.phrases[this.counter]
+      this.counter++
+      this.progressValue = (this.counter / this.phrases.length) * 100
+      this.visualAnswer = null
       document.body.classList.remove('correct', 'incorrect')
+      if(this.progressValue === 100) {
+        return this.showComplete = true
+      }
 
-      var inputFields = document.getElementsByName("images")
-      for(var i=0;i<inputFields.length;i++) {
+      this.targetPhrase = this.phrases[this.counter]
+      const inputFields = document.getElementsByName("images")
+      for(let i = 0; i < inputFields.length; i++) {
         inputFields[i].checked = false
         inputFields[i].disabled = false
       }
     },
     setClickEvent() {
-      if(this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer) {
-         return this.nextQuestion()
+      if(this.targetPhrase.tries === 2 && this.targetPhrase.correctAnswer || this.targetPhrase.correctAnswer && this.targetPhrase.correct ) {
+        return this.nextQuestion()
       } else if(this.targetPhrase.correctAnswer) {
         return this.checkMultipleAnswer(this.visualAnswer)
       } else if(this.targetPhrase.tries === 2 || this.targetPhrase.correct ) {
@@ -198,9 +190,9 @@ export default {
     setButtonIcon() {
       const icons = {
         '/icons/Ear.svg': this.isRecording,
-        '/icons/Next.svg': this.targetPhrase.tries === 1 && this.targetPhrase.correctAnswer || this.targetPhrase.correct || this.targetPhrase.tries === 2,
+        '/icons/Next.svg': this.targetPhrase.correct || this.targetPhrase.tries === 2,
         '/icons/Microphone.svg': this.targetPhrase.word && !this.targetPhrase.correct,
-        '/icons/Check.svg': this.targetPhrase.correctAnswer
+        '/icons/Check.svg': this.targetPhrase.correctAnswer && !this.targetPhrase.correct
       }
       
       for(const [key, value] of Object.entries(icons)) {
@@ -212,10 +204,7 @@ export default {
       this.progressValue = 100
       setTimeout(() => {
         this.showComplete = true
-        // this.$axios.post('/exercise/completed', {
-        //   user: this.$auth.user
-        // })
-      }, 1000)
+      }, 500)
     },
     nextExercise() {
       this.level = 3

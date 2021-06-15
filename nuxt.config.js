@@ -34,19 +34,16 @@ export default {
   plugins: [
     '~/plugins/speech',
     '~/plugins/recognition',
-    '~/plugins/loginRecognition'
+    '~/plugins/checkAnswer'
   ],
   "axios": {
     baseURL: process.env.BASE_URL
   },
   auth: {
-    redirect: {
-      home: '/'
-    },
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/auth', method: 'post' },
+          login: { url: 'auth', method: 'post' },
           logout: false,
           user: false
         }

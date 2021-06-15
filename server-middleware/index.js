@@ -11,7 +11,7 @@ app.locals.db = db
 const sessionOptions = {
   name: 'auth',
   keys: ['Leren praten'],
-  maxAge: 30 * 60 * 1000
+  maxAge: 24 * 60 * 60 * 1000
 }
 
 app

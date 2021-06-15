@@ -34,23 +34,26 @@ if (!Vue.speech) {
       },
       // Send audio feedback
       giveFeedback(result = undefined) {
-        if (result) {
-          this.speak(`Helaas hoorde ik: ${result}`)
-          this.speak(`Ik wíl graag horen: ${this.targetPhrase.word ? this.targetPhrase.word : this.targetPhrase.correctAnswer }`)
-        } else {
-          // Speak a random positive sentence when correct
-          this.speak(this.randomText())
-        }
+        this.speak(this.randomText(result))
       },
       // Generate a random positive affirmation
-      randomText() {
-        const phrases = [
+      randomText(positive) {
+        const posPhrases = [
           'Goed gedaan!',
           'Netjes!',
           'Je doet het súper!',
           'Helemaal goed!',
           'Je bent een topper!'
         ]
+        const negPhrases = [
+          'Ik weet dat je het kunt!',
+          'Jammer, probeer het nog eens!',
+          'Bijna goed!',
+          'Helaas pindakaas',
+          ':)'
+        ]
+
+        const phrases = positive ? posPhrases : negPhrases
         const maximumNumber = phrases.length
         const randomNumber = Math.floor(Math.random() * maximumNumber)
   
