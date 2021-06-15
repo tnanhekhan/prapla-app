@@ -49,8 +49,7 @@ if (!Vue.speech) {
           'Ik weet dat je het kunt!',
           'Jammer, probeer het nog eens!',
           'Bijna goed!',
-          'Helaas pindakaas',
-          ':)'
+          'Helaas pindakaas'
         ]
 
         const phrases = positive ? posPhrases : negPhrases
