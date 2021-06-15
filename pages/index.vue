@@ -204,6 +204,7 @@ export default {
       this.progressValue = 100
       setTimeout(() => {
         this.showComplete = true
+        this.startFinishSound()
       }, 500)
     },
     nextExercise() {
