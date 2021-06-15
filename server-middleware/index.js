@@ -21,7 +21,6 @@ app
   .use('/auth', auth)
   .use('/exercise', exercises)
 
- 
 export default {
   path: '/',
   handler: app
