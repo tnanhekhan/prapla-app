@@ -6,9 +6,9 @@
         :clickEvent="loginSpeechText"
         :buttonText="'Login'"
       />
-    <section v-else>
-      <h1>Wat is je geheime woord?</h1>
-    </section>
+   
+    <h1 v-else>Wat is je geheime woord?</h1>
+    
     <GlobalButton
       v-if="login === true"
       :buttonIcon="setButtonIcon()"
