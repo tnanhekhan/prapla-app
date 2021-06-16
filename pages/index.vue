@@ -152,10 +152,10 @@ export default {
     sendToHome() {
       this.exercises.forEach(exercise => {
         exercise.completed = false
-      })
-      this.phrases.forEach(phrase => {
+        exercise.phrases.forEach(phrase => {
           phrase.correct = false
           phrase.tries = 0
+        })
       })
       this.level = 1
       this.progressValue = 0
