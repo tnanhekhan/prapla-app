@@ -7,7 +7,7 @@
         :buttonText="'Login'"
       />
     <section v-else>
-      <h1>Wat is je geheime wachtwoord?</h1>
+      <h1>Wat is je geheime woord?</h1>
     </section>
     <GlobalButton
       v-if="login === true"
@@ -43,7 +43,7 @@ export default {
     loginSpeechText() {
       this.login = true
       setTimeout(() => {
-        this.speak('Druk op de knop en zeg je geheime wachtwoord')
+        this.speak('Druk op de knop en zeg je geheime woord')
       }, 400)
     }
   }
