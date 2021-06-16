@@ -9,7 +9,7 @@ Praatje-Plaatje (Prapla) is a speech- controlled learning application for young 
 ## Live demo
 Check out the application [here!](https://prapla.vercel.app/)
 
-> ⚠️ Due to bad browser compatabillity, the app might not work on your browser. Check the [compatabillity](https://caniuse.com/?search=web%20speech%20api) first.
+>⚠️ Due to bad browser compatabillity, the app might not work on your browser. Check the [compatabillity](https://caniuse.com/?search=web%20speech%20api) first.
 
 ## Documentation
 You can look at our Design Rationale [here](https://github.com/MarvinMichel/prapla/wiki/Design-Rationale). (Dutch only)
@@ -31,10 +31,12 @@ You can look at our Design Rationale [here](https://github.com/MarvinMichel/prap
 
 ## Dependencies
 - [NuxtJS(Vue)](https://nuxtjs.org/)
+- [Express](https://www.npmjs.com/package/express)
+- [MongoDB](https://www.npmjs.com/package/mongodb)
+- [Mongoose](https://www.npmjs.com/package/mongoose)
 - [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
 ## Lifecycle
-
 ![Data Lifecycle](https://github.com/MarvinMichel/prapla/blob/main/gitimages/lifecycle.png?raw=true)
 
 ## Getting started
