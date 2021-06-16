@@ -150,9 +150,12 @@ export default {
       this.exitModal = false
     },
     sendToHome() {
+      // Get all the users exercises
       this.exercises.forEach(exercise => {
+        // Set all exercises to incomplete
         exercise.completed = false
         exercise.phrases.forEach(phrase => {
+          // Reset all the phrases
           phrase.correct = false
           phrase.tries = 0
         })
@@ -161,8 +164,12 @@ export default {
       this.progressValue = 0
       this.counter = null
       this.targetPhrase = null
+
+      // Close all the modals
       this.exitModal = false
       this.showComplete = false
+
+      // Delete the red/green background
       document.body.classList.remove('correct', 'incorrect')
     },
     getAnswer() {
