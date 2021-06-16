@@ -17,6 +17,7 @@ export default {
 		-webkit-appearance: none;
 		appearance: none;
 		height: 60%;
+		max-height: 2em;
 		width: clamp(15rem, 90%, 30rem);
 	}
 

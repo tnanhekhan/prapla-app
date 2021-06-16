@@ -52,6 +52,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  body {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
   button {
     -webkit-appearance: none;
     appearance: none;

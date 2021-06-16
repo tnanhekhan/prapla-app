@@ -1,9 +1,11 @@
 <template>
   <main>
-    <button
-      v-if="login === false"
-      @click="loginSpeechText"
-    >Login</button>
+    <GlobalButton
+        class="login-button"
+        v-if="login === false"
+        :clickEvent="loginSpeechText"
+        :buttonText="'Login'"
+      />
     <section v-else>
       <h1>Wat is je geheime wachtwoord?</h1>
     </section>
@@ -80,13 +82,8 @@ export default {
     font-size: 150%;
   }
 
-  button {
-    appearance: none;
-    border: none;
-    color: white;
-    background-color: var(--cl-primary-300);
-    padding: 1rem 2rem;
-    border-radius: 30px;
-    font-weight: bold;
+  .login-button {
+    width: 10rem;
+    height: 10rem;
   }
 </style>

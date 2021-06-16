@@ -1,10 +1,11 @@
 <template>
   <button @click="clickEvent">
-    <img
+    <img v-if="buttonIcon"
       :src="buttonIcon"
       alt=" "
       aria-hidden="true"
     >
+    <span v-else>{{buttonText}}</span>
   </button>
 </template>
 
@@ -15,6 +16,9 @@ export default {
       type: Function
     },
     buttonIcon: {
+      type: String
+    },
+    buttonText: {
       type: String
     }
   }
@@ -65,8 +69,9 @@ export default {
     box-shadow: none;
   }
 
-  button p {
-    font-size: 1.5em;
+  button span {
+    font-size: 1.3em;
+    letter-spacing: 2px;
     font-family:
       'Arial Rounded MT',
       sans-serif;

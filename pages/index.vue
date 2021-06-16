@@ -13,7 +13,7 @@
         :voice="voices"
       />
       <VisualExercise
-        v-if="targetPhrase && level === 3"
+        v-if="targetPhrase && level === 2"
         :question="targetPhrase.question"
         :images="targetPhrase.images"
         :speech="speech"
@@ -21,21 +21,31 @@
         :visualAnswer="visualAnswer"
         :getAnswer="getAnswer"
       />
-      <button
+      <GlobalButton
         class="start-button"
         v-if="counter === null"
-        @click="startExercise"
-      >Start oefening</button>
+        :clickEvent="startExercise"
+        :buttonText="'Start oefening'"
+      />
       <GlobalButton
         v-else
         :clickEvent="setClickEvent"
         :buttonIcon="setButtonIcon()"
-        :class="[isRecording ? 'listen' : '', level === 3 && !visualAnswer ? 'inactiveVisual' : '']"
-        :disabled="showComplete || isRecording || (level === 3 && !visualAnswer)"
+        :class="[isRecording ? 'listen' : '', level === 2 && !visualAnswer ? 'inactiveVisual' : '']"
+        :disabled="showComplete || isRecording || (level === 2 && !visualAnswer)"
       />
     </main>
-    <Complete v-if="showComplete" :nextExercise="nextExercise"/>
-    <ExitModal v-if="exitModal" :closeModal="closeModal" :sendToHome="sendToHome"/>
+    <Complete
+      v-if="showComplete"
+      :nextExercise="nextExercise"
+      :sendToHome="sendToHome"
+      :exercises="exercises"
+    />
+    <ExitModal
+      v-if="exitModal"
+      :closeModal="closeModal"
+      :sendToHome="sendToHome"
+    />
     <footer>
       <ProgressBar
         v-if="counter !== null"
@@ -81,8 +91,8 @@ export default {
       visualAnswer: null,
       instructions: [
         'Druk op de knop en zeg mij na:',
-        'Druk op de knop en doe iets anders:',
         'Klik op het juiste antwoord:',
+        'Druk op de knop en doe iets anders:',
         'Klik op de knop en beantwoord de vraag:'
       ],
       level: 1,
@@ -94,6 +104,7 @@ export default {
     this.buildSpeech()
     this.buildRecognition()
 
+    // Array of words in categories, the Baklist
     fetch('/data/data.json')
       .then(response => response.json())
       .then(data => {
@@ -129,7 +140,6 @@ export default {
       }
       
       this.progressValue = (this.counter / this.phrases.length) * 100
-
       document.body.classList.remove('correct', 'incorrect')
     },
     onExit() {
@@ -140,9 +150,19 @@ export default {
       this.exitModal = false
     },
     sendToHome() {
+      this.exercises.forEach(exercise => {
+        exercise.completed = false
+      })
+      this.phrases.forEach(phrase => {
+          phrase.correct = false
+          phrase.tries = 0
+      })
+      this.level = 1
+      this.progressValue = 0
       this.counter = null
       this.targetPhrase = null
       this.exitModal = false
+      this.showComplete = false
       document.body.classList.remove('correct', 'incorrect')
     },
     getAnswer() {
@@ -164,8 +184,9 @@ export default {
       this.progressValue = (this.counter / this.phrases.length) * 100
       this.visualAnswer = null
       document.body.classList.remove('correct', 'incorrect')
+      
       if(this.progressValue === 100) {
-        return this.isCompleted()
+        return this.isCompleted() 
       }
 
       this.targetPhrase = this.phrases[this.counter]
@@ -201,13 +222,18 @@ export default {
     // After finishing each phrase
     isCompleted() {
       this.progressValue = 100
+      this.exercises.forEach(exercise => {
+        if(exercise.level === this.level) {
+          exercise.completed = true
+        }
+      })
       setTimeout(() => {
         this.showComplete = true
         this.startFinishSound()
       }, 500)
     },
     nextExercise() {
-      this.level = 3
+      this.level = 2
       this.showComplete = false
       this.exercises.forEach(exercise => {
         if(exercise.level === this.level) {
@@ -269,9 +295,6 @@ export default {
   }
 
   .start-button {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
+    --size: 10rem;
   }
 </style>

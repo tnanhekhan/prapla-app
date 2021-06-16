@@ -1,29 +1,38 @@
 <template>
   <div class="back-shadow">
     <section class="modal">
-      <h1> Nog {{ needed }}! </h1>
-      <ProgressCircle :amount="amount" :total="total" />
-      <GlobalButton 
-        :buttonIcon="'/icons/Next.svg'" :clickEvent="nextExercise"/>
+      <h1 v-if="needed !== 0"> Nog {{ needed }}! </h1>
+      <h1 v-else> Je bent klaar! </h1>
+      <ProgressCircle
+        :exercises="exercises"
+        :amount="amount"
+        :total="total"
+      />
+      <GlobalButton
+        :buttonIcon="'/icons/Next.svg'"
+        :clickEvent="needed !== 0 ? nextExercise : sendToHome"
+      />
   </section>
   </div>
-  
 </template>
 
 <script>
 export default {
   name: "Complete",
-  props: ['nextExercise'],
+  props: ['nextExercise', 'exercises', 'sendToHome'],
   data() {
     return {
-      needed: 1,
-      total: 4,
-      amount: 2,
+      needed: null,
       audio: null,
       clap: null,
-      buttonIcon: '/icons/Next.svg'
+      buttonIcon: '/icons/Next.svg',
+      amount: this.exercises.filter(exercise => exercise.completed).length,
+      total: this.$auth.user.exercises.length
     }
   },
+  mounted() {
+    this.needed = this.total - this.amount
+  }
 }
 </script>
 

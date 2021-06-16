@@ -1,10 +1,13 @@
 <template>
-      <div class="progress-circles">
-        <div class="progression-circle" v-for="exercise in dummyExercises" :key="exercise.num" :class="exercise.complete ? 'completed' : null">
-          {{ exercise.num}}
-        </div>
-
-      </div>
+  <div class="progress-circles">
+    <div class="progression-circle"
+      v-for="exercise in exercises"
+      :key="exercise.level"
+      :class="exercise.completed ? 'completed' : null"
+    >
+      {{ exercise.level}}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -15,16 +18,9 @@ export default {
     },
     amount: {
       type: Number
-    }
-  },
-  data() {
-    return {
-      dummyExercises: [
-        {num: 1, complete: true}, 
-        {num: 2, complete: true}, 
-        {num: 3, complete: true}, 
-        {num: 4, complete: false}
-      ]
+    },
+    exercises: {
+      type: Array
     }
   },
   mounted() {
@@ -33,7 +29,10 @@ export default {
   methods: {
     setAnimation() {
       const completedArray = document.querySelectorAll('.completed')
-      completedArray[completedArray.length - 1].classList.add('completed-last')
+
+      if(completedArray.length > 1) {
+        completedArray[completedArray.length - 1].classList.add('completed-last')
+      }
     }
   }
 }
@@ -45,10 +44,10 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 80%;
     max-width: 18.75em;
     z-index: 10;
   }
+
   .progression-circle {
     position: relative;
     display: flex;
@@ -61,20 +60,27 @@ export default {
     border-radius: 50%;
     min-width: 2em;
     min-height: 2em;
- 
+    margin-right: 2em;
   }
+
+  .progression-circle:last-of-type {
+    margin-right: 0;
+  }
+
   .progression-circle::before {
     content: '';
     position: absolute;
-    left: -2em;
-    width: 2em;
+    left: -2.5em;
+    width: 2.5em;
     height: .2em;
     z-index: -1;
     background-color: #BEBEBE;
   }
+
   .progression-circle:first-of-type::before {
     display: none;
   }
+
   .completed {
     background-color: var(--cl-green-200);
     border: solid 5px var(--cl-green-400);
@@ -91,16 +97,18 @@ export default {
     color: #BEBEBE;
     animation: to-complete 2s forwards ease 1s;
   }
+
   .completed-last::before {
     /* background-color: #E6E6E6; */
-     width: 0;
+    width: 0;
     animation: to-complete-before 2s forwards ease;
   }
+
   .completed-last::after {
     content: '';
     position: absolute;
-    left: -2em;
-    width: 2em;
+    left: -2.5em;
+    width: 2.5em;
     height: .2em;
     z-index: -1;
     background-color: #BEBEBE;
@@ -114,11 +122,13 @@ export default {
       color: var(--cl-green-400);
     }
   }
+
   @keyframes to-complete-before {
     to {
-       width: 2em;
+       width: 2.5em;
     }
   }
+
   @keyframes to-complete-after {
     0% {
        left: 0;
