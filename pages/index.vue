@@ -218,6 +218,7 @@ export default {
       this.counter = 0
       this.progressValue = (this.counter / this.phrases.length) * 100
       this.targetPhrase = this.phrases[this.counter]
+      this.speak(this.instructions[this.level - 1])
     },
     startFinishSound() {
       this.audio = new Audio('/sounds/feedback_completed.mp3')
