@@ -125,7 +125,6 @@ export default {
       // Show last question on exercise end
       if(!this.targetPhrase) {
         this.isCompleted()
-        this.startFinishSound()
         this.targetPhrase = this.phrases[this.counter - 1]
       }
       
@@ -166,7 +165,7 @@ export default {
       this.visualAnswer = null
       document.body.classList.remove('correct', 'incorrect')
       if(this.progressValue === 100) {
-        return this.showComplete = true
+        return this.isCompleted()
       }
 
       this.targetPhrase = this.phrases[this.counter]
