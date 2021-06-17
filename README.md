@@ -34,6 +34,7 @@ You can look at our Design Rationale [here](https://github.com/MarvinMichel/prap
 - [Express](https://www.npmjs.com/package/express)
 - [MongoDB](https://www.npmjs.com/package/mongodb)
 - [Mongoose](https://www.npmjs.com/package/mongoose)
+- [Dotenv](https://www.npmjs.com/package/dotenv)
 - [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
 ## Lifecycle
