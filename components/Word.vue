@@ -1,11 +1,11 @@
 <template>
   <section>
     <img
-      :src="`${baseUrl}${word}.svg`"
+      :src="`${image}`"
       @click="speak(word, .7)"
     />
-  
-    <h2 
+
+    <h2
       v-if="article"
       @click="speak(word, .7)"
     >
@@ -13,7 +13,7 @@
       {{ noun }}
     </h2>
 
-    <h2 
+    <h2
       v-else
       @click="speak(word, .7)"
     >
@@ -31,7 +31,7 @@ export default {
       noun: null
     }
   },
-  props: ['speech', 'voices', 'word'],
+  props: ['speech', 'voices', 'word', 'image'],
   watch: {
     word: {
       immediate: true,

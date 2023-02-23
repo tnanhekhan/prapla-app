@@ -1,8 +1,8 @@
 <template>
   <section>
     <div class="option-buttons">
-      <div 
-        v-for="image in images" 
+      <div
+        v-for="image in images"
         :key="image"
         @click="getAnswer(image)">
         <input
@@ -11,8 +11,8 @@
           name="images"
           :value="image"
         />
-        <label :for="image"> 
-          <img :src="baseUrl + image + '.svg'" :alt="image"/>
+        <label :for="image">
+          <img :src="images[0]" :alt="image"/>
         </label>
       </div>
     </div>
@@ -32,10 +32,10 @@ export default {
   ],
   data() {
     return {
-      baseUrl: process.env.CLOUDINARY_BASE_URL
+      baseUrl: null
     }
   },
-  
+
   watch: {
     question: {
       immediate: true,

@@ -16,17 +16,13 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  server: {
-    port: 3000,
-    host: '0.0.0.0'
-  },
+  ssr: false,
   env: {
     DB_URL: process.env.DB_URL,
     CLOUDINARY_BASE_URL: process.env.CLOUDINARY_BASE_URL
   },
   buildDir: 'dist',
   components: true,
-  serverMiddleware: ['~/server-middleware/index.js'],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth'
@@ -35,19 +31,5 @@ export default {
     '~/plugins/speech',
     '~/plugins/recognition',
     '~/plugins/checkAnswer'
-  ],
-  "axios": {
-    baseURL: process.env.BASE_URL
-  },
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: 'auth', method: 'post' },
-          logout: false,
-          user: false
-        }
-      }
-    }
-  }
+  ]
 }

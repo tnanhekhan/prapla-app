@@ -9,6 +9,7 @@
       <Word
         v-if="targetPhrase && level === 1"
         :word="targetPhrase.word"
+        :image="targetPhrase.images[0]"
         :speech="speech"
         :voice="voices"
       />
@@ -52,24 +53,41 @@
         :progressValue="progressValue"
       />
     </footer>
-    
+
   </div>
 </template>
 
 <script>
 export default {
   // Get the exercise asynchronously
-  async asyncData({ $axios, $auth }) {
-    const { data } = await $axios.post('/exercise', { user: $auth.user })
-    let exercises = []
+  async asyncData({$axios, $auth, store}) {
+    let data = store.getters['getWordList'];
+    let data2 = data.map(exercise => {
+      return {
+        "_id": exercise.id,
+        "level": 1,
+        "completed": false,
+        "phrases": data.map(exercise => {
+          return {
+            "images": [exercise.image],
+            "word": exercise.word,
+            "correct": false,
+            "tries": 0
+          }
+        })
+      }
+    });
 
-    data.forEach(exercise => {
+
+    let exercises = []
+    data2.forEach(exercise => {
       exercises.push({
-        phrases: exercise.phrases, 
-        level: exercise.level, 
+        phrases: exercise.phrases,
+        level: exercise.level,
         completed: exercise.completed
       })
-    })
+    });
+
     return {
       exercises: exercises
     }
@@ -110,7 +128,7 @@ export default {
       .then(data => {
         this.bakList = data
       })
-      .catch(err => console.log(err)) 
+      .catch(err => console.log(err))
   },
   middleware: 'auth',
   methods: {
@@ -119,12 +137,13 @@ export default {
       this.counter = 0
 
       this.exercises.forEach(exercise => {
-        if(exercise.level === this.level) {
+        if (exercise.level === this.level) {
           this.phrases = exercise.phrases
         }
-      })
+      });
 
       this.targetPhrase = this.phrases[this.counter]
+      console.log(this.targetPhrase);
       this.speak(this.instructions[this.level - 1])
     },
     // Go to the next word
@@ -134,11 +153,11 @@ export default {
       this.targetPhrase = this.phrases[this.counter]
 
       // Show last question on exercise end
-      if(!this.targetPhrase) {
+      if (!this.targetPhrase) {
         this.isCompleted()
         this.targetPhrase = this.phrases[this.counter - 1]
       }
-      
+
       this.progressValue = (this.counter / this.phrases.length) * 100
       document.body.classList.remove('correct', 'incorrect')
     },
@@ -173,17 +192,17 @@ export default {
       document.body.classList.remove('correct', 'incorrect')
     },
     getAnswer() {
-      const inputVal = document.querySelector('input[name="images"]:checked')  
-      if(inputVal){
+      const inputVal = document.querySelector('input[name="images"]:checked')
+      if (inputVal) {
         this.visualAnswer = inputVal.value
       }
     },
     checkMultipleAnswer(answer) {
       this.checkAnswer(answer, this.targetPhrase.correctAnswer)
-      
-      if(this.targetPhrase.tries === 2 && this.targetPhrase.correctAnswer || this.targetPhrase.correctAnswer && this.targetPhrase.correct ) {
+
+      if (this.targetPhrase.tries === 2 && this.targetPhrase.correctAnswer || this.targetPhrase.correctAnswer && this.targetPhrase.correct) {
         const inputFields = document.getElementsByName("images")
-        for(let i = 0; i < inputFields.length; i++) inputFields[i].disabled = true
+        for (let i = 0; i < inputFields.length; i++) inputFields[i].disabled = true
       }
     },
     nextQuestion() {
@@ -191,25 +210,25 @@ export default {
       this.progressValue = (this.counter / this.phrases.length) * 100
       this.visualAnswer = null
       document.body.classList.remove('correct', 'incorrect')
-      
-      if(this.progressValue === 100) {
-        return this.isCompleted() 
+
+      if (this.progressValue === 100) {
+        return this.isCompleted()
       }
 
       this.targetPhrase = this.phrases[this.counter]
       const inputFields = document.getElementsByName("images")
-      for(let i = 0; i < inputFields.length; i++) {
+      for (let i = 0; i < inputFields.length; i++) {
         inputFields[i].checked = false
         inputFields[i].disabled = false
       }
     },
     setClickEvent() {
-      if(this.targetPhrase.tries === 2 && this.targetPhrase.correctAnswer || this.targetPhrase.correctAnswer && this.targetPhrase.correct ) {
+      if (this.targetPhrase.tries === 2 && this.targetPhrase.correctAnswer || this.targetPhrase.correctAnswer && this.targetPhrase.correct) {
         return this.nextQuestion()
-      } else if(this.targetPhrase.correctAnswer) {
+      } else if (this.targetPhrase.correctAnswer) {
         return this.checkMultipleAnswer(this.visualAnswer)
-      } else if(this.targetPhrase.tries === 2 || this.targetPhrase.correct ) {
-       return this.changeWord()
+      } else if (this.targetPhrase.tries === 2 || this.targetPhrase.correct) {
+        return this.changeWord()
       } else {
         return this.startSpeech()
       }
@@ -221,8 +240,8 @@ export default {
         '/icons/Microphone.svg': this.targetPhrase.word && !this.targetPhrase.correct,
         '/icons/Check.svg': this.targetPhrase.correctAnswer && !this.targetPhrase.correct
       }
-      
-      for(const [key, value] of Object.entries(icons)) {
+
+      for (const [key, value] of Object.entries(icons)) {
         if (value !== false && value && value !== undefined) return key;
       }
     },
@@ -230,7 +249,7 @@ export default {
     isCompleted() {
       this.progressValue = 100
       this.exercises.forEach(exercise => {
-        if(exercise.level === this.level) {
+        if (exercise.level === this.level) {
           exercise.completed = true
         }
       })
@@ -243,7 +262,7 @@ export default {
       this.level = 2
       this.showComplete = false
       this.exercises.forEach(exercise => {
-        if(exercise.level === this.level) {
+        if (exercise.level === this.level) {
           this.phrases = exercise.phrases
         }
       })
@@ -261,47 +280,47 @@ export default {
       this.clap.play()
 
       // Slowly lower the volume of the claps to make it less abrupt
-      setTimeout( () => {
+      setTimeout(() => {
         setInterval(() => {
-          if(this.clap.volume > 0.06) {
+          if (this.clap.volume > 0.06) {
             this.clap.volume -= 0.05
           } else {
             this.clap.volume = 0
             clearInterval()
           }
         }, 100)
-      }, 1300)  
+      }, 1300)
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
-  main {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 85vh;
-    justify-content: space-evenly;
-    text-align: center;
-  }
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  justify-content: space-evenly;
+  text-align: center;
+}
 
-  footer {
-    height: 5vh;
-    display: flex;
-    justify-content: center;
-  }
+footer {
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+}
 
-  button {
-    appearance: none;
-    border: none;
-    color: white;
-    background-color: var(--cl-primary-300);
-    padding: 1rem 2rem;
-    font-weight: bold;
-  }
+button {
+  appearance: none;
+  border: none;
+  color: white;
+  background-color: var(--cl-primary-300);
+  padding: 1rem 2rem;
+  font-weight: bold;
+}
 
-  .start-button {
-    --size: 10rem;
-  }
+.start-button {
+  --size: 10rem;
+}
 </style>

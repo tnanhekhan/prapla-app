@@ -4,6 +4,9 @@ export const getters = {
   },
   loggedInUser(state) {
     return state.auth.user
+  },
+  getWordList(state) {
+    return state.wordList
   }
 }
 
@@ -14,5 +17,18 @@ export const actions = {
     } else {
       this.$auth.setUser(null)
     }
+  },
+  storeWordList({commit}, wordList) {
+    commit('STORE_WORD_LIST', wordList)
+  }
+}
+
+export const state = () => ({
+  wordList: []
+})
+
+export const mutations = {
+  STORE_WORD_LIST(state, wordList) {
+    state.wordList = wordList
   }
 }
