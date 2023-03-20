@@ -78,7 +78,6 @@ export default {
       }
     });
 
-
     let exercises = []
     data2.forEach(exercise => {
       exercises.push({
@@ -254,7 +253,7 @@ export default {
         }
       })
       setTimeout(() => {
-        this.showComplete = true
+        this.sendToHome()
         this.startFinishSound()
       }, 500)
     },
