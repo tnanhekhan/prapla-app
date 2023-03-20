@@ -3,7 +3,7 @@ dotenv.config()
 
 export default {
   head: {
-    title: 'PraatjePlaatje',
+    title: 'Prapla',
     htmlAttrs: {
       lang: 'nl'
     },
@@ -22,6 +22,7 @@ export default {
     CLOUDINARY_BASE_URL: process.env.CLOUDINARY_BASE_URL
   },
   buildDir: 'dist',
+  target: 'static',
   components: true,
   modules: [
     '@nuxtjs/axios',
